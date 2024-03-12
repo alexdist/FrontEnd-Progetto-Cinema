@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="578.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.interfaccia_grafica.HelloController">
+   <children>
+      <AnchorPane fx:id="utente_form" prefHeight="578.0" prefWidth="600.0" styleClass="bg-form" stylesheets="@loginstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="utente_accedi" layoutX="257.0" layoutY="413.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="98.0" styleClass="login-btn" stylesheets="@loginstyle.css" text="Accedi" />
+            <TextField fx:id="utente_nome" layoutX="167.0" layoutY="242.0" prefHeight="25.0" prefWidth="280.0" promptText="Nome" styleClass="textfield" stylesheets="@loginstyle.css" />
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="231.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Icone/icons8-account-100.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="263.0" layoutY="179.0" text="Utente" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <TextField fx:id="utente_eta" layoutX="166.0" layoutY="345.0" promptText="Età" styleClass="textfield" stylesheets="@loginstyle.css" />
+            <Button layoutX="536.0" layoutY="2.0" mnemonicParsing="false" onAction="#utente_close" prefHeight="25.0" prefWidth="64.0" styleClass="close" stylesheets="@loginstyle.css">
+               <graphic>
+                  <ImageView fx:id="utente_close" fitHeight="16.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icone/icons8-x-100.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="497.0" layoutY="2.0" mnemonicParsing="false" onAction="#utente_minimize" prefHeight="25.0" prefWidth="39.0" styleClass="minimize" stylesheets="@loginstyle.css">
+               <graphic>
+                  <ImageView fx:id="utente_minimize" fitHeight="20.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icone/icons8-minimize-90%20(1).png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <TextField fx:id="utente_cognome" layoutX="166.0" layoutY="295.0" prefHeight="25.0" prefWidth="280.0" promptText="Cognome" styleClass="textfield" stylesheets="@loginstyle.css" />
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="578.0" prefWidth="600.0" styleClass="bg-form" stylesheets="@loginstyle.css" visible="false">
+         <children>
+            <Button fx:id="admin_login" layoutX="257.0" layoutY="413.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="98.0" styleClass="login-btn" stylesheets="@loginstyle.css" text="Accedi" />
+            <TextField fx:id="admin_nome" layoutX="167.0" layoutY="242.0" prefHeight="25.0" prefWidth="280.0" promptText="Nome" styleClass="textfield" stylesheets="@loginstyle.css" />
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="231.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Icone/icons8-admin-100.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="211.0" layoutY="186.0" text="Amministratore" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Button fx:id="admin_close" layoutX="536.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" styleClass="close" stylesheets="@loginstyle.css">
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icone/icons8-x-100.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="497.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="39.0" styleClass="minimize" stylesheets="@loginstyle.css">
+               <graphic>
+                  <ImageView fx:id="admin_minimize" fitHeight="20.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Icone/icons8-minimize-90%20(1).png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <TextField fx:id="admin_cognome" layoutX="166.0" layoutY="295.0" prefHeight="25.0" prefWidth="280.0" promptText="Cognome" styleClass="textfield" stylesheets="@loginstyle.css" />
+            <PasswordField fx:id="admin_password" layoutX="211.0" layoutY="347.0" prefHeight="26.0" prefWidth="193.0" promptText="Password" styleClass="textfield" stylesheets="@loginstyle.css" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
