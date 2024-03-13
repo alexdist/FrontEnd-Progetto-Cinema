@@ -54,7 +54,7 @@
                   <Image url="@../../../Icone/icons8-movie-theater-100.png" />
                </image>
             </ImageView>
-            <AnchorPane fx:id="admin_form" prefHeight="578.0" prefWidth="600.0" styleClass="bg-form" stylesheets="@loginstyle.css">
+            <AnchorPane fx:id="admin_form" prefHeight="578.0" prefWidth="600.0" styleClass="bg-form" stylesheets="@loginstyle.css" visible="false">
                <children>
                   <Button fx:id="admin_login" layoutX="257.0" layoutY="402.0" mnemonicParsing="false" onAction="#handleAdminLogin" prefHeight="62.0" prefWidth="98.0" styleClass="login-btn" stylesheets="@loginstyle.css" text="Accedi" />
                   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="231.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
