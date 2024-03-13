@@ -1,10 +1,17 @@
 package org.example.interfaccia_grafica;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class HelloController {
     @FXML
@@ -13,8 +20,8 @@ public class HelloController {
     @FXML
     private Button admin_close;
 
-    @FXML
-    private TextField admin_cognome;
+//    @FXML
+//    private TextField admin_cognome;
 
     @FXML
     private AnchorPane admin_form;
@@ -25,8 +32,8 @@ public class HelloController {
     @FXML
     private ImageView admin_minimize;
 
-    @FXML
-    private TextField admin_nome;
+//    @FXML
+//    private TextField admin_nome;
 
     @FXML
     private PasswordField admin_password;
@@ -73,6 +80,9 @@ public class HelloController {
     @FXML
     private TextField utente_nome;
 
+    @FXML
+    private TextField admin_username;
+
     public void utente_close(){
         System.exit(0);
     }
@@ -116,6 +126,74 @@ public class HelloController {
     private void handleBackToMainFromUtente() {
         utente_form.setVisible(false); // Nasconde il form utente
         login_form.setVisible(true); // Mostra il form principale
+    }
+
+
+    @FXML
+    private void handleAdminLogin() throws IOException {
+        // Aggiungi qui il codice per verificare le credenziali dell'admin
+        String username = admin_username.getText();
+        String password = admin_password.getText();
+
+        if (checkAdminCredentials(username, password)) {
+            admin_form.setVisible(true);
+            utente_form.setVisible(false);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Accesso Riuscito");
+            alert.setHeaderText(null);
+            alert.setContentText("Login effettuato con successo!");
+            alert.showAndWait();
+
+            admin_login.getScene().getWindow().hide();
+
+
+            Parent root = FXMLLoader.load(getClass().getResource("admin-dashboard.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } else {
+            // Mostra un messaggio di errore se le credenziali sono sbagliate
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore di accesso");
+            alert.setHeaderText(null);
+            alert.setContentText("Credenziali admin non valide!");
+            alert.showAndWait();
+        }
+    }
+
+    private boolean checkAdminCredentials(String username, String password) {
+        String credentialsFile = "admin_credentials.txt";
+
+        // Verifica se il file delle credenziali esiste, altrimenti lo crea
+        if (!Files.exists(Paths.get(credentialsFile))) {
+            createAdminCredentialsFile(credentialsFile);
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(credentialsFile))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(" ");
+                String storedUsername = parts[0];
+                String storedPassword = parts[1];
+                if (username.equals(storedUsername) && password.equals(storedPassword)) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private void createAdminCredentialsFile(String filename) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+            // Credenziali di default impostate a nome: admin e password: admin
+            writer.println("admin admin");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

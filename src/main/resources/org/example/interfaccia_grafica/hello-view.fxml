@@ -54,10 +54,9 @@
                   <Image url="@../../../Icone/icons8-movie-theater-100.png" />
                </image>
             </ImageView>
-            <AnchorPane fx:id="admin_form" prefHeight="578.0" prefWidth="600.0" styleClass="bg-form" stylesheets="@loginstyle.css" visible="false">
+            <AnchorPane fx:id="admin_form" prefHeight="578.0" prefWidth="600.0" styleClass="bg-form" stylesheets="@loginstyle.css">
                <children>
-                  <Button fx:id="admin_login" layoutX="257.0" layoutY="412.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="98.0" styleClass="login-btn" stylesheets="@loginstyle.css" text="Accedi" />
-                  <TextField fx:id="admin_nome" layoutX="167.0" layoutY="242.0" prefHeight="25.0" prefWidth="280.0" promptText="Nome" styleClass="textfield" stylesheets="@loginstyle.css" />
+                  <Button fx:id="admin_login" layoutX="257.0" layoutY="402.0" mnemonicParsing="false" onAction="#handleAdminLogin" prefHeight="62.0" prefWidth="98.0" styleClass="login-btn" stylesheets="@loginstyle.css" text="Accedi" />
                   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="231.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../Icone/icons8-admin-100.png" />
@@ -86,9 +85,9 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <TextField fx:id="admin_cognome" layoutX="166.0" layoutY="295.0" prefHeight="25.0" prefWidth="280.0" promptText="Cognome" styleClass="textfield" stylesheets="@loginstyle.css" />
-                  <PasswordField fx:id="admin_password" layoutX="211.0" layoutY="347.0" prefHeight="26.0" prefWidth="193.0" promptText="Password" styleClass="textfield" stylesheets="@loginstyle.css" />
+                  <PasswordField fx:id="admin_password" layoutX="166.0" layoutY="302.0" onAction="#handleAdminLogin" prefHeight="26.0" prefWidth="280.0" promptText="Password" styleClass="textfield" stylesheets="@loginstyle.css" />
                   <Hyperlink fx:id="hyperlink_admin" layoutX="265.0" layoutY="517.0" onAction="#handleBackToMainFromAdmin" stylesheets="@loginstyle.css" text="Torna indietro" textFill="WHITE" />
+                  <TextField fx:id="admin_username" layoutX="166.0" layoutY="244.0" onAction="#handleAdminLogin" prefHeight="25.0" prefWidth="280.0" promptText="Username" styleClass="textfield" stylesheets="@loginstyle.css" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="utente_form" prefHeight="578.0" prefWidth="600.0" styleClass="bg-form" stylesheets="@loginstyle.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
