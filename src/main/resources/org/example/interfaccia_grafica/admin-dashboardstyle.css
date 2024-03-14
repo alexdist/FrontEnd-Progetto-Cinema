@@ -128,6 +128,42 @@
     -fx-background-color: #d33d63;
 }
 
+.modify-btn{
+    -fx-background-color: #FFA500; /* Arancione */
+    -fx-background-radius: 8px;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.modify-btn:hover{
+    -fx-background-color: #FFB347; /* Arancione chiaro */
+}
+
+.comeback-btn{
+    -fx-background-color: #B0B0B0; /* Grigio medio */
+    -fx-background-radius: 8px;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.comeback-btn:hover{
+    -fx-background-color: #C8C8C8; /* Grigio chiaro */
+}
+
+.report-btn{
+    -fx-background-color: #4CAF50; /* Grigio medio */
+    -fx-background-radius: 8px;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.report-btn:hover{
+    -fx-background-color: #81C784; /* Grigio chiaro */
+}
+
 .table-view{
     -fx-background-color: #fff;
     -fx-background-radius: 10px;

@@ -294,11 +294,11 @@
                                     <Font name="System Bold" size="24.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="rimuoviFilm_btn" layoutX="78.0" layoutY="477.0" mnemonicParsing="false" onAction="#switchFilm" text="Rimuovi Film">
+                              <Button fx:id="rimuoviFilm_btn" layoutX="130.0" layoutY="482.0" mnemonicParsing="false" onAction="#switchFilm" styleClass="comeback-btn" stylesheets="@admin-dashboardstyle.css" text="Rimuovi Film">
                                  <graphic>
                                     <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../Icone/icons8-next-page-100.png" />
+                                          <Image url="@../../../Icone/icons8-forward-100.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -338,7 +338,14 @@
                               </Label>
                               <Label layoutX="33.0" layoutY="91.0" text="ID Film:" />
                               <TextField fx:id="IDRimuoviFIlm_textfield" layoutX="83.0" layoutY="86.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
-                              <Button fx:id="tornaIndietroRimuoviFilm_btn" layoutX="84.0" layoutY="450.0" mnemonicParsing="false" onAction="#switchFilm" text="Torna indietro" />
+                              <Button fx:id="tornaIndietroRimuoviFilm_btn" layoutX="9.0" layoutY="481.0" mnemonicParsing="false" onAction="#switchFilm" styleClass="comeback-btn" stylesheets="@admin-dashboardstyle.css" text="Torna indietro">
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../Icone/icons8-back-100.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
                            </children>
                         </AnchorPane>
                      </children>
@@ -372,11 +379,11 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="switchModificaSpett_btn" layoutX="66.0" layoutY="479.0" mnemonicParsing="false" onAction="#switchSpettacolo" text="Modifica Spettacolo">
+                              <Button fx:id="switchModificaSpett_btn" layoutX="90.0" layoutY="481.0" mnemonicParsing="false" onAction="#switchSpettacolo" styleClass="comeback-btn" stylesheets="@admin-dashboardstyle.css" text="Modifica Spettacolo">
                                  <graphic>
                                     <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../Icone/icons8-next-page-100.png" />
+                                          <Image url="@../../../Icone/icons8-forward-100.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -398,42 +405,49 @@
                         </AnchorPane>
                         <AnchorPane fx:id="modSpettacolo_anchorpane" layoutX="13.0" layoutY="14.0" prefHeight="526.0" prefWidth="263.0" styleClass="bg-white" stylesheets="@admin-dashboardstyle.css" visible="false" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="636.0" AnchorPane.topAnchor="14.0">
                            <children>
-                              <Label layoutX="59.0" layoutY="126.0" text="Film:" AnchorPane.leftAnchor="59.0" />
-                              <TextField fx:id="modFilmSpett_textfield" layoutX="89.0" layoutY="121.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
-                              <Button fx:id="modificaFilmSpett_btn" layoutX="86.0" layoutY="154.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="93.0" styleClass="insert-btn" stylesheets="@admin-dashboardstyle.css" text="Modifica" />
+                              <Label layoutX="64.0" layoutY="105.0" text="Film:" AnchorPane.leftAnchor="64.0" />
+                              <TextField fx:id="modFilmSpett_textfield" layoutX="94.0" layoutY="100.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
+                              <Button fx:id="modificaFilmSpett_btn" layoutX="91.0" layoutY="133.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="93.0" styleClass="modify-btn" stylesheets="@admin-dashboardstyle.css" text="Modifica" />
                               <Label layoutX="39.0" text="Gestione Spettacoli">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="81.0" layoutY="53.0" text="Modifica Film">
+                              <Label layoutX="81.0" layoutY="38.0" text="Modifica Film">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="64.0" layoutY="93.0" text="ID Spettacolo:" />
-                              <TextField fx:id="IDmodFilmSpett_textfield" layoutX="149.0" layoutY="88.0" prefHeight="27.0" prefWidth="101.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
-                              <Label layoutX="58.0" layoutY="282.0" text="Sala:" />
-                              <TextField fx:id="modSalaSpett_textfield" layoutX="89.0" layoutY="277.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
-                              <Button fx:id="modificaSalaSpett_btn" layoutX="86.0" layoutY="310.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="93.0" styleClass="insert-btn" stylesheets="@admin-dashboardstyle.css" text="Modifica" />
-                              <Label layoutX="82.0" layoutY="211.0" text="Modifica Sala">
+                              <Label layoutX="69.0" layoutY="72.0" text="ID Spettacolo:" />
+                              <TextField fx:id="IDmodFilmSpett_textfield" layoutX="154.0" layoutY="67.0" prefHeight="27.0" prefWidth="101.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
+                              <Label layoutX="58.0" layoutY="251.0" text="Sala:" />
+                              <TextField fx:id="modSalaSpett_textfield" layoutX="89.0" layoutY="246.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
+                              <Button fx:id="modificaSalaSpett_btn" layoutX="86.0" layoutY="279.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="93.0" styleClass="modify-btn" stylesheets="@admin-dashboardstyle.css" text="Modifica" />
+                              <Label layoutX="82.0" layoutY="180.0" text="Modifica Sala">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="64.0" layoutY="249.0" text="ID Spettacolo:" />
-                              <TextField fx:id="IDmodSalaSpett_textfield" layoutX="149.0" layoutY="244.0" prefHeight="27.0" prefWidth="101.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
-                              <Label layoutX="46.0" layoutY="444.0" text="Orario:" />
-                              <TextField fx:id="modOrarioSpett_textfield" layoutX="89.0" layoutY="439.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
-                              <Button fx:id="modificaOrarioSpett_btn" layoutX="85.0" layoutY="472.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="93.0" styleClass="insert-btn" stylesheets="@admin-dashboardstyle.css" text="Modifica" />
-                              <Label layoutX="83.0" layoutY="376.0" text="Modifica Orario">
+                              <Label layoutX="64.0" layoutY="218.0" text="ID Spettacolo:" />
+                              <TextField fx:id="IDmodSalaSpett_textfield" layoutX="149.0" layoutY="213.0" prefHeight="27.0" prefWidth="101.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
+                              <Label layoutX="44.0" layoutY="398.0" text="Orario:" />
+                              <TextField fx:id="modOrarioSpett_textfield" layoutX="87.0" layoutY="393.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
+                              <Button fx:id="modificaOrarioSpett_btn" layoutX="83.0" layoutY="426.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="93.0" styleClass="modify-btn" stylesheets="@admin-dashboardstyle.css" text="Modifica" />
+                              <Label layoutX="81.0" layoutY="330.0" text="Modifica Orario">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="58.0" layoutY="411.0" text="ID Spettacolo:" />
-                              <TextField fx:id="IDmodOrarioSpett_textfield" layoutX="149.0" layoutY="406.0" prefHeight="27.0" prefWidth="101.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
-                              <Button fx:id="switchTornaIndietroSpett_btn" layoutX="19.0" layoutY="350.0" mnemonicParsing="false" onAction="#switchSpettacolo" text="Torna Indietro" />
+                              <Label layoutX="56.0" layoutY="365.0" text="ID Spettacolo:" />
+                              <TextField fx:id="IDmodOrarioSpett_textfield" layoutX="147.0" layoutY="360.0" prefHeight="27.0" prefWidth="101.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
+                              <Button fx:id="switchTornaIndietroSpett_btn" layoutX="6.0" layoutY="491.0" mnemonicParsing="false" onAction="#switchSpettacolo" styleClass="comeback-btn" stylesheets="@admin-dashboardstyle.css" text="Torna Indietro">
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../Icone/icons8-back-100.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
                            </children>
                         </AnchorPane>
                      </children>
@@ -491,7 +505,7 @@
                                     <Font name="System Bold" size="24.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="generaRepRicavi_btn" layoutX="81.0" layoutY="120.0" mnemonicParsing="false" text="Genera Report" />
+                              <Button fx:id="generaRepRicavi_btn" layoutX="81.0" layoutY="120.0" mnemonicParsing="false" styleClass="report-btn" stylesheets="@admin-dashboardstyle.css" text="Genera Report" />
                               <Label layoutX="80.0" layoutY="78.0" text="Report Ricavi">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
