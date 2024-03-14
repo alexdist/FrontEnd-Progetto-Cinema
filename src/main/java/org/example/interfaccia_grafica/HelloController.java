@@ -6,8 +6,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -129,6 +131,8 @@ public class HelloController {
     }
 
 
+    private double x = 0;
+    private double y = 0;
     @FXML
     private void handleAdminLogin() throws IOException {
         // Aggiungi qui il codice per verificare le credenziali dell'admin
@@ -150,6 +154,21 @@ public class HelloController {
             Parent root = FXMLLoader.load(getClass().getResource("admin-dashboard.fxml"));
             Stage stage = new Stage();
             Scene scene = new Scene(root);
+
+            root.setOnMousePressed((MouseEvent event)->{
+
+                x = event.getSceneX();
+                y = event.getSceneY();
+            });
+
+            root.setOnMouseDragged((MouseEvent event)->{
+
+                stage.setX(event.getScreenX() - x);
+                stage.setY(event.getScreenY() - y);
+            });
+
+            stage.initStyle(StageStyle.TRANSPARENT);
+
             stage.setScene(scene);
             stage.show();
 
