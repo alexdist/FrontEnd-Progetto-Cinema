@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.Image?>
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.interfaccia_grafica.DashboardController">
+    <BorderPane fx:id="mainBorderPane">
+        <top>
+            <AnchorPane prefHeight="44.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
+                <children>
+                    <AnchorPane fx:id="topForm_anchorpane" layoutX="182.0" layoutY="-78.0" prefHeight="37.0" prefWidth="1100.0" stylesheets="@admin-dashboardstyle.css" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <children>
+                            <Button fx:id="close" layoutX="1048.0" layoutY="2.0" mnemonicParsing="false" onAction="#closeDashboard" prefHeight="25.0" prefWidth="64.0" styleClass="close" stylesheets="@admin-dashboardstyle.css">
+                                <graphic>
+                                    <ImageView fitHeight="16.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                            <Image url="@../../../Icone/icons8-x-100.png" />
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </Button>
+                            <Button fx:id="minimize" layoutX="1009.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimizeDashboard" prefHeight="25.0" prefWidth="39.0" styleClass="minimize" stylesheets="@admin-dashboardstyle.css">
+                                <graphic>
+                                    <ImageView fitHeight="20.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                            <Image url="@../../../Icone/icons8-minimize-90%20(1).png" />
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </Button>
+                            <Label layoutX="38.0" layoutY="11.0" text="Gestione Cinema">
+                                <font>
+                                    <Font name="Microsoft Sans Serif" size="13.0" />
+                                </font>
+                            </Label>
+                            <ImageView fitHeight="60.0" fitWidth="30.0" layoutX="7.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../../../Icone/icons8-gear-100.png" />
+                                </image>
+                            </ImageView>
+                        </children>
+                        <styleClass>
+                            <String fx:value="top-form" />
+                            <String fx:value="column-header-background" />
+                        </styleClass>
+                    </AnchorPane>
+                </children>
+            </AnchorPane>
+        </top>
+        <left>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="nav-form" stylesheets="@admin-dashboardstyle.css" BorderPane.alignment="CENTER">
+                <children>
+                    <ImageView fitHeight="130.0" fitWidth="125.0" layoutX="38.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../../../Icone/icons8-admin-100%20(1).png" />
+                        </image>
+                    </ImageView>
+                    <Label layoutX="60.0" layoutY="139.0" text="Benvenuto" textFill="WHITE">
+                        <font>
+                            <Font size="18.0" />
+                        </font>
+                    </Label>
+                    <Label alignment="CENTER" layoutX="2.0" layoutY="162.0" prefHeight="17.0" prefWidth="197.0" text="Amministratore" textFill="WHITE">
+                        <font>
+                            <Font name="System Bold" size="24.0" />
+                        </font>
+                    </Label>
+                    <Button fx:id="gestioneSale_btn" layoutX="13.0" layoutY="243.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@admin-dashboardstyle.css" text="Gestione Sale">
+                        <graphic>
+                            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../../../Icone/icons8-auditorium-100%20(1).png" />
+                                </image>
+                            </ImageView>
+                        </graphic></Button>
+                    <Button fx:id="gestioneFilm_btn" layoutX="13.0" layoutY="278.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@admin-dashboardstyle.css" text="Gestione Film">
+                        <graphic>
+                            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../../../Icone/icons8-film-100%20(1).png" />
+                                </image>
+                            </ImageView>
+                        </graphic></Button>
+                    <Button fx:id="gestioneSpettacoli_btn" layoutX="14.0" layoutY="313.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@admin-dashboardstyle.css" text="Gestione Spettacoli">
+                        <graphic>
+                            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../../../Icone/icons8-show-64%20(1).png" />
+                                </image>
+                            </ImageView>
+                        </graphic></Button>
+                    <Button fx:id="gestionePrezzi_btn" layoutX="13.0" layoutY="348.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@admin-dashboardstyle.css" text="Gestione Prezzi">
+                        <graphic>
+                            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../../../Icone/icons8-dollar-100%20(1).png" />
+                                </image>
+                            </ImageView>
+                        </graphic></Button>
+                    <Button fx:id="esci_btn" layoutX="15.0" layoutY="503.0" mnemonicParsing="false" onAction="#logout" prefHeight="30.0" prefWidth="75.0" styleClass="signout" stylesheets="@admin-dashboardstyle.css" text="Esci" textFill="WHITE">
+                        <graphic>
+                            <ImageView fitHeight="36.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../../../Icone/icons8-exit-100.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                        <font>
+                            <Font name="System Bold" size="13.0" />
+                        </font>
+                    </Button>
+                    <Button fx:id="dashboard_btn" layoutX="14.0" layoutY="208.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@admin-dashboardstyle.css" text="Dashboard">
+                        <graphic>
+                            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../../../Icone/icons8-dashboard-100.png" />
+                                </image>
+                            </ImageView>
+                        </graphic></Button>
+                    <Button fx:id="gestioneRicavi_btn" layoutX="14.0" layoutY="383.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@admin-dashboardstyle.css" text="Gestione Ricavi">
+                        <graphic>
+                            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../../../Icone/icons8-revenue-64%20(1).png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </children>
+            </AnchorPane>
+        </left>
+        <center>
+            <!-- Spazi vuoti per i contenuti dinamici -->
+        </center>
+    </BorderPane>
+</AnchorPane>
+

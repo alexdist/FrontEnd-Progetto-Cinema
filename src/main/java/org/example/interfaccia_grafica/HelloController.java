@@ -151,7 +151,7 @@ public class HelloController {
             admin_login.getScene().getWindow().hide();
 
 
-            Parent root = FXMLLoader.load(getClass().getResource("admin-dashboard.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("admin-dashboard2.fxml"));
             Stage stage = new Stage();
             Scene scene = new Scene(root);
 

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.interfaccia_grafica.GestionePrezziController"
+            prefHeight="400.0" prefWidth="600.0" stylesheets="@admin-dashboardstyle.css">
+    <children>
+
+        <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="566.0" prefWidth="922.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <AnchorPane layoutX="14.0" layoutY="16.0" prefHeight="524.0" prefWidth="259.0" styleClass="bg-white" stylesheets="@admin-dashboardstyle.css">
+                    <children>
+                        <Label layoutX="42.0" layoutY="131.0" text="Prezzo:" AnchorPane.leftAnchor="42.0" />
+                        <TextField fx:id="impostaPrzIntero_textflied" layoutX="91.0" layoutY="126.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
+                        <Button fx:id="impostaPrzIntero_btn" layoutX="85.0" layoutY="167.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="93.0" styleClass="insert-btn" stylesheets="@admin-dashboardstyle.css" text="Imposta" />
+                        <Label layoutX="60.0" text="Gestione Prezzi">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="26.0" layoutY="91.0" text="Imposta Prezzo Biglietto Intero">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="42.0" layoutY="318.0" text="Prezzo:" />
+                        <TextField fx:id="impostaPrzRidotto_textflied" layoutX="91.0" layoutY="313.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
+                        <Button fx:id="impostaPrzRidotto_btn" layoutX="87.0" layoutY="353.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="93.0" styleClass="insert-btn" stylesheets="@admin-dashboardstyle.css" text="Imposta" />
+                        <Label layoutX="13.0" layoutY="276.0" text="Imposta Prezzo Biglietto Ridotto">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <AnchorPane layoutX="296.0" layoutY="16.0" prefHeight="524.0" prefWidth="602.0" styleClass="bg-white" stylesheets="@admin-dashboardstyle.css">
+                    <children>
+                        <TableView fx:id="prezzi_tableview" layoutX="7.0" layoutY="64.0" prefHeight="456.0" prefWidth="589.0" stylesheets="@admin-dashboardstyle.css">
+                            <columns>
+                                <TableColumn fx:id="prezzoInteroCol_tableview" prefWidth="311.0" text="Prezzo Intero" />
+                                <TableColumn fx:id="prezzoRidottoCol_tableview" prefWidth="276.0" text="Prezzo Ridotto" />
+                            </columns>
+                        </TableView>
+                        <Label layoutX="233.0" layoutY="22.0" text="Storico Prezzi">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+
+    </children>
+</AnchorPane>
+

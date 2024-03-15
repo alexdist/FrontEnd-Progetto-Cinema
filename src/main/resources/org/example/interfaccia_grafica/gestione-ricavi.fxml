@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.interfaccia_grafica.GestioneRicaviController"
+            prefHeight="400.0" prefWidth="600.0" stylesheets="@admin-dashboardstyle.css">
+    <children>
+
+        <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="576.0" prefWidth="932.0" AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <AnchorPane layoutX="14.0" layoutY="16.0" prefHeight="222.0" prefWidth="259.0" styleClass="bg-white"
+                            stylesheets="@admin-dashboardstyle.css">
+                    <children>
+                        <Label layoutX="52.0" text="Gestione Ricavi">
+                            <font>
+                                <Font name="System Bold" size="24.0"/>
+                            </font>
+                        </Label>
+                        <Button fx:id="generaRepRicavi_btn" layoutX="81.0" layoutY="120.0" mnemonicParsing="false"
+                                styleClass="report-btn" stylesheets="@admin-dashboardstyle.css" text="Genera Report"/>
+                        <Label layoutX="80.0" layoutY="78.0" text="Report Ricavi">
+                            <font>
+                                <Font name="System Bold" size="18.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <AnchorPane layoutX="296.0" layoutY="16.0" prefHeight="524.0" prefWidth="602.0" styleClass="bg-white"
+                            stylesheets="@admin-dashboardstyle.css">
+                    <children>
+                        <TableView fx:id="ricavi_tableview" layoutX="152.0" layoutY="51.0" prefHeight="456.0"
+                                   prefWidth="300.0" stylesheets="@admin-dashboardstyle.css">
+                            <columns>
+                                <TableColumn fx:id="ricaviSalaCol_tableview" prefWidth="78.0" text="Sala"/>
+                                <TableColumn fx:id="affluenzaSalaCol_tableview" minWidth="0.0" prefWidth="87.0"
+                                             text="Affluenza"/>
+                                <TableColumn fx:id="ricaviRicavoCol_tableview" prefWidth="132.0" text="Ricavo"/>
+                            </columns>
+                        </TableView>
+                        <Label layoutX="271.0" layoutY="14.0" text="Ricavi">
+                            <font>
+                                <Font name="System Bold" size="24.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+
+    </children>
+</AnchorPane>
+

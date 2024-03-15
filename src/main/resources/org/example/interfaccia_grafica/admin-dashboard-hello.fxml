@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.interfaccia_grafica.AdminDashboardHelloController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <AnchorPane prefHeight="556.0" prefWidth="912.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <children>
+            <AnchorPane layoutX="8.0" layoutY="14.0" prefHeight="183.0" prefWidth="895.0" styleClass="bg-white" stylesheets="@admin-dashboardstyle.css">
+                <children>
+                    <AnchorPane layoutX="14.0" layoutY="12.0" prefHeight="160.0" prefWidth="250.0" stylesheets="@admin-dashboardstyle.css">
+                        <children>
+                            <AnchorPane layoutX="-1.0" prefHeight="160.0" prefWidth="78.0" styleClass="card1-left" stylesheets="@admin-dashboardstyle.css">
+                                <children>
+                                    <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="4.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                            <Image url="@../../../Icone/icons8-auditorium-100%20(1).png" />
+                                        </image>
+                                    </ImageView>
+                                </children></AnchorPane>
+                            <Label layoutX="169.0" layoutY="127.0" text="Sale Attive" textFill="WHITE">
+                                <font>
+                                    <Font size="15.0" />
+                                </font>
+                            </Label>
+                            <Label fx:id="dashboard_saleTotali" layoutX="222.0" layoutY="14.0" text="11" textFill="WHITE">
+                                <font>
+                                    <Font size="15.0" />
+                                </font>
+                            </Label>
+                        </children>
+                        <styleClass>
+                            <String fx:value="card1" />
+                            <String fx:value="card" />
+                        </styleClass>
+                    </AnchorPane>
+                    <AnchorPane layoutX="323.0" layoutY="12.0" prefHeight="160.0" prefWidth="250.0" stylesheets="@admin-dashboardstyle.css">
+                        <children>
+                            <AnchorPane layoutX="-1.0" prefHeight="160.0" prefWidth="78.0" styleClass="card2-left" stylesheets="@admin-dashboardstyle.css">
+                                <children>
+                                    <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="4.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                            <Image url="@../../../Icone/icons8-film-100%20(1).png" />
+                                        </image>
+                                    </ImageView>
+                                </children></AnchorPane>
+                            <Label layoutX="85.0" layoutY="127.0" text="Film in Programmazione" textFill="WHITE">
+                                <font>
+                                    <Font size="15.0" />
+                                </font>
+                            </Label>
+                            <Label fx:id="dashboard_filmInProgTotali" layoutX="222.0" layoutY="14.0" text="11" textFill="WHITE">
+                                <font>
+                                    <Font size="15.0" />
+                                </font>
+                            </Label>
+                        </children>
+                        <styleClass>
+                            <String fx:value="card2" />
+                            <String fx:value="card" />
+                        </styleClass>
+                    </AnchorPane>
+                    <AnchorPane layoutX="631.0" layoutY="12.0" prefHeight="160.0" prefWidth="250.0" stylesheets="@admin-dashboardstyle.css">
+                        <children>
+                            <AnchorPane layoutX="-1.0" prefHeight="160.0" prefWidth="78.0" styleClass="card3-left" stylesheets="@admin-dashboardstyle.css">
+                                <children>
+                                    <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="4.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                            <Image url="@../../../Icone/icons8-show-64%20(1).png" />
+                                        </image>
+                                    </ImageView>
+                                </children></AnchorPane>
+                            <Label layoutX="91.0" layoutY="127.0" text="Spettacoli in Palinsesto" textFill="WHITE">
+                                <font>
+                                    <Font size="15.0" />
+                                </font>
+                            </Label>
+                            <Label fx:id="dashboard_spettInPalTotali" layoutX="222.0" layoutY="14.0" text="11" textFill="WHITE">
+                                <font>
+                                    <Font size="15.0" />
+                                </font>
+                            </Label>
+                        </children>
+                        <styleClass>
+                            <String fx:value="card1" />
+                            <String fx:value="card3" />
+                            <String fx:value="card" />
+                        </styleClass>
+                    </AnchorPane>
+                </children></AnchorPane>
+        </children>
+    </AnchorPane>
+
+</AnchorPane>

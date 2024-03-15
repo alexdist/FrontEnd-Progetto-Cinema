@@ -11,5 +11,6 @@ module org.example.interfaccia_grafica {
     requires eu.hansolo.tilesfx;
 
     opens org.example.interfaccia_grafica to javafx.fxml;
+    opens cinema_Infrastructure.sala to javafx.base;
     exports org.example.interfaccia_grafica;
 }
