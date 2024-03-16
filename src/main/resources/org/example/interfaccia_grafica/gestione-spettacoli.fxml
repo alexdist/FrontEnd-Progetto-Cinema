@@ -72,8 +72,7 @@
                 <AnchorPane fx:id="modSpettacolo_anchorpane" layoutX="13.0" layoutY="14.0" prefHeight="524.0" prefWidth="255.0" styleClass="bg-white" stylesheets="@admin-dashboardstyle.css" visible="false" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="636.0" AnchorPane.topAnchor="14.0">
                     <children>
                         <Label layoutX="64.0" layoutY="105.0" text="Film:" AnchorPane.leftAnchor="64.0" />
-                        <TextField fx:id="modFilmSpett_textfield" layoutX="94.0" layoutY="100.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
-                        <Button fx:id="modificaFilmSpett_btn" layoutX="91.0" layoutY="133.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="93.0" styleClass="modify-btn" stylesheets="@admin-dashboardstyle.css" text="Modifica" />
+                        <Button fx:id="modificaFilmSpett_btn" layoutX="91.0" layoutY="133.0" mnemonicParsing="false" onAction="#modificaFilm" prefHeight="30.0" prefWidth="93.0" styleClass="modify-btn" stylesheets="@admin-dashboardstyle.css" text="Modifica" />
                         <Label layoutX="39.0" text="Gestione Spettacoli">
                             <font>
                                 <Font name="System Bold" size="24.0" />
@@ -86,26 +85,24 @@
                         </Label>
                         <Label layoutX="69.0" layoutY="72.0" text="ID Spettacolo:" />
                         <TextField fx:id="IDmodFilmSpett_textfield" layoutX="154.0" layoutY="67.0" prefHeight="27.0" prefWidth="101.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
-                        <Label layoutX="58.0" layoutY="251.0" text="Sala:" />
-                        <TextField fx:id="modSalaSpett_textfield" layoutX="89.0" layoutY="246.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
-                        <Button fx:id="modificaSalaSpett_btn" layoutX="86.0" layoutY="279.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="93.0" styleClass="modify-btn" stylesheets="@admin-dashboardstyle.css" text="Modifica" />
-                        <Label layoutX="82.0" layoutY="180.0" text="Modifica Sala">
+                        <Label layoutX="58.0" layoutY="242.0" text="Sala:" />
+                        <Button fx:id="modificaSalaSpett_btn" layoutX="86.0" layoutY="270.0" mnemonicParsing="false" onAction="#modificaSala" prefHeight="30.0" prefWidth="93.0" styleClass="modify-btn" stylesheets="@admin-dashboardstyle.css" text="Modifica" />
+                        <Label layoutX="82.0" layoutY="175.0" text="Modifica Sala">
                             <font>
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Label>
-                        <Label layoutX="64.0" layoutY="218.0" text="ID Spettacolo:" />
-                        <TextField fx:id="IDmodSalaSpett_textfield" layoutX="149.0" layoutY="213.0" prefHeight="27.0" prefWidth="101.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
-                        <Label layoutX="44.0" layoutY="398.0" text="Orario:" />
-                        <TextField fx:id="modOrarioSpett_textfield" layoutX="87.0" layoutY="393.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
-                        <Button fx:id="modificaOrarioSpett_btn" layoutX="83.0" layoutY="426.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="93.0" styleClass="modify-btn" stylesheets="@admin-dashboardstyle.css" text="Modifica" />
-                        <Label layoutX="81.0" layoutY="330.0" text="Modifica Orario">
+                        <Label layoutX="64.0" layoutY="209.0" text="ID Spettacolo:" />
+                        <TextField fx:id="IDmodSalaSpett_textfield" layoutX="149.0" layoutY="204.0" prefHeight="27.0" prefWidth="101.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
+                        <Label layoutX="22.0" layoutY="385.0" text="Orario:" />
+                        <Button fx:id="modificaOrarioSpett_btn" layoutX="86.0" layoutY="446.0" mnemonicParsing="false" onAction="#modificaOrario" prefHeight="30.0" prefWidth="93.0" styleClass="modify-btn" stylesheets="@admin-dashboardstyle.css" text="Modifica" />
+                        <Label layoutX="70.0" layoutY="319.0" text="Modifica Orario">
                             <font>
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Label>
-                        <Label layoutX="56.0" layoutY="365.0" text="ID Spettacolo:" />
-                        <TextField fx:id="IDmodOrarioSpett_textfield" layoutX="147.0" layoutY="360.0" prefHeight="27.0" prefWidth="101.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
+                        <Label layoutX="55.0" layoutY="352.0" text="ID Spettacolo:" />
+                        <TextField fx:id="IDmodOrarioSpett_textfield" layoutX="141.0" layoutY="347.0" prefHeight="27.0" prefWidth="101.0" styleClass="add-textfield" stylesheets="@admin-dashboardstyle.css" />
                         <Button fx:id="switchTornaIndietroSpett_btn" layoutX="4.0" layoutY="482.0" mnemonicParsing="false" onAction="#switchSpettacolo" prefHeight="35.0" prefWidth="135.0" styleClass="comeback-btn" stylesheets="@admin-dashboardstyle.css" text="Torna Indietro">
                             <graphic>
                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
@@ -114,6 +111,11 @@
                                     </image>
                                 </ImageView>
                             </graphic></Button>
+                  <ComboBox fx:id="combobox_film_modifica" layoutX="93.0" layoutY="101.0" prefWidth="150.0" />
+                  <ComboBox fx:id="combobox_sala_modifica" layoutX="93.0" layoutY="238.0" prefWidth="150.0" />
+                  <DatePicker fx:id="datePicker_modifica" layoutX="65.0" layoutY="381.0" />
+                  <ComboBox fx:id="hoursComboBox_modifica" layoutX="65.0" layoutY="414.0" prefHeight="25.0" prefWidth="77.0" />
+                  <ComboBox fx:id="minutesComboBox_modifica" layoutX="161.0" layoutY="414.0" prefHeight="25.0" prefWidth="77.0" />
                     </children>
                 </AnchorPane>
             </children>

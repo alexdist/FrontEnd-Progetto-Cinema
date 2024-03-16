@@ -9,6 +9,9 @@ import Serializzazione.adapter.adapter.SpettacoloSerializerAdapter;
 import Serializzazione.adapter.target.IDataSerializer;
 import admin_commands.film.aggiungi_film.AggiungiFilmCommand;
 import admin_commands.spettacolo.aggiungi_spettacolo.AggiungiSpettacoloCommand;
+import admin_commands.spettacolo.modifica_spettacolo.modifica_film.ModificaFilmPerIdSpettacoloCommand;
+import admin_commands.spettacolo.modifica_spettacolo.modifica_orario.ModificaOrarioPerIdSpettacoloCommand;
+import admin_commands.spettacolo.modifica_spettacolo.modifica_sala.ModificaSalaPerIdSpettacoloCommand;
 import admin_commands.spettacolo.rimuovi_spettacolo.RimuoviSpettacoloCommand;
 import admin_interfaces.ICommand;
 import cinema_Infrastructure.film.IFilm;
@@ -17,10 +20,7 @@ import cinema_Infrastructure.film.gestione_film.IAggiungiFilm;
 import cinema_Infrastructure.sala.ISala;
 import cinema_Infrastructure.spettacolo.ISpettacolo;
 import cinema_Infrastructure.spettacolo.Spettacolo;
-import cinema_Infrastructure.spettacolo.gestione_spettacolo.AggiungiSpettacolo;
-import cinema_Infrastructure.spettacolo.gestione_spettacolo.IAggiungiSpettacolo;
-import cinema_Infrastructure.spettacolo.gestione_spettacolo.IRimuoviSpettacolo;
-import cinema_Infrastructure.spettacolo.gestione_spettacolo.RimuoviSpettacolo;
+import cinema_Infrastructure.spettacolo.gestione_spettacolo.*;
 import domain.Amministratore;
 import domain.Ruolo;
 import exception.film.*;
@@ -119,7 +119,7 @@ public class GestioneSpettacoliController implements Initializable {
     private TableColumn<ISpettacolo, String> salaCol_tableview;
 
     @FXML
-    private TableColumn<?, ?> spettacoloCol_tableview;
+    private TableColumn<ISpettacolo, String> spettacoloCol_tableview;
 
     @FXML
     private TableView<ISpettacolo> spettacolo_tableview;
@@ -135,6 +135,21 @@ public class GestioneSpettacoliController implements Initializable {
 
     @FXML
     private ComboBox<ISala> combobox_sala;
+
+    @FXML
+    private ComboBox<IFilm> combobox_film_modifica;
+
+    @FXML
+    private ComboBox<ISala> combobox_sala_modifica;
+
+    @FXML
+    private DatePicker datePicker_modifica;
+
+    @FXML
+    private ComboBox<Integer> hoursComboBox_modifica;
+
+    @FXML
+    private ComboBox<Integer> minutesComboBox_modifica;
 
     @FXML
     private DatePicker datePicker;
@@ -175,6 +190,9 @@ public class GestioneSpettacoliController implements Initializable {
 
         hoursComboBox.setItems(FXCollections.observableArrayList(IntStream.rangeClosed(0, 23).boxed().collect(Collectors.toList())));
         minutesComboBox.setItems(FXCollections.observableArrayList(IntStream.rangeClosed(0, 59).boxed().collect(Collectors.toList())));
+
+        hoursComboBox_modifica.setItems(FXCollections.observableArrayList(IntStream.rangeClosed(0, 23).boxed().collect(Collectors.toList())));
+        minutesComboBox_modifica.setItems(FXCollections.observableArrayList(IntStream.rangeClosed(0, 59).boxed().collect(Collectors.toList())));
 
         // Imposta un valore predefinito se necessario
         hoursComboBox.getSelectionModel().select(LocalTime.now().getHour());
@@ -258,6 +276,81 @@ public class GestioneSpettacoliController implements Initializable {
             }
         });
 
+
+
+        // Popola combobox_film_modifica con gli oggetti film
+        combobox_film_modifica.setItems(filmObservableList);
+        combobox_film_modifica.setCellFactory(comboBox -> new ListCell<IFilm>() {
+            @Override
+            protected void updateItem(IFilm item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    setText(item.getTitolo());
+                }
+            }
+        });
+        combobox_film_modifica.setButtonCell(new ListCell<IFilm>() {
+            @Override
+            protected void updateItem(IFilm item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("Seleziona Film");
+                } else {
+                    setText(item.getTitolo());
+                }
+            }
+        });
+
+// Ripeti il processo per combobox_sala_modifica
+        combobox_sala_modifica.setItems(salaObservableList);
+        combobox_sala_modifica.setCellFactory(comboBox -> new ListCell<ISala>() {
+            @Override
+            protected void updateItem(ISala item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    setText(String.valueOf(item.getNumeroSala()));
+                }
+            }
+        });
+        combobox_sala_modifica.setButtonCell(new ListCell<ISala>() {
+            @Override
+            protected void updateItem(ISala item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("Seleziona Sala");
+                } else {
+                    setText(String.valueOf(item.getNumeroSala()));
+                }
+            }
+        });
+
+        // Listener per combobox_film_modifica
+        combobox_film_modifica.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                // Logica da eseguire quando un film è selezionato nel ComboBox di modifica
+                System.out.println("Film selezionato per la modifica: " + newValue.getTitolo());
+                // Qui puoi aggiungere qualsiasi logica necessaria in risposta alla selezione di un film per la modifica
+            }
+        });
+
+// Listener per combobox_sala_modifica
+        combobox_sala_modifica.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                // Logica da eseguire quando una sala è selezionata nel ComboBox di modifica
+                System.out.println("Sala selezionata per la modifica: " + newValue.getNumeroSala());
+                // Qui puoi aggiungere qualsiasi logica necessaria in risposta alla selezione di una sala per la modifica
+            }
+        });
+
+
+
+        spettacoloCol_tableview.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getFilm().getTitolo()));
+
         filmCol_tableview.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getFilm().getTitolo()));
 
@@ -330,23 +423,117 @@ public class GestioneSpettacoliController implements Initializable {
         amministratore.setCommand(aggiungiSpettacoloCommand);
         amministratore.eseguiComando();
         aggiungiSpettacoloTable(nuovoSpettacolo);
-        //aggiungiSpettacoloTable(nuovoSpettacolo);
-        showInformationAlert("Spettacolo aggiunto con successo!");
-       // aggiungiSpettacoloTable(nuovoFilm);
-
-        //filmSerializerAdapter.serialize(films, "film.ser"); // Salva le sale dopo l'aggiunta
-
-
-
-        // Aggiungi lo spettacolo alla lista e alla ObservableList per l'aggiornamento dell'UI
-//        spettacoli.add(nuovoSpettacolo);
-//        spettacoliObservableList.add(nuovoSpettacolo);
-
-        // Opzionalmente, salva la lista aggiornata di spettacoli
         spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser");
-
-       // showInformationAlert("Spettacolo aggiunto con successo!");
+        showInformationAlert("Spettacolo aggiunto con successo!");
     }
+
+    @FXML
+    private void modificaOrario(){
+        try {
+            // Estrai l'ID dello spettacolo da modificare dal TextField
+            long idSpettacolo = Long.parseLong(IDmodOrarioSpett_textfield.getText().trim());
+
+            // Controlla se la data è stata selezionata
+            LocalDate data = datePicker_modifica.getValue();
+            if (data == null) {
+                showAlert("Errore", "Devi selezionare una data.");
+                return;
+            }
+
+            // Estrai l'ora e i minuti dai ComboBox
+            Integer ora = hoursComboBox_modifica.getSelectionModel().getSelectedItem();
+            Integer minuti = minutesComboBox_modifica.getSelectionModel().getSelectedItem();
+            if (ora == null || minuti == null) {
+                showAlert("Errore", "Devi selezionare sia l'ora che i minuti.");
+                return;
+            }
+
+            // Costruisci l'oggetto LocalDateTime combinando data, ora e minuti
+            LocalDateTime orarioModificato = LocalDateTime.of(data, LocalTime.of(ora, minuti));
+
+            // Utilizza il servizio di modifica per aggiornare l'orario dello spettacolo
+            IModificaSpettacolo servizioModificaOrarioSpettacolo = new ModificaSpettacolo(spettacoli);
+            ICommand modificaOrarioSpettacoloCommand = new ModificaOrarioPerIdSpettacoloCommand(servizioModificaOrarioSpettacolo, idSpettacolo, orarioModificato);
+
+            Amministratore amministratore = new Amministratore("Mario", "Rossi", Ruolo.AMMINISTRATORE); // Assumi che l'amministratore sia già definito
+            amministratore.setCommand(modificaOrarioSpettacoloCommand);
+            amministratore.eseguiComando();
+            spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser");
+
+            // Mostra un messaggio di successo
+            showAlert("Successo", "Orario dello spettacolo modificato con successo.");
+
+        } catch (NumberFormatException e) {
+            // Gestisce il caso in cui l'ID non sia un numero valido
+            showAlert("Errore di formato", "L'ID inserito non è valido.");
+        } catch (Exception e) {
+            // Gestisce eventuali altri errori
+            showAlert("Errore", "Errore durante la modifica dell'orario dello spettacolo: " + e.getMessage());
+        }
+    }
+
+
+    @FXML
+    private void modificaSala(){
+        try{
+            long idSpettacolo = Long.parseLong(IDmodSalaSpett_textfield.getText().trim());
+            ISala salaSelezionata = combobox_sala_modifica.getSelectionModel().getSelectedItem();
+
+            if(salaSelezionata == null){
+                showAlert("Errore", "Seleziona una sala da assegnare allo spettacolo.");
+                return;
+            }
+            // Prepara il comando per la modifica dello spettacolo
+            IModificaSpettacolo servizioModificaSpettacolo = new ModificaSpettacolo(spettacoli);
+            Amministratore amministratore = new Amministratore("Mario", "Rossi", Ruolo.AMMINISTRATORE);
+            ICommand modificaSalaSpettacoloCommand = new ModificaSalaPerIdSpettacoloCommand(servizioModificaSpettacolo, idSpettacolo, salaSelezionata);
+            amministratore.setCommand(modificaSalaSpettacoloCommand);
+            amministratore.eseguiComando();
+            spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser");
+            // Mostra un messaggio di successo
+            showAlert("Successo", "Sala dello spettacolo modificato con successo.");
+        } catch (NumberFormatException e) {
+            // Gestisce il caso in cui l'ID non sia un numero valido
+            showAlert("Errore di formato", "L'ID inserito non è valido.");
+        } catch (Exception e) {
+            // Gestisce eventuali altri errori
+            showAlert("Errore", "Errore durante la modifica dello spettacolo: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void modificaFilm() {
+        try {
+            long idSpettacolo = Long.parseLong(IDmodFilmSpett_textfield.getText().trim()); // Converte l'ID in long
+            IFilm filmSelezionato = combobox_film_modifica.getSelectionModel().getSelectedItem(); // Recupera il film selezionato
+
+            if (filmSelezionato == null) {
+                // Mostra un messaggio di errore se nessun film è stato selezionato
+                showAlert("Errore", "Seleziona un film da assegnare allo spettacolo.");
+                return;
+            }
+
+            // Prepara il comando per la modifica dello spettacolo
+            IModificaSpettacolo servizioModificaSpettacolo = new ModificaSpettacolo(spettacoli);
+            Amministratore amministratore = new Amministratore("Mario", "Rossi", Ruolo.AMMINISTRATORE);
+            ICommand modificaFilmSpettacoloCommand = new ModificaFilmPerIdSpettacoloCommand(servizioModificaSpettacolo, idSpettacolo, filmSelezionato);
+            amministratore.setCommand(modificaFilmSpettacoloCommand);
+            amministratore.eseguiComando();
+            spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser");
+
+            // Mostra un messaggio di successo
+            showAlert("Successo", "Film dello spettacolo modificato con successo.");
+
+        } catch (NumberFormatException e) {
+            // Gestisce il caso in cui l'ID non sia un numero valido
+            showAlert("Errore di formato", "L'ID inserito non è valido.");
+        } catch (Exception e) {
+            // Gestisce eventuali altri errori
+            showAlert("Errore", "Errore durante la modifica dello spettacolo: " + e.getMessage());
+        }
+    }
+
+
 
     public void aggiungiSpettacoloTable(ISpettacolo nuovoSpettacolo) {
         spettacoliObservableList.add(nuovoSpettacolo);
@@ -443,6 +630,14 @@ public class GestioneSpettacoliController implements Initializable {
         alert.setTitle("Informazione");
         alert.setHeaderText(null);
         alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
         alert.showAndWait();
     }
 
