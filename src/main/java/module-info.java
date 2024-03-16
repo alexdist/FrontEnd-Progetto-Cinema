@@ -12,5 +12,6 @@ module org.example.interfaccia_grafica {
 
     opens org.example.interfaccia_grafica to javafx.fxml;
     opens cinema_Infrastructure.sala to javafx.base;
+    opens cinema_Infrastructure.film to javafx.base;
     exports org.example.interfaccia_grafica;
 }

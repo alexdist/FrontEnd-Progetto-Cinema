@@ -15,17 +15,14 @@ import cinema_Infrastructure.sala.gestione_sala.RimuoviSala;
 import domain.Amministratore;
 import domain.Ruolo;
 import exception.sala.*;
-import id_generator_factory.abstract_factory.GeneratoreIDFactory;
-import id_generator_factory.concrete_factories.GeneratoreIDSalaFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import prova_id_PERSISTENTE.GeneratoreIDPersistente;
+import prova_id_PERSISTENTE.GeneratoreIDPersistenteSala;
 import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +32,15 @@ public class GestioneSaleController implements Initializable {
 
     @FXML
     private TableView<ISala> sala_tableview;
+
     @FXML
     private TableColumn<Sala, Integer> numeroSalaCol_tableview;
+
     @FXML
     private TableColumn<Sala, Integer> capacitaCol_tableview;
+
     @FXML
     private TableColumn<Sala, Long> IDCol_tableview;
-
-
 
     @FXML
     private TextField IDRimuoviSala_textfiel;
@@ -50,22 +48,16 @@ public class GestioneSaleController implements Initializable {
     @FXML
     private Button aggiungiSala_btn;
 
-
-
     @FXML
     private TextField capacitaSala_textflied;
 
     @FXML
     private Button eliminaSala_btn;
 
-
-
     @FXML
     private TextField numeroSala_textfiel;
 
     private ObservableList<ISala> saleObservableList = FXCollections.observableArrayList();
-
-
 
     private List<ISala> sale;
 
@@ -75,16 +67,6 @@ public class GestioneSaleController implements Initializable {
 
 
     @Override
-//    public void initialize(URL location, ResourceBundle resources) {
-//        // Inizializzazione dell'ambiente di test
-//        sale = new ArrayList<>();
-//        numeroSalaCol_tableview.setCellValueFactory(new PropertyValueFactory<>("numeroSala"));
-//        capacitaCol_tableview.setCellValueFactory(new PropertyValueFactory<>("capacita"));
-//        IDCol_tableview.setCellValueFactory(new PropertyValueFactory<>("id"));
-//
-//        sala_tableview.setItems(saleObservableList);
-//
-//    }
     public void initialize(URL location, ResourceBundle resources) {
         // Tentativo di caricare le sale esistenti
         try {
@@ -113,7 +95,7 @@ public class GestioneSaleController implements Initializable {
             if(capacita <= 0) throw new NumeroPostiNegativoException();
 
             //GeneratoreIDFactory generatoreIDSalaFactory = new GeneratoreIDSalaFactory();
-            IGeneratoreIDPersistente generatoreIDSala = new GeneratoreIDPersistente();
+            IGeneratoreIDPersistente generatoreIDSala = new GeneratoreIDPersistenteSala();
 
             IAggiungiSala servizioAggiungiSala = new AggiungiSala(sale, generatoreIDSala);
 
