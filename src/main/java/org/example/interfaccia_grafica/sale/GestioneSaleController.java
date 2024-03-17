@@ -1,4 +1,4 @@
-package org.example.interfaccia_grafica;
+package org.example.interfaccia_grafica.sale;
 
 import Serializzazione.adapter.adaptee.SalaSerializer;
 import Serializzazione.adapter.adapter.SalaSerializerAdapter;
@@ -15,18 +15,21 @@ import cinema_Infrastructure.sala.gestione_sala.RimuoviSala;
 import domain.Amministratore;
 import domain.Ruolo;
 import exception.sala.*;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.example.interfaccia_grafica.spettacoli.utility_classes.AlertUtil;
 import prova_id_PERSISTENTE.GeneratoreIDPersistenteSala;
 import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 public class GestioneSaleController implements Initializable {
 
@@ -61,13 +64,12 @@ public class GestioneSaleController implements Initializable {
 
     private List<ISala> sale;
 
-    // Adapter instances
-    SalaSerializer salaSerializer = new SalaSerializer();
-    IDataSerializer salaSerializerAdapter = new SalaSerializerAdapter(salaSerializer);
+    private IGestioneSaleService gestioneSaleService;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        IDataSerializer salaSerializerAdapter = new SalaSerializerAdapter(new SalaSerializer());
         // Tentativo di caricare le sale esistenti
         try {
             sale = (List<ISala>) salaSerializerAdapter.deserialize("sale.ser");
@@ -77,12 +79,17 @@ public class GestioneSaleController implements Initializable {
             sale = new ArrayList<>();
         }
 
+        // Qui assumiamo che 'sale' sia la lista delle sale disponibili e sia già stata inizializzata
+
+        IGeneratoreIDPersistente generatoreIDSala = new GeneratoreIDPersistenteSala();
+        Amministratore amministratore = new Amministratore("Mario","Rossi",Ruolo.AMMINISTRATORE);
+        this.gestioneSaleService = new GestioneSaleService(sale, generatoreIDSala, salaSerializerAdapter, amministratore);
+
         numeroSalaCol_tableview.setCellValueFactory(new PropertyValueFactory<>("numeroSala"));
         capacitaCol_tableview.setCellValueFactory(new PropertyValueFactory<>("capacita"));
         IDCol_tableview.setCellValueFactory(new PropertyValueFactory<>("id"));
         sala_tableview.setItems(saleObservableList);
     }
-
 
     @FXML
     public void aggiungiSala() {
@@ -90,53 +97,39 @@ public class GestioneSaleController implements Initializable {
             int numeroSala = Integer.parseInt(numeroSala_textfiel.getText());
             int capacita = Integer.parseInt(capacitaSala_textflied.getText());
 
-            // Assicurati che il numero della sala e la capacità siano positivi
-            if(numeroSala <= 0) throw new NumeroSalaNegativoException();
-            if(capacita <= 0) throw new NumeroPostiNegativoException();
-
-            //GeneratoreIDFactory generatoreIDSalaFactory = new GeneratoreIDSalaFactory();
-            IGeneratoreIDPersistente generatoreIDSala = new GeneratoreIDPersistenteSala();
-
-            IAggiungiSala servizioAggiungiSala = new AggiungiSala(sale, generatoreIDSala);
-
-            ISala nuovaSala = new Sala(numeroSala, capacita);
-            ICommand aggiungiSalaCommand = new AggiungiSalaCommand(servizioAggiungiSala, nuovaSala);
-
-            Amministratore amministratore = new Amministratore("Nome", "Cognome", Ruolo.AMMINISTRATORE);
-            amministratore.setCommand(aggiungiSalaCommand);
-            amministratore.eseguiComando();
-            showInformationAlert("Sala aggiunta con successo!");
-            aggiungiSalaTable(nuovaSala);
-
-            salaSerializerAdapter.serialize(sale, "sale.ser"); // Salva le sale dopo l'aggiunta
+            gestioneSaleService.aggiungiSala(numeroSala, capacita, nuovaSala -> {
+                AlertUtil.showInformationAlert("Sala aggiunta con successo!");
+                aggiungiSalaTable(nuovaSala);
+            });
         } catch (NumeroSalaNegativoException | NumeroPostiNegativoException e) {
-            showErrorAlert("Il numero della sala e la capacità devono essere positivi.");
+            AlertUtil.showErrorAlert("Il numero della sala e la capacità devono essere positivi.");
         } catch (SalaGiaEsistenteException e) {
-            showErrorAlert("La sala esiste già.");
+            AlertUtil.showErrorAlert("La sala esiste già.");
+        } catch (NumberFormatException e) {
+            AlertUtil.showErrorAlert("Numero della sala o capacità non validi.");
         } catch (Exception e) {
-            showErrorAlert("Errore imprevisto durante l'aggiunta della sala.");
+            AlertUtil.showErrorAlert("Errore imprevisto durante l'aggiunta della sala: " + e.getMessage());
         }
     }
+
 
     @FXML
     public void rimuoviSala() {
         try {
             long idSala = Long.parseLong(IDRimuoviSala_textfiel.getText());
 
-            IRimuoviSala servizioRimuoviSala = new RimuoviSala(sale);
-            ICommand rimuoviSalaCommand = new RimuoviSalaCommand(servizioRimuoviSala, idSala);
+            Consumer<Long> onSuccess = idSalaRimosso -> {
+                AlertUtil.showInformationAlert("Sala rimossa con successo!");
+                rimuoviSalaTable(idSalaRimosso);
+            };
+            gestioneSaleService.rimuoviSala(idSala, onSuccess);
 
-            Amministratore amministratore = new Amministratore("Nome", "Cognome", Ruolo.AMMINISTRATORE);
-            amministratore.setCommand(rimuoviSalaCommand);
-            amministratore.eseguiComando();
-            showInformationAlert("Sala rimossa con successo!");
-            rimuoviSalaTable(idSala);
-
-            salaSerializerAdapter.serialize(sale, "sale.ser"); // Salva le sale dopo la rimozione
-        }catch (SalaNonTrovataException e) {
-            showErrorAlert("Sala non trovata.");
+        } catch (NumberFormatException e) {
+            AlertUtil.showErrorAlert("ID della sala non valido.");
+        } catch (SalaNonTrovataException e) {
+            AlertUtil.showErrorAlert("Sala non trovata.");
         } catch (Exception e) {
-            showErrorAlert("Errore imprevisto durante la rimozione della sala.");
+            AlertUtil.showErrorAlert(e.getMessage());
         }
     }
 
@@ -161,22 +154,22 @@ public class GestioneSaleController implements Initializable {
     }
 
 
-    // Funzione per mostrare un alert di errore
-    private void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Errore");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    // Funzione per mostrare un alert di informazione
-    private void showInformationAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Informazione");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+//    // Funzione per mostrare un alert di errore
+//    private void showErrorAlert(String message) {
+//        Alert alert = new Alert(Alert.AlertType.ERROR);
+//        alert.setTitle("Errore");
+//        alert.setHeaderText(null);
+//        alert.setContentText(message);
+//        alert.showAndWait();
+//    }
+//
+//    // Funzione per mostrare un alert di informazione
+//    private void showInformationAlert(String message) {
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.setTitle("Informazione");
+//        alert.setHeaderText(null);
+//        alert.setContentText(message);
+//        alert.showAndWait();
+//    }
 
 }
