@@ -55,7 +55,7 @@ import java.util.stream.IntStream;
 
 public class GestioneSpettacoliController implements Initializable {
     @FXML
-    private TextField IDRimuoviSpett_textfield;
+    private TextField IDRimuoviSpett_textfield;//
 
     @FXML
     private TableColumn<ISpettacolo, Long> IDSpettacoloCol_tableview;
