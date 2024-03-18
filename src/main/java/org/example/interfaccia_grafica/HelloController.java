@@ -215,6 +215,37 @@ public class HelloController {
         }
     }
 
+    private double x1 = 0;
+    private double y1 = 0;
+    @FXML
+    private void handleLoginUtenteForm() throws IOException {
+        utente_accedi.getScene().getWindow().hide();
+
+
+        Parent root = FXMLLoader.load(getClass().getResource("user_dashboard.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+
+        root.setOnMousePressed((MouseEvent event)->{
+
+            x1 = event.getSceneX();
+            y1 = event.getSceneY();
+        });
+
+        root.setOnMouseDragged((MouseEvent event)->{
+
+            stage.setX(event.getScreenX() - x1);
+            stage.setY(event.getScreenY() - y1);
+        });
+
+        stage.initStyle(StageStyle.TRANSPARENT);
+
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
+
 
 
     @FXML

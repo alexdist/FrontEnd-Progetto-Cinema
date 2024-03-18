@@ -3,26 +3,18 @@ package org.example.interfaccia_grafica.sale;
 import Serializzazione.adapter.adaptee.SalaSerializer;
 import Serializzazione.adapter.adapter.SalaSerializerAdapter;
 import Serializzazione.adapter.target.IDataSerializer;
-import admin_commands.sala.aggiungi_sala.AggiungiSalaCommand;
-import admin_commands.sala.rimuovi_sala.RimuoviSalaCommand;
-import admin_interfaces.ICommand;
 import cinema_Infrastructure.sala.ISala;
 import cinema_Infrastructure.sala.Sala;
-import cinema_Infrastructure.sala.gestione_sala.AggiungiSala;
-import cinema_Infrastructure.sala.gestione_sala.IAggiungiSala;
-import cinema_Infrastructure.sala.gestione_sala.IRimuoviSala;
-import cinema_Infrastructure.sala.gestione_sala.RimuoviSala;
 import domain.Amministratore;
 import domain.Ruolo;
 import exception.sala.*;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.example.interfaccia_grafica.spettacoli.utility_classes.AlertUtil;
+import org.example.interfaccia_grafica.general_utility_classes.AlertUtil;
 import prova_id_PERSISTENTE.GeneratoreIDPersistenteSala;
 import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
 import java.net.URL;
@@ -152,24 +144,4 @@ public class GestioneSaleController implements Initializable {
             saleObservableList.remove(salaTrovata);
         }
     }
-
-
-//    // Funzione per mostrare un alert di errore
-//    private void showErrorAlert(String message) {
-//        Alert alert = new Alert(Alert.AlertType.ERROR);
-//        alert.setTitle("Errore");
-//        alert.setHeaderText(null);
-//        alert.setContentText(message);
-//        alert.showAndWait();
-//    }
-//
-//    // Funzione per mostrare un alert di informazione
-//    private void showInformationAlert(String message) {
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle("Informazione");
-//        alert.setHeaderText(null);
-//        alert.setContentText(message);
-//        alert.showAndWait();
-//    }
-
 }

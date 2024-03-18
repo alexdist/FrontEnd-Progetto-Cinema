@@ -92,7 +92,7 @@
             </AnchorPane>
             <AnchorPane fx:id="utente_form" prefHeight="578.0" prefWidth="600.0" styleClass="bg-form" stylesheets="@loginstyle.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button fx:id="utente_accedi" layoutX="258.0" layoutY="403.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="98.0" styleClass="login-btn" stylesheets="@loginstyle.css" text="Prosegui" />
+                  <Button fx:id="utente_accedi" layoutX="258.0" layoutY="403.0" mnemonicParsing="false" onAction="#handleLoginUtenteForm" prefHeight="62.0" prefWidth="98.0" styleClass="login-btn" stylesheets="@loginstyle.css" text="Prosegui" />
                   <TextField fx:id="utente_nome" layoutX="167.0" layoutY="242.0" prefHeight="25.0" prefWidth="280.0" promptText="Nome" styleClass="textfield" stylesheets="@loginstyle.css" />
                   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="231.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>

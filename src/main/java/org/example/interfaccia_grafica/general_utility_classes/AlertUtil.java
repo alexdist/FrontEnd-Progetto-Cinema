@@ -1,4 +1,4 @@
-package org.example.interfaccia_grafica.spettacoli.utility_classes;
+package org.example.interfaccia_grafica.general_utility_classes;
 
 import javafx.scene.control.Alert;
 

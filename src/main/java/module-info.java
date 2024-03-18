@@ -22,4 +22,8 @@ module org.example.interfaccia_grafica {
     opens org.example.interfaccia_grafica.spettacoli.service to javafx.fxml;
     exports org.example.interfaccia_grafica.sale;
     opens org.example.interfaccia_grafica.sale to javafx.fxml;
+    exports org.example.interfaccia_grafica.film;
+    opens org.example.interfaccia_grafica.film to javafx.fxml;
+    exports org.example.interfaccia_grafica.general_utility_classes;
+    opens org.example.interfaccia_grafica.general_utility_classes to javafx.fxml;
 }
