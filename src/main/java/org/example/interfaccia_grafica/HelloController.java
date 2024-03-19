@@ -1,5 +1,7 @@
 package org.example.interfaccia_grafica;
 
+import domain.Ruolo;
+import domain.Utente;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -219,26 +221,66 @@ public class HelloController {
     private double y1 = 0;
     @FXML
     private void handleLoginUtenteForm() throws IOException {
+
+//        // Nasconde la finestra corrente
+//        utente_accedi.getScene().getWindow().hide();
+//
+//
+//        Parent root = FXMLLoader.load(getClass().getResource("user_dashboard.fxml"));
+//
+//        Stage stage = new Stage();
+//        Scene scene = new Scene(root);
+//
+//        root.setOnMousePressed((MouseEvent event)->{
+//
+//            x1 = event.getSceneX();
+//            y1 = event.getSceneY();
+//        });
+//
+//        root.setOnMouseDragged((MouseEvent event)->{
+//
+//            stage.setX(event.getScreenX() - x1);
+//            stage.setY(event.getScreenY() - y1);
+//        });
+//
+//        stage.initStyle(StageStyle.TRANSPARENT);
+//
+//        stage.setScene(scene);
+//        stage.show();
+        // Raccoglie i dati dell'utente dai campi di testo
+        String nome = utente_nome.getText();
+        String cognome = utente_cognome.getText();
+        int eta = Integer.parseInt(utente_eta.getText()); // Assicurati che utente_eta contenga un numero valido
+
+        // Crea l'oggetto Utente
+        Utente utente = new Utente(nome, cognome, eta, Ruolo.UTENTE); // Sostituisci Ruolo.UTENTE con il valore appropriato
+
+        // Nasconde la finestra corrente
         utente_accedi.getScene().getWindow().hide();
 
+        // Utilizza FXMLLoader per caricare il file FXML e ottenere il controller
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("user_dashboard.fxml"));
+        Parent root = loader.load();
 
-        Parent root = FXMLLoader.load(getClass().getResource("user_dashboard.fxml"));
+        // Ottenere il controller della dashboard dell'utente e impostare l'utente
+        UserDashboardController dashboardController = loader.getController();
+        dashboardController.setUtente(utente);
+
+        // Prepara la nuova finestra (stage) con il root ottenuto dal FXML
         Stage stage = new Stage();
         Scene scene = new Scene(root);
+        stage.initStyle(StageStyle.TRANSPARENT); // Imposta lo stile prima di visualizzare lo stage
 
-        root.setOnMousePressed((MouseEvent event)->{
-
+        // Imposta i gestori per gli eventi del mouse per il trascinamento della finestra
+        root.setOnMousePressed(event -> {
             x1 = event.getSceneX();
             y1 = event.getSceneY();
         });
 
-        root.setOnMouseDragged((MouseEvent event)->{
-
+        root.setOnMouseDragged(event -> {
             stage.setX(event.getScreenX() - x1);
             stage.setY(event.getScreenY() - y1);
         });
-
-        stage.initStyle(StageStyle.TRANSPARENT);
 
         stage.setScene(scene);
         stage.show();

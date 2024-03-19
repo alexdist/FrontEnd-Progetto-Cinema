@@ -59,19 +59,19 @@
         <left>
             <AnchorPane prefHeight="541.0" prefWidth="228.0" styleClass="nav-form" stylesheets="@admin-dashboardstyle.css" BorderPane.alignment="CENTER">
                 <children>
-                    <ImageView fitHeight="130.0" fitWidth="125.0" layoutX="38.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="130.0" fitWidth="125.0" layoutX="53.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                             <Image url="@../../../Icone/icons8-admin-100%20(1).png" />
                         </image>
                     </ImageView>
-                    <Label layoutX="60.0" layoutY="139.0" text="Benvenuto" textFill="WHITE">
+                    <Label layoutX="73.0" layoutY="139.0" text="Benvenuto" textFill="WHITE">
                         <font>
                             <Font size="18.0" />
                         </font>
                     </Label>
-                    <Label alignment="CENTER" layoutX="2.0" layoutY="162.0" prefHeight="17.0" prefWidth="197.0" text="Utente" textFill="WHITE">
+                    <Label fx:id="label_utente" alignment="CENTER" layoutX="2.0" layoutY="162.0" prefHeight="43.0" prefWidth="226.0" text="Utente" textFill="WHITE">
                         <font>
-                            <Font name="System Bold" size="24.0" />
+                            <Font name="System Bold" size="20.0" />
                         </font>
                     </Label>
                     <Button fx:id="esci_btn" layoutX="15.0" layoutY="503.0" mnemonicParsing="false" onAction="#logout" prefHeight="30.0" prefWidth="75.0" styleClass="signout" stylesheets="@admin-dashboardstyle.css" text="Esci" textFill="WHITE">
@@ -106,12 +106,12 @@
                                        <Font name="Microsoft Sans Serif" size="13.0" />
                                     </font>
                                  </Label>
-                                 <Label layoutX="124.0" layoutY="14.0" prefHeight="30.0" prefWidth="126.0" styleClass="label-info" stylesheets="@user.css" text="Titolo del Film">
+                                 <Label fx:id="selectTitoloFilm_label" layoutX="124.0" layoutY="14.0" prefHeight="30.0" prefWidth="126.0" styleClass="label-info" stylesheets="@user.css">
                                     <font>
                                        <Font name="Microsoft Sans Serif" size="13.0" />
                                     </font>
                                  </Label>
-                                 <Button layoutX="84.0" layoutY="150.0" mnemonicParsing="false" styleClass="insert-btn" stylesheets="@user.css" text="Seleziona Spettacolo" />
+                                 <Button fx:id="select_button" layoutX="84.0" layoutY="150.0" mnemonicParsing="false" onAction="#selezionaSpettacolo" styleClass="insert-btn" stylesheets="@user.css" text="Seleziona Spettacolo" />
                                  <Label layoutX="66.0" layoutY="62.0" text="Genere:">
                                     <font>
                                        <Font name="Microsoft Sans Serif" size="13.0" />
@@ -122,24 +122,24 @@
                                        <Font name="Microsoft Sans Serif" size="13.0" />
                                     </font>
                                  </Label>
-                                 <Label layoutX="124.0" layoutY="55.0" prefHeight="30.0" prefWidth="126.0" styleClass="label-info" stylesheets="@user.css" text="Titolo del Film">
+                                 <Label fx:id="selectGenereFilm_label" layoutX="124.0" layoutY="55.0" prefHeight="30.0" prefWidth="126.0" styleClass="label-info" stylesheets="@user.css">
                                     <font>
                                        <Font name="Microsoft Sans Serif" size="13.0" />
                                     </font>
                                  </Label>
-                                 <Label layoutX="124.0" layoutY="99.0" prefHeight="30.0" prefWidth="126.0" styleClass="label-info" stylesheets="@user.css" text="Titolo del Film">
+                                 <Label fx:id="selectDataFilm_label" layoutX="124.0" layoutY="99.0" prefHeight="30.0" prefWidth="126.0" styleClass="label-info" stylesheets="@user.css">
                                     <font>
                                        <Font name="Microsoft Sans Serif" size="13.0" />
                                     </font>
                                  </Label>
                               </children>
                            </AnchorPane>
-                           <TableView layoutX="270.0" layoutY="1.0" prefHeight="185.0" prefWidth="601.0" stylesheets="@user.css">
+                           <TableView fx:id="spettacoli_user_tableview" layoutX="270.0" layoutY="1.0" prefHeight="185.0" prefWidth="601.0" stylesheets="@user.css">
                              <columns>
-                               <TableColumn prefWidth="223.0" text="Titolo del Film" />
-                               <TableColumn minWidth="0.0" prefWidth="160.0" text="Genere" />
-                                 <TableColumn minWidth="0.0" prefWidth="55.0" text="Sala" />
-                                 <TableColumn prefWidth="109.0" text="Data" />
+                               <TableColumn fx:id="titoloFilm_user_tableview" prefWidth="223.0" text="Titolo del Film" />
+                               <TableColumn fx:id="genereFilm_user_tableview" minWidth="0.0" prefWidth="160.0" text="Genere" />
+                                 <TableColumn fx:id="sala_user_tableview" minWidth="0.0" prefWidth="55.0" text="Sala" />
+                                 <TableColumn fx:id="data_user_tableview" prefWidth="160.0" text="Data di Proiezione" />
                              </columns>
                            </TableView>
                         </children></AnchorPane>
@@ -163,28 +163,28 @@
                                     </font>
                                  </Label>
                               </children></AnchorPane>
-                           <Label layoutX="459.0" layoutY="52.0" text="Quantità">
+                           <Label layoutX="459.0" layoutY="59.0" text="Quantità">
                               <font>
                                  <Font name="Microsoft Sans Serif" size="18.0" />
                               </font>
                            </Label>
-                           <Label layoutX="590.0" layoutY="52.0" text="Price">
+                           <Label layoutX="590.0" layoutY="59.0" text="Price">
                               <font>
                                  <Font name="Microsoft Sans Serif" size="18.0" />
                               </font>
                            </Label>
                            <Label layoutX="272.0" layoutY="14.0" text="Biglietti Acquistati">
                               <font>
-                                 <Font size="24.0" />
+                                 <Font name="System Bold Italic" size="24.0" />
                               </font>
                            </Label>
-                           <Label layoutX="338.0" layoutY="87.0" text="Special Class">
+                           <Label layoutX="383.0" layoutY="94.0" text="Biglietti">
                               <font>
                                  <Font size="18.0" />
                               </font>
                            </Label>
-                           <Spinner layoutX="459.0" layoutY="87.0" prefHeight="16.0" prefWidth="67.0" stylesheets="@user.css" />
-                           <Label layoutX="593.0" layoutY="87.0" text="0.0€">
+                           <Spinner fx:id="numeroBiglietti_spinner" layoutX="459.0" layoutY="94.0" prefHeight="16.0" prefWidth="67.0" stylesheets="@user.css" />
+                           <Label fx:id="prezzoParziale_label" layoutX="593.0" layoutY="94.0" text="0.0€">
                               <font>
                                  <Font size="18.0" />
                               </font>
@@ -194,13 +194,12 @@
                                  <Font name="System Bold" size="20.0" />
                               </font>
                            </Label>
-                           <Label layoutX="723.0" layoutY="182.0" text="0.0€">
+                           <Label fx:id="prezzoTotale_label" layoutX="723.0" layoutY="182.0" text="0.0€">
                               <font>
                                  <Font size="18.0" />
                               </font>
                            </Label>
-                           <Button layoutX="724.0" layoutY="221.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="73.0" styleClass="buy-btn" stylesheets="@user.css" text="Acquista" />
-                           <Button layoutX="626.0" layoutY="221.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="73.0" styleClass="receipt-btn" stylesheets="@user.css" text="Bho" />
+                           <Button fx:id="procediAcquistoBigliettoButton" layoutX="687.0" layoutY="215.0" mnemonicParsing="false" onAction="#procediAcquisto" prefHeight="41.0" prefWidth="73.0" styleClass="buy-btn" stylesheets="@user.css" text="Procedi" />
                         </children></AnchorPane>
                   </children>
                </AnchorPane>
