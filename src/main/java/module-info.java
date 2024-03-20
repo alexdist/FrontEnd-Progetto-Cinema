@@ -26,4 +26,8 @@ module org.example.interfaccia_grafica {
     opens org.example.interfaccia_grafica.film to javafx.fxml;
     exports org.example.interfaccia_grafica.general_utility_classes;
     opens org.example.interfaccia_grafica.general_utility_classes to javafx.fxml;
+    // Apri il pacchetto a javafx.base
+    opens org.example.interfaccia_grafica.ricavi to javafx.base;
+
+   
 }

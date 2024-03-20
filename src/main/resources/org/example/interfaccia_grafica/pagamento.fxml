@@ -16,9 +16,10 @@
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Label>
-                  <Button fx:id="pagaInContanti_button" layoutX="115.0" layoutY="167.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="135.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga in Contanti" />
-                  <Button fx:id="pagaConCarta_button" layoutX="380.0" layoutY="167.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="135.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga con Carta" />
-                  <Button fx:id="pagaConBancomat_button" layoutX="645.0" layoutY="167.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="141.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga con Bancomat" />
+                  <Button fx:id="pagaInContanti_button" layoutX="115.0" layoutY="167.0" mnemonicParsing="false" onAction="#pagaInContanti" prefHeight="99.0" prefWidth="135.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga in Contanti" />
+                  <Button fx:id="pagaConCarta_button" layoutX="380.0" layoutY="167.0" mnemonicParsing="false" onAction="#pagaConCarta" prefHeight="99.0" prefWidth="135.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga con Carta" />
+                  <Button fx:id="pagaConBancomat_button" layoutX="645.0" layoutY="167.0" mnemonicParsing="false" onAction="#pagaConBancomat" prefHeight="99.0" prefWidth="141.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga con Bancomat" />
+                  <Button fx:id="annulla_button" layoutX="537.0" layoutY="387.0" mnemonicParsing="false" onAction="#annullaUltimoAcquisto" prefHeight="55.0" prefWidth="147.0" text="AnnullaUltimoAcquisto" />
                     </children>
                 </AnchorPane>
             </children>

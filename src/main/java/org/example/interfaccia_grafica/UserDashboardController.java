@@ -374,6 +374,7 @@ public class UserDashboardController {
         }
 
         visualizzaInformazioniBiglietti();
+        caricaSchermataPagamento();
     }
 
     private void visualizzaInformazioniBiglietti() {
@@ -395,6 +396,12 @@ public class UserDashboardController {
             // Carica il nuovo contenuto FXML per il centro
             FXMLLoader loader = new FXMLLoader(getClass().getResource("pagamento.fxml")); // Assicurati di usare il percorso corretto
             AnchorPane pagamentoPane = loader.load();
+
+            // Ottieni l'accesso al controller associato alla vista caricata
+            PagamentoController pagamentoController = loader.getController();
+            // Passa l'oggetto Utente al controller
+            pagamentoController.setUtente(this.utente);
+            pagamentoController.setBigliettiDaAcquistare(this.bigliettiCreati); // Passa l'elenco dei biglietti
 
             // Sostituisci il contenuto del centro nel BorderPane
             mainBorderPane.setCenter(pagamentoPane);
