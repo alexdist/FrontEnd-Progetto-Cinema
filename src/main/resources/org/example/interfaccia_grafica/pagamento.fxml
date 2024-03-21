@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@admin-dashboardstyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.interfaccia_grafica.PagamentoController">
@@ -16,10 +17,15 @@
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Label>
-                  <Button fx:id="pagaInContanti_button" layoutX="115.0" layoutY="167.0" mnemonicParsing="false" onAction="#pagaInContanti" prefHeight="99.0" prefWidth="135.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga in Contanti" />
-                  <Button fx:id="pagaConCarta_button" layoutX="380.0" layoutY="167.0" mnemonicParsing="false" onAction="#pagaConCarta" prefHeight="99.0" prefWidth="135.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga con Carta" />
-                  <Button fx:id="pagaConBancomat_button" layoutX="645.0" layoutY="167.0" mnemonicParsing="false" onAction="#pagaConBancomat" prefHeight="99.0" prefWidth="141.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga con Bancomat" />
-                  <Button fx:id="annulla_button" layoutX="537.0" layoutY="387.0" mnemonicParsing="false" onAction="#annullaUltimoAcquisto" prefHeight="55.0" prefWidth="147.0" text="AnnullaUltimoAcquisto" />
+                  <Button fx:id="pagaInContanti_button" layoutX="115.0" layoutY="68.0" mnemonicParsing="false" onAction="#pagaInContanti" prefHeight="99.0" prefWidth="135.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga in Contanti" />
+                  <Button fx:id="pagaConCarta_button" layoutX="378.0" layoutY="68.0" mnemonicParsing="false" onAction="#pagaConCarta" prefHeight="99.0" prefWidth="135.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga con Carta" />
+                  <Button fx:id="pagaConBancomat_button" layoutX="633.0" layoutY="68.0" mnemonicParsing="false" onAction="#pagaConBancomat" prefHeight="99.0" prefWidth="141.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga con Bancomat" />
+                  <Button fx:id="annulla_button" layoutX="725.0" layoutY="305.0" mnemonicParsing="false" onAction="#annullaUltimoAcquisto" prefHeight="55.0" prefWidth="147.0" text="AnnullaUltimoAcquisto" />
+                  <AnchorPane layoutX="23.0" layoutY="245.0" prefHeight="211.0" prefWidth="642.0">
+                     <children>
+                              <TilePane fx:id="tilePaneBiglietti" hgap="10" layoutX="-3.0" prefHeight="272.0" prefWidth="651.0" vgap="10" />
+                     </children>
+                  </AnchorPane>
                     </children>
                 </AnchorPane>
             </children>

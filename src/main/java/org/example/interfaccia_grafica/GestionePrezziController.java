@@ -14,6 +14,10 @@ import exception.sala.SalaNonTrovataException;
 import exception.sala.SalaNonValidaException;
 import exception.spettacolo.SovrapposizioneSpettacoloException;
 import exception.spettacolo.SpettacoloNonTrovatoException;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ticket_pricing.IPrezziBiglietto;
@@ -21,6 +25,8 @@ import ticket_pricing.PrezziBiglietto;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.example.interfaccia_grafica.general_utility_classes.AlertUtil.showAlert;
 
@@ -39,13 +45,16 @@ public class GestionePrezziController {
     private TextField impostaPrzRidotto_textflied;
 
     @FXML
-    private TableView<?> prezzi_tableview;
+    private TableView<IPrezziBiglietto> prezzi_tableview;
 
     @FXML
-    private TableColumn<?, ?> prezzoInteroCol_tableview;
+    private TableColumn<IPrezziBiglietto, Double> prezzoInteroCol_tableview;
 
     @FXML
-    private TableColumn<?, ?> prezzoRidottoCol_tableview;
+    private TableColumn<IPrezziBiglietto, Double> prezzoRidottoCol_tableview;
+
+    @FXML
+    private TableColumn<IPrezziBiglietto, Integer> sovrapprezzoCol_tableview1;
 
 
     @FXML
@@ -84,7 +93,39 @@ public class GestionePrezziController {
         impostaSovraPrz_btn1.setOnAction(event -> impostaSovrapprezzo());
         // Carica i prezzi correnti all'avvio dell'applicazione, se esistono
         caricaPrezziDaFile();
+
+        // Assumi che prezziBiglietto sia un campo della classe controller che è stato caricato o inizializzato nel metodo caricaPrezziDaFile()
+        if (prezziBiglietto != null) {
+            // Crea una ObservableList con un solo elemento: l'oggetto prezziBiglietto
+            ObservableList<IPrezziBiglietto> data = FXCollections.observableArrayList(prezziBiglietto);
+
+            // Imposta questa ObservableList come l'elemento della TableView
+            prezzi_tableview.setItems(data);
+
+            // Configura le TableColumn per mostrare i dati
+            prezzoInteroCol_tableview.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrezzoIntero()));
+            prezzoRidottoCol_tableview.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrezzoRidotto()));
+            //sovrapprezzoCol_tableview1.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getSovrapprezzo()*100));
+            sovrapprezzoCol_tableview1.setCellValueFactory(cellData ->
+                    new SimpleObjectProperty<>((int) (cellData.getValue().getSovrapprezzo() * 100)));
+
+        }
+
+       // caricaPrezziInTableView();
     }
+
+    private void aggiornaPrezziTableView() {
+        if (prezziBiglietto != null) {
+            // Semplicemente aggiorna la ObservableList con il nuovo oggetto prezziBiglietto
+            // In questo caso specifico, dato che c'è un solo elemento, puoi rimuoverlo e aggiungerlo di nuovo per forzare l'aggiornamento
+            prezzi_tableview.getItems().clear();
+            prezzi_tableview.getItems().add(prezziBiglietto);
+        }
+    }
+
+
+
+
 
     private void impostaPrezzoIntero() {
         try {
@@ -92,6 +133,7 @@ public class GestionePrezziController {
             ICommand cambiaPrezzoIntero = new ImpostaPrezzoInteroCommand(prezziBiglietto, nuovoPrezzoIntero);
             amministratore.setCommand(cambiaPrezzoIntero);
             amministratore.eseguiComando();
+            aggiornaPrezziTableView();
             // Mostra un alert di successo
             showAlert("Prezzo Aggiornato", "Il prezzo intero è stato aggiornato con successo.");
 
@@ -111,6 +153,7 @@ public class GestionePrezziController {
             ICommand cambiaPrezzoRidotto = new ImpostaPrezzoRidottoCommand(prezziBiglietto, nuovoPrezzoRidotto);
             amministratore.setCommand(cambiaPrezzoRidotto);
             amministratore.eseguiComando();
+            aggiornaPrezziTableView();
             // Mostra un alert di successo
             showAlert("Prezzo Aggiornato", "Il prezzo ridotto è stato aggiornato con successo.");
             salvaPrezziSuFile();
@@ -130,6 +173,7 @@ public class GestionePrezziController {
             ICommand impostaSovrapprezzo = new ImpostaSovrapprezzoCommand(prezziBiglietto, sovrapprezzo);
             amministratore.setCommand(impostaSovrapprezzo);
             amministratore.eseguiComando();
+            aggiornaPrezziTableView();
             // Mostra un alert di successo
             showAlert("Prezzo Aggiornato", "Il sovrapprezzo è stato aggiornato con successo.");
             salvaPrezziSuFile();
