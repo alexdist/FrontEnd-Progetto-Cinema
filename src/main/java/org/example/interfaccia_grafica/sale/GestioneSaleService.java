@@ -18,7 +18,9 @@ import exception.spettacolo.SovrapposizioneSpettacoloException;
 import exception.spettacolo.SpettacoloNonTrovatoException;
 import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class GestioneSaleService implements IGestioneSaleService{
@@ -81,5 +83,4 @@ public class GestioneSaleService implements IGestioneSaleService{
             throw new Exception("Errore imprevisto durante la rimozione della sala.", e);
         }
     }
-
 }

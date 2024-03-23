@@ -5,10 +5,12 @@ import Serializzazione.adapter.adaptee.SpettacoloSerializer;
 import Serializzazione.adapter.adapter.PrezziBigliettoSerializerAdapter;
 import Serializzazione.adapter.adapter.SpettacoloSerializerAdapter;
 import Serializzazione.adapter.target.IDataSerializer;
+import cinema_Infrastructure.sala.ISala;
 import cinema_Infrastructure.spettacolo.ISpettacolo;
 import domain.Utente;
 import id_generator_factory.abstract_factory.GeneratoreIDFactory;
 import id_generator_factory.concrete_factories.GeneratoreIDBigliettoFactory;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -50,6 +52,10 @@ import java.util.List;
 
 
 public class UserDashboardController {
+
+    @FXML
+    private TableColumn<ISpettacolo, String> posti_disponibili_tableview1;
+
     @FXML
     private Button close;
 
@@ -119,12 +125,7 @@ public class UserDashboardController {
     private Utente utente;
 
 
-    // Aggiungi i campi per i prezzi dei biglietti
-//    private double prezzoIntero;
-//    private double prezzoRidotto;
 
-   // private IPrezziBiglietto prezziBiglietto; // Istanza globale per gestire i prezzi dei biglietti
-   // Deserializza gli spettacoli dal file
    IDataSerializer spettacoloSerializerAdapter = new SpettacoloSerializerAdapter();
    IDataSerializer prezziBigliettoSerializer = new PrezziBigliettoSerializerAdapter();
 
@@ -137,7 +138,7 @@ public class UserDashboardController {
     public void initialize() {
 
 
-
+        spettacoli_user_tableview.refresh();
         //carica i prezzi dei biglietti
         caricaPrezziBiglietti();
 
@@ -180,8 +181,44 @@ public class UserDashboardController {
             };
         });
 
-        // Non hai fornito un esempio specifico per "genereFilm_user_tableview", quindi uso il titolo come placeholder
-        // Sostituisci con la corretta proprietà per il genere, se disponibile
+        posti_disponibili_tableview1.setCellValueFactory(cellData ->
+                new ReadOnlyObjectWrapper<>(cellData.getValue().getSala().getPostiDisponibili() + " disponibili")
+        );
+
+        posti_disponibili_tableview1.setCellFactory(column -> new TableCell<ISpettacolo, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                // Pulisce lo stile precedente
+                setText(null);
+                setStyle("");
+
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    // Estrai il numero di posti disponibili dal testo
+                    String[] parts = item.split(" ");
+                    int postiDisponibili = Integer.parseInt(parts[0]);
+
+                    // Imposta il testo della cella
+                    setText(item);
+
+                    // Se i posti disponibili sono meno di 5, colora il testo di rosso
+                    if (postiDisponibili < 5) {
+                        setStyle("-fx-text-fill: red;");
+                    } else {
+                        setStyle("-fx-text-fill: black;"); // Oppure un altro colore per valori superiori
+                    }
+                }
+            }
+        });
+
+
+
+
+
         genereFilm_user_tableview.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getFilm().getGenere())); // Assumi che IFilm abbia un metodo getGenere()
 
@@ -212,23 +249,9 @@ public class UserDashboardController {
                 aggiornaLabelConSpettacoloSelezionato(spettacoloSelezionato);
             }
         });
-
     }
 
-//    private void caricaPrezziBiglietti() {
-//        //IDataSerializer prezziBigliettoSerializer = new PrezziBigliettoSerializerAdapter();
-//
-//        File file = new File("prezziBiglietto.ser");
-//        if (file.exists()) {
-//            try {
-//                prezziBiglietto = (IPrezziBiglietto) prezziBigliettoSerializer.deserialize("prezziBiglietto.ser");
-//            } catch (Exception e) {
-//                // Gestione dell'errore
-//            }
-//        } else {
-//            // Gestione del caso in cui il file non esiste
-//        }
-//    }
+
 
     private void caricaPrezziBiglietti() {
         File file = new File("prezziBiglietto.ser");
@@ -258,17 +281,7 @@ public class UserDashboardController {
         }
     }
 
-//    public void selezionaSpettacolo() {
-//        spettacoloSelezionato = spettacoli_user_tableview.getSelectionModel().getSelectedItem();
-//        if (spettacoloSelezionato != null) {
-//            selectTitoloFilm_label.setText(spettacoloSelezionato.getFilm().getTitolo());
-//            selectGenereFilm_label.setText(spettacoloSelezionato.getFilm().getGenere());
-//            selectDataFilm_label.setText(spettacoloSelezionato.getOrarioProiezione().toString());
-//            // Applica le strategie di prezzo e aggiorna l'interfaccia utente
-//            applicaStrategieDiPrezzo();
-//            // Preparazione per il passo successivo (numero biglietti già impostato tramite Spinner)
-//        }
-//    }
+
 
     public void selezionaSpettacolo() {
         ISpettacolo spettacoloSelezionatoTemp = spettacoli_user_tableview.getSelectionModel().getSelectedItem();
@@ -291,24 +304,6 @@ public class UserDashboardController {
         }
     }
 
-
-
-//    private void applicaStrategieDiPrezzo() {
-//        if (spettacoloSelezionato != null) {
-//            Context context = new Context(new PrezzoBaseStrategy(prezziBiglietto));
-//            context.executeStrategy();
-//
-//            // Verifica se la data dello spettacolo cade in un weekend e applica l'aumento
-//            DayOfWeek giorno = spettacoloSelezionato.getOrarioProiezione().getDayOfWeek();
-//            if (giorno == DayOfWeek.SATURDAY || giorno == DayOfWeek.SUNDAY) {
-//                context.setStrategy(new PrezzoWeekEndStrategy(prezziBiglietto, prezziBiglietto.getSovrapprezzo())); // 50% di aumento
-//                context.executeStrategy();
-//            }
-//
-//            // Aggiorna i prezzi visualizzati all'utente
-//            aggiornaPrezzoParziale();
-//        }
-//    }
 
     private void applicaStrategieDiPrezzo() {
         // Assicurati che spettacoloSelezionato non sia null
@@ -349,6 +344,11 @@ public class UserDashboardController {
     public void procediAcquisto() {
         if (spettacoloSelezionato == null) {
             System.out.println("Seleziona uno spettacolo prima di procedere.");
+            return;
+        }
+
+        if (spettacoloSelezionato.getSala().getPostiDisponibili() == 0) {
+            System.out.println("Posti a sedere esauriti per questo spettacolo");
             return;
         }
 

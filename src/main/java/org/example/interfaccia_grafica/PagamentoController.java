@@ -1,8 +1,13 @@
 package org.example.interfaccia_grafica;
 
 import Serializzazione.adapter.adaptee.RegistroBigliettiSerializer;
+import Serializzazione.adapter.adaptee.SalaSerializer;
+import Serializzazione.adapter.adaptee.SpettacoloSerializer;
 import Serializzazione.adapter.adapter.RegistroBigliettiSerializerAdapter;
+import Serializzazione.adapter.adapter.SalaSerializerAdapter;
+import Serializzazione.adapter.adapter.SpettacoloSerializerAdapter;
 import Serializzazione.adapter.target.IDataSerializer;
+import cinema_Infrastructure.sala.ISala;
 import cinema_Infrastructure.spettacolo.ISpettacolo;
 import domain.Utente;
 import javafx.collections.FXCollections;
@@ -12,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.example.interfaccia_grafica.general_utility_classes.AlertUtil;
+import org.example.interfaccia_grafica.sale.GestioneSaleService;
 import payment_strategy.*;
 import revenues_observer.concrete_observable.RegistroBiglietti;
 import revenues_observer.concrete_observableA.AffluenzaPerSalaReport;
@@ -24,8 +30,10 @@ import user_interfaces.AcquistoBiglietto;
 import user_interfaces.IUserCommand;
 import user_services.ServizioAcquistoBiglietto;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class PagamentoController {
 
@@ -48,20 +56,42 @@ public class PagamentoController {
 
     private AbstractRegistroBiglietti registroBiglietti = new RegistroBiglietti();
 
+    private List<ISala> sale;
+    IDataSerializer salaSerializer = new SalaSerializerAdapter(new SalaSerializer());
+
+    IDataSerializer spettacoloSerializer = new SpettacoloSerializerAdapter(new SpettacoloSerializer());
+
+
+
     @FXML
     private ListView<IBiglietto> listaBiglietti;
 
     @FXML
     private TilePane tilePaneBiglietti;
 
-
+    @FXML
+    private List<ISpettacolo> spettacoli;
 
 
 
 
     @FXML
     public void initialize() {
+        try {
+            sale = (List<ISala>) salaSerializer.deserialize("sale.ser");
+            //saleObservableList.addAll(sale);
+        } catch (Exception e) {
+            System.out.println("Impossibile caricare le sale esistenti. " + e.getMessage());
+            sale = new ArrayList<>();
+        }
 
+        try {
+            spettacoli = (List<ISpettacolo>) spettacoloSerializer.deserialize("spettacoli.ser");
+            //saleObservableList.addAll(sale);
+        } catch (Exception e) {
+            System.out.println("Impossibile caricare gli spettacoli esistenti. " + e.getMessage());
+            spettacoli = new ArrayList<>();
+        }
     }
 
 
@@ -115,115 +145,146 @@ public class PagamentoController {
     @FXML
     private void pagaInContanti() {
         IMetodoPagamentoStrategy metodoPagamento = new PagamentoContantiStrategy();
-        eseguiPagamento(metodoPagamento);
-        aggiungiBigliettiAlTilePane(bigliettiDaAcquistare);
+        if(eseguiPagamento(metodoPagamento)){
+            aggiungiBigliettiAlTilePane(bigliettiDaAcquistare);}
     }
 
     @FXML
     private void pagaConCarta() {
         IMetodoPagamentoStrategy metodoPagamento = new PagamentoCartaDiCreditoStrategy();
-        eseguiPagamento(metodoPagamento);
-        aggiungiBigliettiAlTilePane(bigliettiDaAcquistare);
+        if(eseguiPagamento(metodoPagamento)){
+            aggiungiBigliettiAlTilePane(bigliettiDaAcquistare);}
     }
 
     @FXML
     private void pagaConBancomat() {
         IMetodoPagamentoStrategy metodoPagamento = new PagamentoBancomatStrategy();
-        eseguiPagamento(metodoPagamento);
-        aggiungiBigliettiAlTilePane(bigliettiDaAcquistare);
+        if(eseguiPagamento(metodoPagamento)){
+        aggiungiBigliettiAlTilePane(bigliettiDaAcquistare);}
     }
 
-    private void eseguiPagamento(IMetodoPagamentoStrategy metodoPagamento) {
+//    private void eseguiPagamento(IMetodoPagamentoStrategy metodoPagamento) {
+//        PayContext pagamento = new PayContext(metodoPagamento);
+//
+//
+//
+//        AcquistoBiglietto servizioAcquisto = new ServizioAcquistoBiglietto(pagamento, registroBiglietti);
+//
+//        for (IBiglietto biglietto : bigliettiDaAcquistare) {
+//            IUserCommand acquistoCommand = new AcquistoBigliettoCommand(servizioAcquisto, biglietto);
+//            utente.setCommand(acquistoCommand);
+//            utente.eseguiComando();
+//
+//            aggiornaRicaviConNuovoBiglietto(biglietto);
+//        }
+//        //visualizzaBigliettiAcquistati();
+//        mostraBigliettiAcquistatiConAlert();
+//        // Gestisci le azioni post-pagamento come la conferma dell'acquisto
+//        // Serializzazione del registro biglietti dopo l'acquisto
+//
+//        //serializzaRegistroBiglietti();
+//    }
+//
+//    private boolean eseguiPagamento(IMetodoPagamentoStrategy metodoPagamento) {
+//        PayContext pagamento = new PayContext(metodoPagamento);
+//        AcquistoBiglietto servizioAcquisto = new ServizioAcquistoBiglietto(pagamento, registroBiglietti);
+//
+//
+//        for (IBiglietto biglietto : bigliettiDaAcquistare) {
+//            // Utilizza getPostiDisponibili() per verificare se ci sono posti disponibili
+//            if (biglietto.getSpettacolo().getSala().getPostiDisponibili() > 0) {
+//                IUserCommand acquistoCommand = new AcquistoBigliettoCommand(servizioAcquisto, biglietto);
+//                utente.setCommand(acquistoCommand);
+//                utente.eseguiComando();
+//                // Aggiorna lo stato della sala per occupare il posto
+//                aggiornaStatoPostoAcquistato(biglietto.getSpettacolo().getSala().getId());
+//               // bigliettiAcquistatiConSuccesso.add(biglietto);
+//                aggiornaRicaviConNuovoBiglietto(biglietto);
+//                return true;
+//            } else {
+//                System.out.println("Non è possibile procedere all'acquisto: posti esauriti per lo spettacolo " + biglietto.getSpettacolo().getFilm().getTitolo());
+//                return false;
+//            }
+//        }
+//
+////        if (!bigliettiAcquistatiConSuccesso.isEmpty()) {
+////            aggiungiBigliettiAlTilePane(bigliettiAcquistatiConSuccesso);
+////            mostraBigliettiAcquistatiConAlert();
+////        }
+//        return false;
+//    }
+
+//    private boolean eseguiPagamento(IMetodoPagamentoStrategy metodoPagamento) {
+//        PayContext pagamento = new PayContext(metodoPagamento);
+//        AcquistoBiglietto servizioAcquisto = new ServizioAcquistoBiglietto(pagamento, registroBiglietti);
+//
+//        for (IBiglietto biglietto : bigliettiDaAcquistare) {
+//            if (biglietto.getSpettacolo().getSala().getPostiDisponibili() > 0) {
+//                IUserCommand acquistoCommand = new AcquistoBigliettoCommand(servizioAcquisto, biglietto);
+//                utente.setCommand(acquistoCommand);
+//                utente.eseguiComando(); // Esegui il comando senza controllare il risultato
+//
+//                aggiornaStatoPostoAcquistato(biglietto.getSpettacolo().getSala().getId());
+//                aggiornaRicaviConNuovoBiglietto(biglietto);
+//
+//            } else {
+//                System.out.println("Non è possibile procedere all'acquisto: posti esauriti per lo spettacolo " + biglietto.getSpettacolo().getFilm().getTitolo());
+//                return false; // Termina la funzione e indica che l'acquisto non è riuscito
+//            }
+//        }
+//
+//        // Se il ciclo termina senza entrare nell'else, significa che tutti gli acquisti sono andati a buon fine
+//        return true;
+//    }
+
+    private boolean eseguiPagamento(IMetodoPagamentoStrategy metodoPagamento) {
         PayContext pagamento = new PayContext(metodoPagamento);
-
-
-
         AcquistoBiglietto servizioAcquisto = new ServizioAcquistoBiglietto(pagamento, registroBiglietti);
 
         for (IBiglietto biglietto : bigliettiDaAcquistare) {
-            IUserCommand acquistoCommand = new AcquistoBigliettoCommand(servizioAcquisto, biglietto);
-            utente.setCommand(acquistoCommand);
-            utente.eseguiComando();
+            if (aggiornaStatoPostoAcquistato(biglietto.getSpettacolo().getId())) { //biglietto.getSpettacolo().getSala().getPostiDisponibili() > 0
+                IUserCommand acquistoCommand = new AcquistoBigliettoCommand(servizioAcquisto, biglietto);
+                utente.setCommand(acquistoCommand);
+                utente.eseguiComando(); // Esegui il comando senza controllare il risultato
+                salaSerializer.serialize(sale,"sale.ser");
+                spettacoloSerializer.serialize(spettacoli, "spettacoli.ser");
 
-            aggiornaRicaviConNuovoBiglietto(biglietto);
+                // Verifica se l'aggiornamento dello stato del posto è riuscito
+                //boolean postoAggiornato = aggiornaStatoPostoAcquistato(biglietto.getSpettacolo().getSala().getId());
+//                if (!postoAggiornato) {
+//                    return false; // Se l'aggiornamento non è riuscito, termina immediatamente
+//                }
+
+                aggiornaRicaviConNuovoBiglietto(biglietto);
+            } else {
+                System.out.println("Non è possibile procedere all'acquisto: posti esauriti per lo spettacolo " + biglietto.getSpettacolo().getFilm().getTitolo());
+                return false; // Termina la funzione e indica che l'acquisto non è riuscito
+            }
         }
-        //visualizzaBigliettiAcquistati();
-        mostraBigliettiAcquistatiConAlert();
-        // Gestisci le azioni post-pagamento come la conferma dell'acquisto
-        // Serializzazione del registro biglietti dopo l'acquisto
 
-        //serializzaRegistroBiglietti();
+        // Se il ciclo termina senza entrare nell'else, significa che tutti gli acquisti sono andati a buon fine
+        return true;
+    }
+
+    private boolean aggiornaStatoPostoAcquistato(long idSpettacolo) {
+        // Cerca lo spettacolo tramite ID
+        ISpettacolo spettacoloTrovato = spettacoli.stream()
+                .filter(s -> s.getId() == idSpettacolo)
+                .findFirst()
+                .orElse(null);
+
+        if (spettacoloTrovato != null && spettacoloTrovato.getSala().occupaPosto()) {
+            // Se il posto è stato occupato con successo, serializza lo stato aggiornato
+            salaSerializer.serialize(sale,"sale.ser");
+            spettacoloSerializer.serialize(spettacoli, "spettacoli.ser");
+            return true; // Posto occupato e stato serializzato con successo
+        } else {
+            System.out.println("La sala è piena o lo spettacolo non è stato trovato.");
+            return false; // Posti esauriti o spettacolo non trovato
+        }
     }
 
 
-//    public void annullaUltimoAcquisto() {
-//        if (bigliettiDaAcquistare.isEmpty()) {
-//            System.out.println("Non ci sono acquisti recenti da annullare.");
-//            return;
-//        }
-//
-//        // Carica il registro dei biglietti esistente
-//        IDataSerializer adapter = new RegistroBigliettiSerializerAdapter(new RegistroBigliettiSerializer());
-//        String filePath = "registroBiglietti.ser";
-//        AbstractRegistroBiglietti registroEsistente = (AbstractRegistroBiglietti) adapter.deserialize(filePath);
-//
-//        if (registroEsistente == null) {
-//            System.out.println("Errore nel caricamento del registro dei biglietti.");
-//            return;
-//        }
-//
-//        // Ottiene l'ultimo biglietto acquistato
-//        IBiglietto ultimoBiglietto = bigliettiDaAcquistare.get(bigliettiDaAcquistare.size() - 1);
-//
-//        // Crea il comando per annullare l'acquisto del biglietto
-//        IUserCommand annullaCommand = new AnnullaBigliettoCommand(ultimoBiglietto.getId(), registroEsistente);
-//        utente.setCommand(annullaCommand);
-//        utente.eseguiComando();
-//
-//        // Assumendo che l'annullamento sia andato a buon fine, aggiorna il registro
-//        // e serializza il registro aggiornato
-//        adapter.serialize(registroEsistente, filePath);
-//
-//        // Rimuovi l'ultimo biglietto dalla lista dei biglietti acquistati
-//        bigliettiDaAcquistare.remove(ultimoBiglietto);
-//    }
-
-//    public void annullaUltimoAcquisto() {
-//        if (bigliettiDaAcquistare.isEmpty()) {
-//            AlertUtil.showInformationAlert("Annullamento Acquisto. Non ci sono acquisti recenti da annullare.");
-//            return;
-//        }
-//
-//        // Carica il registro dei biglietti esistente
-//        IDataSerializer adapter = new RegistroBigliettiSerializerAdapter(new RegistroBigliettiSerializer());
-//        String filePath = "registroBiglietti.ser";
-//        AbstractRegistroBiglietti registroEsistente = (AbstractRegistroBiglietti) adapter.deserialize(filePath);
-//
-//        if (registroEsistente == null) {
-//            AlertUtil.showErrorAlert("Errore nel caricamento del registro dei biglietti.");
-//            return;
-//        }
-//
-//        // Ottiene l'ultimo biglietto acquistato
-//        IBiglietto ultimoBiglietto = bigliettiDaAcquistare.get(bigliettiDaAcquistare.size() - 1);
-//
-//        // Crea il comando per annullare l'acquisto del biglietto
-//        IUserCommand annullaCommand = new AnnullaBigliettoCommand(ultimoBiglietto.getId(), registroEsistente);
-//        utente.setCommand(annullaCommand);
-//        utente.eseguiComando();
-//
-//        // Assumendo che l'annullamento sia andato a buon fine, aggiorna il registro
-//        // e serializza il registro aggiornato
-//        adapter.serialize(registroEsistente, filePath);
-//
-//        // Rimuovi l'ultimo biglietto dalla lista dei biglietti acquistati
-//        bigliettiDaAcquistare.remove(ultimoBiglietto);
-//
-//        rimuoviUltimoBigliettoDalTilePane();
-//
-//        // Mostra un Alert per confermare l'annullamento dell'acquisto
-//        AlertUtil.showAlert("Annullamento Confermato", "L'ultimo acquisto è stato annullato con successo.");
-//    }
 
     public void annullaUltimoAcquisto() {
         if (bigliettiDaAcquistare.isEmpty()) {
@@ -250,6 +311,12 @@ public class PagamentoController {
         utente.eseguiComando();
 
         if (registroEsistente.isUltimoAnnullamentoRiuscito()) {
+            // Libera il posto associato all'ultimo biglietto annullato
+            if (liberaPostoSpettacolo(ultimoBiglietto.getSpettacolo().getId())) {
+                System.out.println("Posto liberato con successo.");
+            } else {
+                System.out.println("Errore nella liberazione del posto.");
+            }
             // Assumendo che l'annullamento sia andato a buon fine, aggiorna il registro
             // e serializza il registro aggiornato
             adapter.serialize(registroEsistente, filePath);
@@ -265,6 +332,26 @@ public class PagamentoController {
         } else {
             // Mostra un Alert per l'annullamento fallito
             AlertUtil.showAlert("Annullamento Fallito", "Non è stato possibile annullare l'acquisto.");
+        }
+    }
+
+    private boolean liberaPostoSpettacolo(long idSpettacolo) {
+        // Cerca lo spettacolo tramite ID
+        ISpettacolo spettacoloTrovato = spettacoli.stream()
+                .filter(s -> s.getId() == idSpettacolo)
+                .findFirst()
+                .orElse(null);
+
+        if (spettacoloTrovato != null) {
+            // Libera il posto nello spettacolo trovato
+            spettacoloTrovato.getSala().liberaPosto();
+            // Serializza lo stato aggiornato della sala e degli spettacoli
+            salaSerializer.serialize(sale, "sale.ser");
+            spettacoloSerializer.serialize(spettacoli, "spettacoli.ser");
+            return true; // Posto liberato e stato serializzato con successo
+        } else {
+            System.out.println("Spettacolo non trovato.");
+            return false; // Spettacolo non trovato
         }
     }
 

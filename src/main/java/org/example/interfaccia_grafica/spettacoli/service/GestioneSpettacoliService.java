@@ -36,7 +36,10 @@ public class GestioneSpettacoliService implements IGestioneSpettacoliService{
 
     public void aggiungiSpettacolo(IFilm filmSelezionato, ISala salaSelezionata, LocalDateTime orarioSelezionato, Consumer<ISpettacolo> onSuccess) throws Exception {
         IAggiungiSpettacolo servizioAggiungiSpettacolo = new AggiungiSpettacolo(spettacoli, generatoreID);
-        ISpettacolo nuovoSpettacolo = new Spettacolo(filmSelezionato, salaSelezionata, orarioSelezionato);
+
+        // Qui uso clone() per assicurare che ogni spettacolo abbia una propria istanza di sala, poiché ho avuto problemi quando decrementavo il numero di posti a sedere per uno spettacolo. Gli spettacoli che avevano lo stesso numero di sala sortivano lo stesso decremento.
+        ISala salaClonata = salaSelezionata.clone();
+        ISpettacolo nuovoSpettacolo = new Spettacolo(filmSelezionato, salaClonata, orarioSelezionato);
 
         ICommand aggiungiSpettacoloCommand = new AggiungiSpettacoloCommand(servizioAggiungiSpettacolo, nuovoSpettacolo);
         amministratore.setCommand(aggiungiSpettacoloCommand);
@@ -62,11 +65,6 @@ public class GestioneSpettacoliService implements IGestioneSpettacoliService{
     }
 
     public void modificaOrarioSpettacolo(long idSpettacolo, LocalDateTime nuovoOrario, Runnable onSuccess) throws Exception {
-//        // Trova lo spettacolo da modificare basato sull'ID fornito
-//        ISpettacolo spettacoloDaModificare = spettacoli.stream()
-//                .filter(spettacolo -> spettacolo.getId() == idSpettacolo)
-//                .findFirst()
-//                .orElseThrow(() -> new SpettacoloNonTrovatoException("Spettacolo non trovato."));
 
         // Assumi che ModificaSpettacolo implementi IModificaSpettacolo e richieda una lista di spettacoli come dipendenza
         IModificaSpettacolo servizioModificaOrarioSpettacolo = new ModificaSpettacolo(spettacoli);
@@ -83,10 +81,6 @@ public class GestioneSpettacoliService implements IGestioneSpettacoliService{
     }
 
     public void modificaSalaSpettacolo(long idSpettacolo, ISala nuovaSala, Runnable onSuccess) throws Exception {
-//        ISpettacolo spettacoloDaModificare = spettacoli.stream()
-//                .filter(spettacolo -> spettacolo.getId() == idSpettacolo)
-//                .findFirst()
-//                .orElseThrow(() -> new SpettacoloNonTrovatoException("Spettacolo non trovato."));
 
         IModificaSpettacolo servizioModificaSpettacolo = new ModificaSpettacolo(spettacoli);
         ICommand modificaSalaSpettacoloCommand = new ModificaSalaPerIdSpettacoloCommand(servizioModificaSpettacolo, idSpettacolo, nuovaSala);
@@ -100,10 +94,7 @@ public class GestioneSpettacoliService implements IGestioneSpettacoliService{
     }
 
     public void modificaFilmSpettacolo(long idSpettacolo, IFilm nuovoFilm, Runnable onSuccess) throws Exception {
-//        ISpettacolo spettacoloDaModificare = spettacoli.stream()
-//                .filter(spettacolo -> spettacolo.getId() == idSpettacolo)
-//                .findFirst()
-//                .orElseThrow(() -> new SpettacoloNonTrovatoException("Spettacolo non trovato."));
+
 
         IModificaSpettacolo servizioModificaSpettacolo = new ModificaSpettacolo(spettacoli);
         ICommand modificaFilmSpettacoloCommand = new ModificaFilmPerIdSpettacoloCommand(servizioModificaSpettacolo, idSpettacolo, nuovoFilm);

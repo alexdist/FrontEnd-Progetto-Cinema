@@ -61,7 +61,7 @@
                 <children>
                     <ImageView fitHeight="130.0" fitWidth="125.0" layoutX="53.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@../../../Icone/icons8-admin-100%20(1).png" />
+                            <Image url="@../../../Icone/icons8-user-100.png" />
                         </image>
                     </ImageView>
                     <Label layoutX="73.0" layoutY="139.0" text="Benvenuto" textFill="WHITE">
@@ -136,10 +136,11 @@
                            </AnchorPane>
                            <TableView fx:id="spettacoli_user_tableview" layoutX="270.0" layoutY="1.0" prefHeight="185.0" prefWidth="601.0" stylesheets="@user.css">
                              <columns>
-                               <TableColumn fx:id="titoloFilm_user_tableview" prefWidth="223.0" text="Titolo del Film" />
-                               <TableColumn fx:id="genereFilm_user_tableview" minWidth="0.0" prefWidth="160.0" text="Genere" />
-                                 <TableColumn fx:id="sala_user_tableview" minWidth="0.0" prefWidth="55.0" text="Sala" />
-                                 <TableColumn fx:id="data_user_tableview" prefWidth="160.0" text="Data di Proiezione" />
+                               <TableColumn fx:id="titoloFilm_user_tableview" prefWidth="171.0" text="Titolo del Film" />
+                               <TableColumn fx:id="genereFilm_user_tableview" minWidth="0.0" prefWidth="114.0" text="Genere" />
+                                 <TableColumn fx:id="sala_user_tableview" minWidth="0.0" prefWidth="48.0" text="Sala" />
+                                 <TableColumn fx:id="data_user_tableview" prefWidth="168.0" text="Data di Proiezione" />
+                                 <TableColumn fx:id="posti_disponibili_tableview1" minWidth="0.0" prefWidth="94.0" text="Posti Disponibili" />
                              </columns>
                            </TableView>
                         </children></AnchorPane>

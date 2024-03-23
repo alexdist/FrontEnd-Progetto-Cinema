@@ -110,45 +110,7 @@ public class GestioneFilmController implements Initializable {
 
     }
 
-//    @FXML
-//    public void aggiungiFilm() {
-//        try {
-//            String titoloFilm = titoloFilm_textfield.getText();
-//            String genereFilm = genereFilm_textfield.getText();
-//            int durataFilm = Integer.parseInt(durataFilm_textfield.getText());
-//
-//
-//
-////            // Assicurati che il numero della sala e la capacità siano positivi
-////            if(numeroSala <= 0) throw new NumeroSalaNegativoException();
-////            if(capacita <= 0) throw new NumeroPostiNegativoException();
-//
-//            //GeneratoreIDFactory generatoreIDSalaFactory = new GeneratoreIDSalaFactory();
-//
-//            IGeneratoreIDPersistente generatoreIDFilm = new GeneratoreIDPersistenteFilm();
-//
-//            IAggiungiFilm servizioAggiungiFilm = new AggiungiFilm(films, generatoreIDFilm);
-//
-//            IFilm nuovoFilm = new Film(titoloFilm, durataFilm,genereFilm);
-//            ICommand aggiungiFilmCommand = new AggiungiFilmCommand(servizioAggiungiFilm, nuovoFilm);
-//
-//            Amministratore amministratore = new Amministratore("Nome", "Cognome", Ruolo.AMMINISTRATORE);
-//            amministratore.setCommand(aggiungiFilmCommand);
-//            amministratore.eseguiComando();
-//            showInformationAlert("Film aggiunto con successo!");
-//            aggiungiFilmTable(nuovoFilm);
-//
-//            filmSerializerAdapter.serialize(films, "film.ser"); // Salva le sale dopo l'aggiunta
-//        } catch (FilmGiaPresenteException e) {
-//            showErrorAlert("Il Film è già presente");
-//        } catch (DurataFilmNonValidaException e) {
-//            showErrorAlert("Durata Film non valida");
-//        }catch (TitoloVuotoException e) {
-//            showErrorAlert("Il campo titolo del film è vuoto");
-//        } catch (Exception e) {
-//            showErrorAlert("Errore imprevisto durante l'aggiunta del film.");
-//        }
-//    }
+
 
     @FXML
     public void aggiungiFilm() {
@@ -174,45 +136,7 @@ public class GestioneFilmController implements Initializable {
         }
     }
 
-//    @FXML
-//    public void aggiungiFilm() {
-//        try {
-//            String titoloFilm = titoloFilm_textfield.getText();
-//            String genereFilm = genereFilm_textfield.getText();
-//            int durataFilm = Integer.parseInt(durataFilm_textfield.getText());
-//
-//            gestioneFilmService.aggiungiFilm(titoloFilm, durataFilm, genereFilm, nuovoFilm -> {
-//                AlertUtil.showInformationAlert("Film aggiunto con successo!");
-//                aggiungiFilmTable(nuovoFilm);
-//            });
-//        } catch (Exception e) {
-//            AlertUtil.showErrorAlert("Errore durante l'aggiunta del film: " + e.getMessage());
-//        }
-//    }
 
-
-
-//    @FXML
-//    public void rimuoviFilm() {
-//        try {
-//            long idFilm = Long.parseLong(IDRimuoviFIlm_textfield.getText());
-//
-//            IRimuoviFilm servizioRimuoviFilm = new RimuoviFilm(films);
-//            ICommand rimuoviFilmCommand = new RimuoviFilmCommand(servizioRimuoviFilm, idFilm);
-//
-//            Amministratore amministratore = new Amministratore("Nome", "Cognome", Ruolo.AMMINISTRATORE);
-//            amministratore.setCommand(rimuoviFilmCommand);
-//            amministratore.eseguiComando();
-//            showInformationAlert("Film rimosso con successo!");
-//            rimuoviFilmTable(idFilm);
-//
-//            filmSerializerAdapter.serialize(films, "film.ser"); // Salva le sale dopo la rimozione
-//        }catch (FilmNonTrovatoException e) {
-//            showErrorAlert("Film non trovato");
-//        } catch (Exception e) {
-//            showErrorAlert("Errore imprevisto durante la rimozione del film.");
-//        }
-//    }
 
     @FXML
     public void rimuoviFilm() {
@@ -262,23 +186,5 @@ public class GestioneFilmController implements Initializable {
             rimuoviFilm_anchorpane.setVisible(false);
         }
     }
-
-    // Funzione per mostrare un alert di errore
-//    private void showErrorAlert(String message) {
-//        Alert alert = new Alert(Alert.AlertType.ERROR);
-//        alert.setTitle("Errore");
-//        alert.setHeaderText(null);
-//        alert.setContentText(message);
-//        alert.showAndWait();
-//    }
-//
-//    // Funzione per mostrare un alert di informazione
-//    private void showInformationAlert(String message) {
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle("Informazione");
-//        alert.setHeaderText(null);
-//        alert.setContentText(message);
-//        alert.showAndWait();
-//    }
 }
 
