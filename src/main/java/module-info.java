@@ -28,6 +28,14 @@ module org.example.interfaccia_grafica {
     opens org.example.interfaccia_grafica.general_utility_classes to javafx.fxml;
     // Apri il pacchetto a javafx.base
     opens org.example.interfaccia_grafica.ricavi to javafx.base;
+    exports org.example.interfaccia_grafica.pagamento;
+    opens org.example.interfaccia_grafica.pagamento to javafx.fxml;
+    exports org.example.interfaccia_grafica.pagamento.service;
+    opens org.example.interfaccia_grafica.pagamento.service to javafx.fxml;
+    exports org.example.interfaccia_grafica.sale.service;
+    opens org.example.interfaccia_grafica.sale.service to javafx.fxml;
+    exports org.example.interfaccia_grafica.film.service;
+    opens org.example.interfaccia_grafica.film.service to javafx.fxml;
 
-   
+
 }

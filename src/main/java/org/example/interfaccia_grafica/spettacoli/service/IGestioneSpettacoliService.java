@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.function.Consumer;
 
 public interface IGestioneSpettacoliService {
-
     void aggiungiSpettacolo(IFilm filmSelezionato, ISala salaSelezionata, LocalDateTime orarioSelezionato, Consumer<ISpettacolo> onSuccess) throws Exception;
     void rimuoviSpettacolo(long idSpettacolo, Consumer<Long> onSuccess) throws Exception;
     void modificaOrarioSpettacolo(long idSpettacolo, LocalDateTime nuovoOrario, Runnable onSuccess) throws Exception;

@@ -222,31 +222,6 @@ public class HelloController {
     @FXML
     private void handleLoginUtenteForm() throws IOException {
 
-//        // Nasconde la finestra corrente
-//        utente_accedi.getScene().getWindow().hide();
-//
-//
-//        Parent root = FXMLLoader.load(getClass().getResource("user_dashboard.fxml"));
-//
-//        Stage stage = new Stage();
-//        Scene scene = new Scene(root);
-//
-//        root.setOnMousePressed((MouseEvent event)->{
-//
-//            x1 = event.getSceneX();
-//            y1 = event.getSceneY();
-//        });
-//
-//        root.setOnMouseDragged((MouseEvent event)->{
-//
-//            stage.setX(event.getScreenX() - x1);
-//            stage.setY(event.getScreenY() - y1);
-//        });
-//
-//        stage.initStyle(StageStyle.TRANSPARENT);
-//
-//        stage.setScene(scene);
-//        stage.show();
         // Raccoglie i dati dell'utente dai campi di testo
         String nome = utente_nome.getText();
         String cognome = utente_cognome.getText();
@@ -285,10 +260,6 @@ public class HelloController {
         stage.setScene(scene);
         stage.show();
     }
-
-
-
-
 
     @FXML
     protected void onHelloButtonClick() {

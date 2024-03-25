@@ -15,6 +15,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.interfaccia_grafica.general_utility_classes.AlertUtil;
+import org.example.interfaccia_grafica.sale.service.GestioneSaleService;
+import org.example.interfaccia_grafica.sale.service.IGestioneSaleService;
 import prova_id_PERSISTENTE.GeneratoreIDPersistenteSala;
 import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
 import java.net.URL;

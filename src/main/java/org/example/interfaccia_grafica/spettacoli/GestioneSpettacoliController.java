@@ -28,6 +28,7 @@ import org.example.interfaccia_grafica.spettacoli.service.IGestioneSpettacoliSer
 import org.example.interfaccia_grafica.spettacoli.utility_classes.*;
 import prova_id_PERSISTENTE.GeneratoreIDPersistenteSpettacolo;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -177,7 +178,9 @@ public class GestioneSpettacoliController implements Initializable {
             spettacoli = new ArrayList<>();
         }
 
+
         gestioneSpettacoliService = new GestioneSpettacoliService(spettacoli, new GeneratoreIDPersistenteSpettacolo(), spettacoloSerializerAdapter, amministratore);
+
 
         hoursComboBox.setItems(FXCollections.observableArrayList(IntStream.rangeClosed(0, 23).boxed().collect(Collectors.toList())));
 

@@ -25,6 +25,7 @@ import ticket_pricing.PrezziBiglietto;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -144,6 +145,8 @@ public class GestionePrezziController {
                  SovrapposizioneSpettacoloException | FilmNonValidoException | SalaNonValidaException |
                  SpettacoloNonTrovatoException e) {
             // Gestire l'eccezione se il valore inserito non è un numero
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -161,7 +164,7 @@ public class GestionePrezziController {
         } catch (NumberFormatException | FilmGiaPresenteException | DurataFilmNonValidaException |
                  TitoloVuotoException | FilmNonTrovatoException | SalaGiaEsistenteException | SalaNonTrovataException |
                  SovrapposizioneSpettacoloException | FilmNonValidoException | SalaNonValidaException |
-                 SpettacoloNonTrovatoException e) {
+                 SpettacoloNonTrovatoException | IOException e) {
             // Gestire l'eccezione se il valore inserito non è un numero
         }
     }
@@ -181,7 +184,7 @@ public class GestionePrezziController {
         } catch (NumberFormatException | FilmGiaPresenteException | DurataFilmNonValidaException |
                  TitoloVuotoException | FilmNonTrovatoException | SalaGiaEsistenteException | SalaNonTrovataException |
                  SovrapposizioneSpettacoloException | FilmNonValidoException | SalaNonValidaException |
-                 SpettacoloNonTrovatoException e) {
+                 SpettacoloNonTrovatoException | IOException e) {
             // Gestire l'eccezione se il valore inserito non è un numero
         }
     }

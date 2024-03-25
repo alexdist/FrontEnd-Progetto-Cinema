@@ -1,4 +1,4 @@
-package org.example.interfaccia_grafica.sale;
+package org.example.interfaccia_grafica.sale.service;
 
 import Serializzazione.adapter.target.IDataSerializer;
 import admin_commands.sala.aggiungi_sala.AggiungiSalaCommand;
@@ -20,10 +20,9 @@ import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 
-public class GestioneSaleService implements IGestioneSaleService{
+public class GestioneSaleService implements IGestioneSaleService {
     private List<ISala> sale;
     private IGeneratoreIDPersistente generatoreID;
     private IDataSerializer salaSerializer;
@@ -36,7 +35,7 @@ public class GestioneSaleService implements IGestioneSaleService{
         this.amministratore = amministratore;
     }
 
-    public void aggiungiSala(int numeroSala, int capacita, Consumer<ISala> onSuccess) throws NumeroSalaNegativoException, NumeroPostiNegativoException, SalaGiaEsistenteException, FilmGiaPresenteException, DurataFilmNonValidaException, SpettacoloNonTrovatoException, TitoloVuotoException, SalaNonTrovataException, FilmNonValidoException, SovrapposizioneSpettacoloException, SalaNonValidaException, FilmNonTrovatoException {
+    public void aggiungiSala(int numeroSala, int capacita, Consumer<ISala> onSuccess) throws NumeroSalaNegativoException, NumeroPostiNegativoException, SalaGiaEsistenteException, FilmGiaPresenteException, DurataFilmNonValidaException, SpettacoloNonTrovatoException, TitoloVuotoException, SalaNonTrovataException, FilmNonValidoException, SovrapposizioneSpettacoloException, SalaNonValidaException, FilmNonTrovatoException, IOException {
         if (numeroSala <= 0) {
             throw new NumeroSalaNegativoException("Il numero della sala deve essere maggiore di zero.");
         }

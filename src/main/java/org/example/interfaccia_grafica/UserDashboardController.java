@@ -5,11 +5,8 @@ import Serializzazione.adapter.adaptee.SpettacoloSerializer;
 import Serializzazione.adapter.adapter.PrezziBigliettoSerializerAdapter;
 import Serializzazione.adapter.adapter.SpettacoloSerializerAdapter;
 import Serializzazione.adapter.target.IDataSerializer;
-import cinema_Infrastructure.sala.ISala;
 import cinema_Infrastructure.spettacolo.ISpettacolo;
 import domain.Utente;
-import id_generator_factory.abstract_factory.GeneratoreIDFactory;
-import id_generator_factory.concrete_factories.GeneratoreIDBigliettoFactory;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -18,14 +15,14 @@ import javafx.fxml.FXML;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -35,6 +32,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.example.interfaccia_grafica.general_utility_classes.AlertUtil;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.ISpettacoloDataSerializer;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.SpettacoloDataSerializer;
+import org.example.interfaccia_grafica.pagamento.PagamentoController;
+import org.example.interfaccia_grafica.service_userdashcontroller.GestoreAcquisti;
+import org.example.interfaccia_grafica.service_userdashcontroller.IGestoreAcquisti;
+import org.example.interfaccia_grafica.service_userdashcontroller.IServizioPrezziBiglietto;
+import org.example.interfaccia_grafica.service_userdashcontroller.ServizioPrezziBiglietto;
 import prova_id_PERSISTENTE.GeneratoreIDPersistenteBiglietti;
 import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
 import ticket.factory.abstract_factory.BigliettoFactory;
@@ -46,9 +50,6 @@ import ticket_pricing.PrezziBiglietto;
 import ticket_pricing.strategy.Context;
 import ticket_pricing.strategy.PrezzoBaseStrategy;
 import ticket_pricing.strategy.PrezzoWeekEndStrategy;
-
-import java.util.List;
-
 
 
 public class UserDashboardController {
@@ -113,38 +114,50 @@ public class UserDashboardController {
     @FXML
     private Label prezzoTotale_label;
 
+    @FXML
     private ISpettacolo spettacoloSelezionato;
 
+    @FXML
     private List<IBiglietto> bigliettiCreati = new ArrayList<>();
 
     @FXML
     private double x = 0;
+    @FXML
     private double y = 0;
 
     // Nella classe UserDashboardController
+    @FXML
     private Utente utente;
 
+    @FXML
+    IGeneratoreIDPersistente generatoreID;
+
+    @FXML
+    private IGestoreAcquisti gestoreAcquisti;
+
+    @FXML
+    private IServizioPrezziBiglietto prezziBigliettoDaFile;
+
+    @FXML
+    private ISpettacoloDataSerializer spettacoloDataSerializer;
 
 
-   IDataSerializer spettacoloSerializerAdapter = new SpettacoloSerializerAdapter();
-   IDataSerializer prezziBigliettoSerializer = new PrezziBigliettoSerializerAdapter();
-
-   // IPrezziBiglietto prezziBiglietto = new PrezziBiglietto(0,0);
-    IGeneratoreIDPersistente generatoreID = new GeneratoreIDPersistenteBiglietti();
-    IPrezziBiglietto prezziBigliettoBase;
-    IPrezziBiglietto prezziBiglietto;
     @FXML
 
-    public void initialize() {
+    public void initialize(){
+        prezziBigliettoDaFile = new ServizioPrezziBiglietto();
 
+        spettacoloDataSerializer = new SpettacoloDataSerializer(new SpettacoloSerializerAdapter(new SpettacoloSerializer()));
+
+        generatoreID = new GeneratoreIDPersistenteBiglietti();
+
+        this.gestoreAcquisti = new GestoreAcquisti(generatoreID, prezziBigliettoDaFile.getPrezziBiglietto());
 
         spettacoli_user_tableview.refresh();
-        //carica i prezzi dei biglietti
-        caricaPrezziBiglietti();
 
         // Configurazione dello Spinner per il numero di biglietti
         SpinnerValueFactory<Integer> valueFactory =
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 30, 0); // Min: 1, Max: 100, Default: 1
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 30, 0);
         numeroBiglietti_spinner.setValueFactory(valueFactory);
 
         // Aggiungi un ChangeListener allo spinner dei numeri di biglietti
@@ -161,10 +174,9 @@ public class UserDashboardController {
         sala_user_tableview.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getSala().getNumeroSala())));
 
-        // Assumendo che la colonna "data_user_tableview" voglia visualizzare solo la data,
-        // senza l'orario, o viceversa. Adattalo secondo le tue necessità
         data_user_tableview.setCellValueFactory(cellData ->
                 new SimpleObjectProperty<>(cellData.getValue().getOrarioProiezione()));
+
         // Imposta il Custom CellFactory per formattare l'orario di proiezione
         data_user_tableview.setCellFactory(column -> {
             return new TableCell<ISpettacolo, LocalDateTime>() {
@@ -184,7 +196,6 @@ public class UserDashboardController {
         posti_disponibili_tableview1.setCellValueFactory(cellData ->
                 new ReadOnlyObjectWrapper<>(cellData.getValue().getSala().getPostiDisponibili() + " disponibili")
         );
-
         posti_disponibili_tableview1.setCellFactory(column -> new TableCell<ISpettacolo, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -215,30 +226,12 @@ public class UserDashboardController {
             }
         });
 
-
-
-
-
         genereFilm_user_tableview.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getFilm().getGenere())); // Assumi che IFilm abbia un metodo getGenere()
+                new SimpleStringProperty(cellData.getValue().getFilm().getGenere()));
 
 
-
-
-        Object result = spettacoloSerializerAdapter.deserialize("spettacoli.ser");
-        if (result instanceof List<?>) {
-            List<?> resultList = (List<?>) result;
-            if (!resultList.isEmpty() && resultList.get(0) instanceof ISpettacolo) {
-                List<ISpettacolo> spettacoli = (List<ISpettacolo>) resultList;
-                spettacoli_user_tableview.setItems(FXCollections.observableList(spettacoli));
-            } else {
-                System.out.println("La lista deserializzata non contiene elementi di tipo ISpettacolo");
-            }
-        } else {
-            System.out.println("Il risultato della deserializzazione non è una lista");
-        }
-
-        // Assumi che la tua TableView sia già configurata qui
+        List<ISpettacolo> spettacoli = spettacoloDataSerializer.caricaSpettacoli();
+        spettacoli_user_tableview.setItems(FXCollections.observableList(spettacoli));
 
         // Aggiungi un listener alla selezione degli elementi nella TableView
         spettacoli_user_tableview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -251,33 +244,19 @@ public class UserDashboardController {
         });
     }
 
-
-
-    private void caricaPrezziBiglietti() {
-        File file = new File("prezziBiglietto.ser");
-        if (file.exists()) {
-            try {
-                // Deserializza i prezzi del biglietto dal file
-                IPrezziBiglietto prezziDaFile = (IPrezziBiglietto) prezziBigliettoSerializer.deserialize("prezziBiglietto.ser");
-
-                // Inizializza sia prezziBigliettoBase che prezziBiglietto con i valori deserializzati
-                prezziBigliettoBase = new PrezziBiglietto(prezziDaFile.getPrezzoIntero(), prezziDaFile.getPrezzoRidotto(), prezziDaFile.getSovrapprezzo());
-                prezziBiglietto = new PrezziBiglietto(prezziDaFile.getPrezzoIntero(), prezziDaFile.getPrezzoRidotto(), prezziDaFile.getSovrapprezzo());
-            } catch (Exception e) {
-                // Gestione dell'errore
-            }
-        } else {
-            // Gestione del caso in cui il file non esiste
-        }
-    }
-
     private void aggiornaPrezzoParziale() {
+
         if (numeroBiglietti_spinner.getValue() != null) {
+
             int numeroBiglietti = numeroBiglietti_spinner.getValue();
-            double prezzoApplicato = utente.getEta() < 14 ? prezziBiglietto.getPrezzoRidotto() : prezziBiglietto.getPrezzoIntero();
+            // Ottieni i prezzi aggiornati dal servizio
+            IPrezziBiglietto prezziAttuali = prezziBigliettoDaFile.getPrezziBiglietto();
+
+            double prezzoApplicato = utente.getEta() < 14 ? prezziAttuali.getPrezzoRidotto() : prezziAttuali.getPrezzoIntero();
             double prezzoParziale = numeroBiglietti * prezzoApplicato;
             prezzoParziale_label.setText(String.format("%.2f€", prezzoParziale));
             prezzoTotale_label.setText(String.format("%.2f€", prezzoParziale));
+
         }
     }
 
@@ -285,96 +264,46 @@ public class UserDashboardController {
 
     public void selezionaSpettacolo() {
         ISpettacolo spettacoloSelezionatoTemp = spettacoli_user_tableview.getSelectionModel().getSelectedItem();
+
         if (spettacoloSelezionatoTemp != null) {
             // Imposta lo spettacolo selezionato
             spettacoloSelezionato = spettacoloSelezionatoTemp;
+            // Supponiamo che spettacoloSelezionato.getOrarioProiezione() ritorni un oggetto LocalDateTime
+            LocalDateTime dataOrarioProiezione = spettacoloSelezionato.getOrarioProiezione();
+
+            // Crea un oggetto DateTimeFormatter e specifica il formato desiderato
+            DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+            // Formatta la data
+            String dataFormattata = dataOrarioProiezione.format(formatoData);
+
+            // Imposta il testo formattato nel label
+            selectDataFilm_label.setText(dataFormattata);
 
             // Aggiorna le label con i dettagli dello spettacolo
             selectTitoloFilm_label.setText(spettacoloSelezionato.getFilm().getTitolo());
             selectGenereFilm_label.setText(spettacoloSelezionato.getFilm().getGenere());
-            selectDataFilm_label.setText(spettacoloSelezionato.getOrarioProiezione().toString());
 
-            // Reset dei prezzi ai valori base prima di applicare le strategie
-            resetPrezziBiglietto();
 
-            // Applica le strategie di prezzo
-            applicaStrategieDiPrezzo();
+            // Chiama il metodo per applicare le strategie di prezzo al prezzo del biglietto
+            prezziBigliettoDaFile.applicaStrategieDiPrezzo(spettacoloSelezionato);
+            aggiornaPrezzoParziale();
 
             // Preparazione per il passo successivo (numero biglietti già impostato tramite Spinner)
         }
     }
 
-
-    private void applicaStrategieDiPrezzo() {
-        // Assicurati che spettacoloSelezionato non sia null
-        if (spettacoloSelezionato != null) {
-            // Crea un nuovo contesto con i prezzi base
-            Context context = new Context(new PrezzoBaseStrategy(prezziBiglietto));
-
-            // Esegue la strategia base per assicurare che i prezzi siano inizializzati correttamente
-            context.executeStrategy();
-
-            // Verifica condizioni specifiche e applica strategie aggiuntive
-            DayOfWeek giorno = spettacoloSelezionato.getOrarioProiezione().getDayOfWeek();
-            if (giorno == DayOfWeek.SATURDAY || giorno == DayOfWeek.SUNDAY) {
-                // Sovrapprezzo weekend
-                context.setStrategy(new PrezzoWeekEndStrategy(prezziBiglietto, calcolaSovrapprezzoWeekend()));
-                context.executeStrategy();
-            }
-
-            // Aggiorna i prezzi visualizzati all'utente
-            aggiornaPrezzoParziale();
-        }
-    }
-
-    private void resetPrezziBiglietto() {
-        // Reset dei prezzi ai valori iniziali
-        prezziBiglietto.setPrezzoIntero(prezziBigliettoBase.getPrezzoIntero());
-        prezziBiglietto.setPrezzoRidotto(prezziBigliettoBase.getPrezzoRidotto());
-        prezziBiglietto.setSovrapprezzo(0); // Assicurati che questa proprietà esista e sia gestibile adeguatamente
-    }
-
-    private double calcolaSovrapprezzoWeekend() {
-        // Qui puoi calcolare il sovrapprezzo specifico per il weekend se variabile
-        return prezziBigliettoBase.getSovrapprezzo(); // Modifica con il tuo metodo di calcolo
-    }
-
-
     @FXML
-    public void procediAcquisto() {
-        if (spettacoloSelezionato == null) {
-            System.out.println("Seleziona uno spettacolo prima di procedere.");
+    public void procediAcquisto(){
+        List<IBiglietto> bigliettiCreati = gestoreAcquisti.procediAcquisto(spettacoloSelezionato, utente, numeroBiglietti_spinner.getValue());
+
+        if (bigliettiCreati.isEmpty()) {
+            AlertUtil.showInformationAlert("Impossibile procedere all'acquisto. Posti a sedere esauriti o numero biglietti selezionati maggiore del numero di posti a sedere disponibili.");
             return;
-        }
-
-        if (spettacoloSelezionato.getSala().getPostiDisponibili() == 0) {
-            System.out.println("Posti a sedere esauriti per questo spettacolo");
-            return;
-        }
-
-        // Ottiene il numero di biglietti selezionato dallo Spinner
-        int numeroBiglietti = numeroBiglietti_spinner.getValue();
-
-
-
-
-        // Determina il tipo di biglietto in base all'età dell'utente
-        BigliettoFactory bigliettoFactory;
-        if (utente.getEta() < 14) {
-            bigliettoFactory = new BigliettoRidottoFactory(generatoreID);
-        } else {
-            bigliettoFactory = new BigliettoInteroFactory(generatoreID);
-        }
-        
-        double prezzoApplicato = utente.getEta() < 14 ? prezziBiglietto.getPrezzoRidotto() : prezziBiglietto.getPrezzoIntero();
-
-        for (int i = 0; i < numeroBiglietti; i++) {
-            IBiglietto biglietto = bigliettoFactory.creaBiglietto(spettacoloSelezionato, utente, prezzoApplicato);
-            bigliettiCreati.add(biglietto);
         }
 
         visualizzaInformazioniBiglietti();
-        caricaSchermataPagamento();
+        caricaSchermataPagamento(bigliettiCreati);
     }
 
     private void visualizzaInformazioniBiglietti() {
@@ -389,9 +318,7 @@ public class UserDashboardController {
         }
     }
 
-
-
-    public void caricaSchermataPagamento() {
+    public void caricaSchermataPagamento(List<IBiglietto> bigliettiCreati) {
         try {
             // Carica il nuovo contenuto FXML per il centro
             FXMLLoader loader = new FXMLLoader(getClass().getResource("pagamento.fxml")); // Assicurati di usare il percorso corretto
@@ -399,9 +326,10 @@ public class UserDashboardController {
 
             // Ottieni l'accesso al controller associato alla vista caricata
             PagamentoController pagamentoController = loader.getController();
-            // Passa l'oggetto Utente al controller
+
+            // Passa l'oggetto Utente e la lista dei biglietti al controller della schermata di pagamento
             pagamentoController.setUtente(this.utente);
-            pagamentoController.setBigliettiDaAcquistare(this.bigliettiCreati); // Passa l'elenco dei biglietti
+            pagamentoController.setBigliettiDaAcquistare(bigliettiCreati); // Usa la lista dei biglietti passata come parametro
 
             // Sostituisci il contenuto del centro nel BorderPane
             mainBorderPane.setCenter(pagamentoPane);
@@ -409,8 +337,6 @@ public class UserDashboardController {
             e.printStackTrace(); // Gestisci l'eccezione come preferisci
         }
     }
-
-
 
     private void aggiornaLabelConSpettacoloSelezionato(ISpettacolo spettacolo) {
         // Assumi che la classe ISpettacolo e le sue relative classi abbiano i metodi getter corretti
@@ -462,8 +388,6 @@ public class UserDashboardController {
             label_utente.setText(nome + " " + cognome);
         }
     }
-
-
 
     public void closeDashboard(){
 

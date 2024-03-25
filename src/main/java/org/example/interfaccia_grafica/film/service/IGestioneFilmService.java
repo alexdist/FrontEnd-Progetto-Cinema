@@ -1,4 +1,4 @@
-package org.example.interfaccia_grafica.film;
+package org.example.interfaccia_grafica.film.service;
 
 import cinema_Infrastructure.film.IFilm;
 import exception.film.DurataFilmNonValidaException;

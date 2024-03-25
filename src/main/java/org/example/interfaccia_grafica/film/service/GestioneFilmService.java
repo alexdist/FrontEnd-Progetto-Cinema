@@ -1,4 +1,4 @@
-package org.example.interfaccia_grafica.film;
+package org.example.interfaccia_grafica.film.service;
 
 import Serializzazione.adapter.target.IDataSerializer;
 import admin_commands.film.aggiungi_film.AggiungiFilmCommand;

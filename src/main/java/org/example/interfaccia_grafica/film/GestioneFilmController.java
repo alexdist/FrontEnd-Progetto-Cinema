@@ -18,10 +18,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import org.example.interfaccia_grafica.film.service.GestioneFilmService;
+import org.example.interfaccia_grafica.film.service.IGestioneFilmService;
 import org.example.interfaccia_grafica.general_utility_classes.AlertUtil;
 import prova_id_PERSISTENTE.GeneratoreIDPersistenteFilm;
 import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +101,7 @@ public class GestioneFilmController implements Initializable {
         }
 
         IGeneratoreIDPersistente generatoreIDFilm = new GeneratoreIDPersistenteFilm();
+
         Amministratore amministratore = new Amministratore("Mario","Rossi",Ruolo.AMMINISTRATORE);
         this.gestioneFilmService = new GestioneFilmService(films, generatoreIDFilm, filmSerializerAdapter, amministratore);
 
