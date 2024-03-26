@@ -15,6 +15,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.interfaccia_grafica.general_utility_classes.AlertUtil;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.ISalaDataSerializer;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.SalaDataSerializer;
 import org.example.interfaccia_grafica.sale.service.GestioneSaleService;
 import org.example.interfaccia_grafica.sale.service.IGestioneSaleService;
 import prova_id_PERSISTENTE.GeneratoreIDPersistenteSala;
@@ -60,13 +62,18 @@ public class GestioneSaleController implements Initializable {
 
     private IGestioneSaleService gestioneSaleService;
 
+    private ISalaDataSerializer salaDataSerializer;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        IDataSerializer salaSerializerAdapter = new SalaSerializerAdapter(new SalaSerializer());
+        salaDataSerializer = new SalaDataSerializer(new SalaSerializerAdapter(new SalaSerializer()));
+
+        //IDataSerializer salaSerializerAdapter = new SalaSerializerAdapter(new SalaSerializer());
         // Tentativo di caricare le sale esistenti
         try {
-            sale = (List<ISala>) salaSerializerAdapter.deserialize("sale.ser");
+            //sale = (List<ISala>) salaSerializerAdapter.deserialize("sale.ser");
+            sale =  salaDataSerializer.caricaSala();
             saleObservableList.addAll(sale);
         } catch (Exception e) {
             System.out.println("Impossibile caricare le sale esistenti. " + e.getMessage());
@@ -77,7 +84,7 @@ public class GestioneSaleController implements Initializable {
 
         IGeneratoreIDPersistente generatoreIDSala = new GeneratoreIDPersistenteSala();
         Amministratore amministratore = new Amministratore("Mario","Rossi",Ruolo.AMMINISTRATORE);
-        this.gestioneSaleService = new GestioneSaleService(sale, generatoreIDSala, salaSerializerAdapter, amministratore);
+        this.gestioneSaleService = new GestioneSaleService(sale, generatoreIDSala, salaDataSerializer, amministratore);
 
         numeroSalaCol_tableview.setCellValueFactory(new PropertyValueFactory<>("numeroSala"));
         capacitaCol_tableview.setCellValueFactory(new PropertyValueFactory<>("capacita"));

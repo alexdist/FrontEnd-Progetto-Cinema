@@ -1,5 +1,6 @@
 package org.example.interfaccia_grafica.service_gestionericavicontroller;
 
+import domain.Amministratore;
 import org.example.interfaccia_grafica.ricavi.DatiSala;
 import revenues_observer.observable.AbstractRegistroBiglietti;
 import ticket.factory.product.IBiglietto;
@@ -15,6 +16,7 @@ import java.util.Map;
 public class GestioneRicaviService implements IGestioneRicaviService{
 
     private AbstractRegistroBiglietti registroBiglietti;
+    private Amministratore amministratore;
 
     public GestioneRicaviService() {
         try {

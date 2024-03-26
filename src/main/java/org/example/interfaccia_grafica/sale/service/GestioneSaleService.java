@@ -16,6 +16,7 @@ import exception.film.*;
 import exception.sala.*;
 import exception.spettacolo.SovrapposizioneSpettacoloException;
 import exception.spettacolo.SpettacoloNonTrovatoException;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.ISalaDataSerializer;
 import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
 
 import java.io.IOException;
@@ -25,10 +26,11 @@ import java.util.function.Consumer;
 public class GestioneSaleService implements IGestioneSaleService {
     private List<ISala> sale;
     private IGeneratoreIDPersistente generatoreID;
-    private IDataSerializer salaSerializer;
+    //private IDataSerializer salaSerializer;
+    private ISalaDataSerializer salaSerializer;
     private Amministratore amministratore;
 
-    public GestioneSaleService(List<ISala> sale, IGeneratoreIDPersistente generatoreID, IDataSerializer salaSerializer, Amministratore amministratore) {
+    public GestioneSaleService(List<ISala> sale, IGeneratoreIDPersistente generatoreID, ISalaDataSerializer salaSerializer, Amministratore amministratore) {
         this.sale = sale;
         this.generatoreID = generatoreID;
         this.salaSerializer = salaSerializer;
@@ -59,7 +61,8 @@ public class GestioneSaleService implements IGestioneSaleService {
         amministratore.eseguiComando();
 
         onSuccess.accept(nuovaSala);
-        salaSerializer.serialize(sale, "sale.ser");
+        //salaSerializer.serialize(sale, "sale.ser");
+        salaSerializer.salvaSala(sale);
     }
 
 
@@ -73,7 +76,8 @@ public class GestioneSaleService implements IGestioneSaleService {
             amministratore.setCommand(rimuoviSalaCommand);
             amministratore.eseguiComando();
 
-            salaSerializer.serialize(sale, "sale.ser"); // Salva le sale dopo la rimozione
+            //salaSerializer.serialize(sale, "sale.ser"); // Salva le sale dopo la rimozione
+            salaSerializer.salvaSala(sale);
 
             onSuccess.accept(idSala); // Esegue l'operazione di successo
         } catch (SalaNonTrovataException e) {

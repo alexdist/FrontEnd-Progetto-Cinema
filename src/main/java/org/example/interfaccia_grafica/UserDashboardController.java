@@ -1,10 +1,7 @@
 package org.example.interfaccia_grafica;
 
-import Serializzazione.adapter.adaptee.PrezziBigliettoSerializer;
 import Serializzazione.adapter.adaptee.SpettacoloSerializer;
-import Serializzazione.adapter.adapter.PrezziBigliettoSerializerAdapter;
 import Serializzazione.adapter.adapter.SpettacoloSerializerAdapter;
-import Serializzazione.adapter.target.IDataSerializer;
 import cinema_Infrastructure.spettacolo.ISpettacolo;
 import domain.Utente;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -12,17 +9,11 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -41,15 +32,9 @@ import org.example.interfaccia_grafica.service_userdashcontroller.IServizioPrezz
 import org.example.interfaccia_grafica.service_userdashcontroller.ServizioPrezziBiglietto;
 import prova_id_PERSISTENTE.GeneratoreIDPersistenteBiglietti;
 import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
-import ticket.factory.abstract_factory.BigliettoFactory;
-import ticket.factory.concrete_factory.BigliettoInteroFactory;
-import ticket.factory.concrete_factory.BigliettoRidottoFactory;
 import ticket.factory.product.IBiglietto;
 import ticket_pricing.IPrezziBiglietto;
-import ticket_pricing.PrezziBiglietto;
-import ticket_pricing.strategy.Context;
-import ticket_pricing.strategy.PrezzoBaseStrategy;
-import ticket_pricing.strategy.PrezzoWeekEndStrategy;
+
 
 
 public class UserDashboardController {
@@ -144,7 +129,7 @@ public class UserDashboardController {
 
     @FXML
 
-    public void initialize(){
+    public void initialize() {
         prezziBigliettoDaFile = new ServizioPrezziBiglietto();
 
         spettacoloDataSerializer = new SpettacoloDataSerializer(new SpettacoloSerializerAdapter(new SpettacoloSerializer()));
@@ -261,7 +246,6 @@ public class UserDashboardController {
     }
 
 
-
     public void selezionaSpettacolo() {
         ISpettacolo spettacoloSelezionatoTemp = spettacoli_user_tableview.getSelectionModel().getSelectedItem();
 
@@ -294,11 +278,11 @@ public class UserDashboardController {
     }
 
     @FXML
-    public void procediAcquisto(){
+    public void procediAcquisto() {
         List<IBiglietto> bigliettiCreati = gestoreAcquisti.procediAcquisto(spettacoloSelezionato, utente, numeroBiglietti_spinner.getValue());
 
         if (bigliettiCreati.isEmpty()) {
-            AlertUtil.showInformationAlert("Impossibile procedere all'acquisto. Posti a sedere esauriti o numero biglietti selezionati maggiore del numero di posti a sedere disponibili.");
+            AlertUtil.showErrorAlert("Impossibile procedere all'acquisto. Posti a sedere esauriti o numero biglietti selezionati maggiore del numero di posti a sedere disponibili.");
             return;
         }
 
@@ -353,20 +337,20 @@ public class UserDashboardController {
 
     public void logout() throws IOException {
         esci_btn.getScene().getWindow().hide();
-        try{
+        try {
             Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
 
             Stage stage = new Stage();
             Scene scene = new Scene(root);
 
-            root.setOnMousePressed((MouseEvent event)->{
+            root.setOnMousePressed((MouseEvent event) -> {
 
                 x = event.getSceneX();
                 y = event.getSceneY();
 
             });
 
-            root.setOnMouseDragged((MouseEvent event)->{
+            root.setOnMouseDragged((MouseEvent event) -> {
 
                 stage.setX(event.getScreenX() - x);
                 stage.setY(event.getScreenY() - y);
@@ -375,13 +359,14 @@ public class UserDashboardController {
 
             stage.setScene(scene);
             stage.show();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     // Metodo helper per aggiornare la label con il nome e cognome dell'utente
     private void updateLabelUtente() {
+
         if (utente != null && label_utente != null) {
             String nome = utente.getNome(); // Assumi che la classe Utente abbia il metodo getNome()
             String cognome = utente.getCognome(); // Assumi che la classe Utente abbia il metodo getCognome()
@@ -389,14 +374,14 @@ public class UserDashboardController {
         }
     }
 
-    public void closeDashboard(){
+    public void closeDashboard() {
 
         System.exit(0);
     }
 
-    public void minimizeDashboard(){
+    public void minimizeDashboard() {
 
-        Stage stage = (Stage)topForm_anchorpane.getScene().getWindow();
+        Stage stage = (Stage) topForm_anchorpane.getScene().getWindow();
         stage.setIconified(true);
     }
 }

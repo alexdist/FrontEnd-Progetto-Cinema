@@ -21,6 +21,8 @@ import javafx.scene.layout.AnchorPane;
 import org.example.interfaccia_grafica.film.service.GestioneFilmService;
 import org.example.interfaccia_grafica.film.service.IGestioneFilmService;
 import org.example.interfaccia_grafica.general_utility_classes.AlertUtil;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.FilmDataSerializer;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.IFilmDataSerializer;
 import prova_id_PERSISTENTE.GeneratoreIDPersistenteFilm;
 import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
 
@@ -88,12 +90,16 @@ public class GestioneFilmController implements Initializable {
 
     private IGestioneFilmService gestioneFilmService;
 
+    private IFilmDataSerializer filmDataSerializer;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        IDataSerializer filmSerializerAdapter = new FilmSerializerAdapter(new FilmSerializer());
+        //IDataSerializer filmSerializerAdapter = new FilmSerializerAdapter(new FilmSerializer());
+        filmDataSerializer = new FilmDataSerializer(new FilmSerializerAdapter(new FilmSerializer()));
         try {
-            films = (List<IFilm>) filmSerializerAdapter.deserialize("film.ser");
+            //films = (List<IFilm>) filmSerializerAdapter.deserialize("film.ser");
+            films = filmDataSerializer.caricaFilm();
             filmObservableList.addAll(films);
         } catch (Exception e) {
             System.out.println("Impossibile caricare i film esistenti. " + e.getMessage());
@@ -103,7 +109,7 @@ public class GestioneFilmController implements Initializable {
         IGeneratoreIDPersistente generatoreIDFilm = new GeneratoreIDPersistenteFilm();
 
         Amministratore amministratore = new Amministratore("Mario","Rossi",Ruolo.AMMINISTRATORE);
-        this.gestioneFilmService = new GestioneFilmService(films, generatoreIDFilm, filmSerializerAdapter, amministratore);
+        this.gestioneFilmService = new GestioneFilmService(films, generatoreIDFilm, filmDataSerializer, amministratore);
 
         titoloFilmCol_tableview.setCellValueFactory(new PropertyValueFactory<>("titolo"));
         durataFilmCol_tableview.setCellValueFactory(new PropertyValueFactory<>("durata"));

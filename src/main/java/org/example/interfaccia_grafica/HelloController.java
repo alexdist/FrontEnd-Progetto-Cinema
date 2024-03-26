@@ -12,7 +12,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -24,8 +23,6 @@ public class HelloController {
     @FXML
     private Button admin_close;
 
-//    @FXML
-//    private TextField admin_cognome;
 
     @FXML
     private AnchorPane admin_form;
@@ -35,9 +32,6 @@ public class HelloController {
 
     @FXML
     private ImageView admin_minimize;
-
-//    @FXML
-//    private TextField admin_nome;
 
     @FXML
     private PasswordField admin_password;
@@ -87,21 +81,21 @@ public class HelloController {
     @FXML
     private TextField admin_username;
 
-    public void utente_close(){
+    public void utente_close() {
         System.exit(0);
     }
 
-    public void utente_minimize(){
-        Stage stage = (Stage)utente_form.getScene().getWindow();
+    public void utente_minimize() {
+        Stage stage = (Stage) utente_form.getScene().getWindow();
         stage.setIconified(true);
     }
 
-    public void admin_close(){
+    public void admin_close() {
         System.exit(0);
     }
 
-    public void admin_minimize(){
-        Stage stage = (Stage)admin_form.getScene().getWindow();
+    public void admin_minimize() {
+        Stage stage = (Stage) admin_form.getScene().getWindow();
         stage.setIconified(true);
     }
 
@@ -135,6 +129,7 @@ public class HelloController {
 
     private double x = 0;
     private double y = 0;
+
     @FXML
     private void handleAdminLogin() throws IOException {
         // Aggiungi qui il codice per verificare le credenziali dell'admin
@@ -157,13 +152,13 @@ public class HelloController {
             Stage stage = new Stage();
             Scene scene = new Scene(root);
 
-            root.setOnMousePressed((MouseEvent event)->{
+            root.setOnMousePressed((MouseEvent event) -> {
 
                 x = event.getSceneX();
                 y = event.getSceneY();
             });
 
-            root.setOnMouseDragged((MouseEvent event)->{
+            root.setOnMouseDragged((MouseEvent event) -> {
 
                 stage.setX(event.getScreenX() - x);
                 stage.setY(event.getScreenY() - y);
@@ -219,6 +214,7 @@ public class HelloController {
 
     private double x1 = 0;
     private double y1 = 0;
+
     @FXML
     private void handleLoginUtenteForm() throws IOException {
 
@@ -261,8 +257,4 @@ public class HelloController {
         stage.show();
     }
 
-    @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
 }

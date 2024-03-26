@@ -23,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import org.example.interfaccia_grafica.general_utility_classes.AlertUtil;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.*;
 import org.example.interfaccia_grafica.spettacoli.service.GestioneSpettacoliService;
 import org.example.interfaccia_grafica.spettacoli.service.IGestioneSpettacoliService;
 import org.example.interfaccia_grafica.spettacoli.utility_classes.*;
@@ -40,7 +41,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class GestioneSpettacoliController implements Initializable {
+public class GestioneSpettacoliController implements Initializable { //
     @FXML
     private TextField IDRimuoviSpett_textfield;//
 
@@ -165,13 +166,20 @@ public class GestioneSpettacoliController implements Initializable {
     Amministratore amministratore = new Amministratore("Nome", "Cognome", Ruolo.AMMINISTRATORE);
 
     private IGestioneSpettacoliService gestioneSpettacoliService;
+    private IFilmDataSerializer filmDataSerializer;
+    private ISalaDataSerializer salaDataSerializer;
+    private ISpettacoloDataSerializer spettacoloDataSerializer;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
+        spettacoloDataSerializer = new SpettacoloDataSerializer(new SpettacoloSerializerAdapter(new SpettacoloSerializer()));
+        filmDataSerializer = new FilmDataSerializer(new FilmSerializerAdapter(new FilmSerializer()));
+        salaDataSerializer = new SalaDataSerializer(new SalaSerializerAdapter(new SalaSerializer()));
 
         try {
-            spettacoli = (List<ISpettacolo>) spettacoloSerializerAdapter.deserialize("spettacoli.ser");
+            //spettacoli = (List<ISpettacolo>) spettacoloSerializerAdapter.deserialize("spettacoli.ser");
+            spettacoli = spettacoloDataSerializer.caricaSpettacoli();
             spettacoliObservableList.addAll(spettacoli);
         } catch (Exception e) {
             System.out.println("Impossibile caricare gli spettacoli esistenti. " + e.getMessage());
@@ -179,7 +187,7 @@ public class GestioneSpettacoliController implements Initializable {
         }
 
 
-        gestioneSpettacoliService = new GestioneSpettacoliService(spettacoli, new GeneratoreIDPersistenteSpettacolo(), spettacoloSerializerAdapter, amministratore);
+        gestioneSpettacoliService = new GestioneSpettacoliService(spettacoli, new GeneratoreIDPersistenteSpettacolo(), spettacoloDataSerializer, amministratore);
 
 
         hoursComboBox.setItems(FXCollections.observableArrayList(IntStream.rangeClosed(0, 23).boxed().collect(Collectors.toList())));
@@ -382,7 +390,8 @@ public class GestioneSpettacoliController implements Initializable {
     private List<IFilm> getFilms() {
         // Questo metodo deve recuperare l'elenco dei film, ad esempio:
         try {
-            return (List<IFilm>) filmSerializerAdapter.deserialize("film.ser");
+            //return (List<IFilm>) filmSerializerAdapter.deserialize("film.ser");
+            return filmDataSerializer.caricaFilm();
         } catch (Exception e) {
             // gestire l'eccezione e ritornare una lista vuota o gestire di conseguenza
             return new ArrayList<>();
@@ -392,7 +401,8 @@ public class GestioneSpettacoliController implements Initializable {
     private List<ISala> getSale() {
         // Questo metodo deve recuperare l'elenco delle sale, simile a come viene fatto per i film
         try {
-            return (List<ISala>) salaSerializerAdapter.deserialize("sale.ser");
+            //return (List<ISala>) salaSerializerAdapter.deserialize("sale.ser");
+            return salaDataSerializer.caricaSala();
         } catch (Exception e) {
             // gestire l'eccezione e ritornare una lista vuota o gestire di conseguenza
             return new ArrayList<>();

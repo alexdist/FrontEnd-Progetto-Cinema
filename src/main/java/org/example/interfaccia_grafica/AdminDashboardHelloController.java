@@ -13,6 +13,7 @@ import cinema_Infrastructure.spettacolo.ISpettacolo;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -44,11 +45,11 @@ public class AdminDashboardHelloController implements Initializable {
         dashboard_spettInPalTotali.setText(String.valueOf(numeroSpettacoliInPalinsesto));
     }
 
-    private int getNumeroSpettacoliInPalinsesto(){
-        try{
-            SpettacoloSerializer spettacoloSerializer = new SpettacoloSerializer();
-            IDataSerializer spettacoloSerializerAdapter = new SpettacoloSerializerAdapter(spettacoloSerializer);
-            List<ISpettacolo> spettacoli = (List<ISpettacolo>) spettacoloSerializerAdapter.deserialize("spettacoli.ser");
+
+    private int getNumeroSpettacoliInPalinsesto() {
+        ISpettacoloDataSerializer spettacoloDataSerializer = new SpettacoloDataSerializer(new SpettacoloSerializerAdapter(new SpettacoloSerializer()));
+        try {
+            List<ISpettacolo> spettacoli = spettacoloDataSerializer.caricaSpettacoli();
             return spettacoli.size();
         }catch (Exception e){
             e.printStackTrace();
@@ -57,10 +58,9 @@ public class AdminDashboardHelloController implements Initializable {
     }
 
         private int getNumeroFilmInProgrammazione(){
+            IFilmDataSerializer filmDataSerializer = new FilmDataSerializer(new FilmSerializerAdapter(new FilmSerializer()));
         try{
-            FilmSerializer filmSerializer = new FilmSerializer();
-            IDataSerializer filmSerializerAdapter = new FilmSerializerAdapter(filmSerializer);
-            List<IFilm> films = (List<IFilm>) filmSerializerAdapter.deserialize("film.ser");
+            List<IFilm> films = filmDataSerializer.caricaFilm();
             return films.size();
         } catch (Exception e){
             e.printStackTrace();
@@ -69,11 +69,10 @@ public class AdminDashboardHelloController implements Initializable {
         }
 
         private int getNumeroSaleAttive() {
+            ISalaDataSerializer salaDataSerializer = new SalaDataSerializer(new SalaSerializerAdapter(new SalaSerializer()));
             try {
-                // Utilizza l'adapter per deserializzare la lista delle sale dal file
-                SalaSerializer salaSerializer = new SalaSerializer();
-                IDataSerializer salaSerializerAdapter = new SalaSerializerAdapter(salaSerializer);
-                List<ISala> sale = (List<ISala>) salaSerializerAdapter.deserialize("sale.ser");
+
+                List<ISala> sale =salaDataSerializer.caricaSala();
 
                 // Il numero di sale attive corrisponde alla dimensione della lista
                 return sale.size();
@@ -83,9 +82,6 @@ public class AdminDashboardHelloController implements Initializable {
                 return 0; // In caso di errore, ritorna 0 o gestisci come preferisci
             }
         }
-
-
-
 }
 
 

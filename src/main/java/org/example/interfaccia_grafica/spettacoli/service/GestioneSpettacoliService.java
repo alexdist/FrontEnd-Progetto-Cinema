@@ -14,23 +14,26 @@ import cinema_Infrastructure.spettacolo.Spettacolo;
 import cinema_Infrastructure.spettacolo.gestione_spettacolo.*;
 import domain.Amministratore;
 import exception.spettacolo.SpettacoloNonTrovatoException;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.ISpettacoloDataSerializer;
 import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class GestioneSpettacoliService implements IGestioneSpettacoliService{
+public class GestioneSpettacoliService implements IGestioneSpettacoliService{//
 
     private List<ISpettacolo> spettacoli;
     private IGeneratoreIDPersistente generatoreID;
-    private IDataSerializer spettacoloSerializerAdapter;
+    //private IDataSerializer spettacoloSerializerAdapter;
+    private ISpettacoloDataSerializer spettacoloDataSerializer;
     private Amministratore amministratore;
 
-    public GestioneSpettacoliService(List<ISpettacolo> spettacoli, IGeneratoreIDPersistente generatoreID, IDataSerializer spettacoloSerializerAdapter, Amministratore amministratore) {
+    public GestioneSpettacoliService(List<ISpettacolo> spettacoli, IGeneratoreIDPersistente generatoreID, ISpettacoloDataSerializer spettacoloDataSerializer, Amministratore amministratore) {
         this.spettacoli = spettacoli;
         this.generatoreID = generatoreID;
-        this.spettacoloSerializerAdapter = spettacoloSerializerAdapter;
+        //this.spettacoloSerializerAdapter = spettacoloSerializerAdapter;
+        this.spettacoloDataSerializer = spettacoloDataSerializer;
         this.amministratore = amministratore;
     }
 
@@ -48,7 +51,8 @@ public class GestioneSpettacoliService implements IGestioneSpettacoliService{
         onSuccess.accept(nuovoSpettacolo);
 
         // Eventuale logica di post-esecuzione, come la serializzazione
-        spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser");
+        //spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser");
+        spettacoloDataSerializer.salvaSpettacolo(spettacoli);
     }
 
 
@@ -61,7 +65,8 @@ public class GestioneSpettacoliService implements IGestioneSpettacoliService{
 
         onSuccess.accept(idSpettacolo); // Notifica il successo dell'operazione
 
-        spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser"); // Salva la lista aggiornata di spettacoli
+        //spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser"); // Salva la lista aggiornata di spettacoli
+        spettacoloDataSerializer.salvaSpettacolo(spettacoli);
     }
 
     public void modificaOrarioSpettacolo(long idSpettacolo, LocalDateTime nuovoOrario, Runnable onSuccess) throws Exception {
@@ -77,7 +82,8 @@ public class GestioneSpettacoliService implements IGestioneSpettacoliService{
 
         onSuccess.run(); // Esegui l'azione di successo, per esempio l'aggiornamento dell'UI
 
-        spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser"); // Salva le modifiche
+       // spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser"); // Salva le modifiche
+        spettacoloDataSerializer.salvaSpettacolo(spettacoli);
     }
 
     public void modificaSalaSpettacolo(long idSpettacolo, ISala nuovaSala, Runnable onSuccess) throws Exception {
@@ -90,7 +96,8 @@ public class GestioneSpettacoliService implements IGestioneSpettacoliService{
 
         onSuccess.run(); // Esegui l'azione di successo
 
-        spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser"); // Salva le modifiche
+        //spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser"); // Salva le modifiche
+        spettacoloDataSerializer.salvaSpettacolo(spettacoli);
     }
 
     public void modificaFilmSpettacolo(long idSpettacolo, IFilm nuovoFilm, Runnable onSuccess) throws Exception {
@@ -104,6 +111,7 @@ public class GestioneSpettacoliService implements IGestioneSpettacoliService{
 
         onSuccess.run(); // Esegui l'azione di successo
 
-        spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser"); // Salva le modifiche
+        //spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser"); // Salva le modifiche
+        spettacoloDataSerializer.salvaSpettacolo(spettacoli);
     }
 }

@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ISpettacoloDataSerializer {
     public List<ISpettacolo> caricaSpettacoli();
+    public void salvaSpettacolo(List<ISpettacolo> spettacoli);
 }

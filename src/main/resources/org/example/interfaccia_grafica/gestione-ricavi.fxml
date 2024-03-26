@@ -19,7 +19,7 @@
                                 <Font name="System Bold" size="24.0" />
                             </font>
                         </Label>
-                        <Button fx:id="generaRepRicavi_btn" layoutX="81.0" layoutY="120.0" mnemonicParsing="false" onAction="#generaReportRicavi" styleClass="report-btn" stylesheets="@admin-dashboardstyle.css" text="Genera Report" />
+                        <Button fx:id="generaRepRicavi_btn" layoutX="81.0" layoutY="120.0" mnemonicParsing="false" onAction="#onGeneraReportRicaviClicked" styleClass="report-btn" stylesheets="@admin-dashboardstyle.css" text="Genera Report" />
                         <Label layoutX="80.0" layoutY="78.0" text="Report Ricavi">
                             <font>
                                 <Font name="System Bold" size="18.0" />

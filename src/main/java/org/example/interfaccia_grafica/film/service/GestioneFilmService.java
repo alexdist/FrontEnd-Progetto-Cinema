@@ -15,6 +15,7 @@ import exception.film.DurataFilmNonValidaException;
 import exception.film.FilmGiaPresenteException;
 import exception.film.FilmNonTrovatoException;
 import exception.film.TitoloVuotoException;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.IFilmDataSerializer;
 import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
 
 import java.util.List;
@@ -23,10 +24,11 @@ import java.util.function.Consumer;
 public class GestioneFilmService implements IGestioneFilmService {
     private List<IFilm> films;
     private IGeneratoreIDPersistente generatoreID;
-    private IDataSerializer filmSerializer;
+    //private IDataSerializer filmSerializer;
+    private IFilmDataSerializer filmSerializer;
     private Amministratore amministratore;
 
-    public GestioneFilmService(List<IFilm> films, IGeneratoreIDPersistente generatoreID, IDataSerializer filmSerializer, Amministratore amministratore) {
+    public GestioneFilmService(List<IFilm> films, IGeneratoreIDPersistente generatoreID, IFilmDataSerializer filmSerializer, Amministratore amministratore) {
         this.films = films;
         this.generatoreID = generatoreID;
         this.filmSerializer = filmSerializer;
@@ -47,7 +49,8 @@ public class GestioneFilmService implements IGestioneFilmService {
         amministratore.eseguiComando();
 
         onSuccess.accept(nuovoFilm);
-        filmSerializer.serialize(films, "film.ser");
+        //filmSerializer.serialize(films, "film.ser");
+        filmSerializer.salvaSala(films);
     }
 
     @Override
@@ -59,7 +62,8 @@ public class GestioneFilmService implements IGestioneFilmService {
         amministratore.setCommand(rimuoviFilmCommand);
         amministratore.eseguiComando();
 
-        filmSerializer.serialize(films, "film.ser");
+        //filmSerializer.serialize(films, "film.ser");
+        filmSerializer.salvaSala(films);
 
         onSuccess.accept(idFilm);
 

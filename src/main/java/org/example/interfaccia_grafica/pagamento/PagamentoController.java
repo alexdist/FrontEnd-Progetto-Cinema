@@ -14,6 +14,10 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.ISalaDataSerializer;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.ISpettacoloDataSerializer;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.SalaDataSerializer;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.SpettacoloDataSerializer;
 import org.example.interfaccia_grafica.pagamento.service.IPagamentoService;
 import org.example.interfaccia_grafica.pagamento.service.PagamentoService;
 import payment_strategy.*;
@@ -62,11 +66,11 @@ public class PagamentoController {
     @FXML
     private AbstractRegistroBiglietti registroBiglietti;
 
-    @FXML
-    private IDataSerializer salaSerializer;
-
-    @FXML
-    private IDataSerializer spettacoloSerializer;
+//    @FXML
+//    private IDataSerializer salaSerializer;
+//
+//    @FXML
+//    private IDataSerializer spettacoloSerializer;
 
     @FXML
     private IMetodoPagamentoStrategy metodoPagamentoContanti;
@@ -77,22 +81,28 @@ public class PagamentoController {
     @FXML
     private IMetodoPagamentoStrategy metodoPagamentoBancomat;
 
+    private ISpettacoloDataSerializer spettacoloDataSerializer;
+    private ISalaDataSerializer salaDataSerializer;
 
 
     @FXML
     public void initialize() {
+        spettacoloDataSerializer = new SpettacoloDataSerializer(new SpettacoloSerializerAdapter(new SpettacoloSerializer()));
+        salaDataSerializer = new SalaDataSerializer(new SalaSerializerAdapter(new SalaSerializer()));
+
 
         // Inizializza qui le dipendenze
         bigliettiDaAcquistare = new ArrayList<>();
         registroBiglietti = new RegistroBiglietti();
-        salaSerializer = new SalaSerializerAdapter(new SalaSerializer());
-        spettacoloSerializer = new SpettacoloSerializerAdapter(new SpettacoloSerializer());
+//        salaSerializer = new SalaSerializerAdapter(new SalaSerializer());
+//        spettacoloSerializer = new SpettacoloSerializerAdapter(new SpettacoloSerializer());
         metodoPagamentoContanti = new PagamentoContantiStrategy();
         metodoPagamentoCartaDiCredito = new PagamentoCartaDiCreditoStrategy();
         metodoPagamentoBancomat = new PagamentoBancomatStrategy();
 
         try {
-            sale = (List<ISala>) salaSerializer.deserialize("sale.ser");
+            //sale = (List<ISala>) salaSerializer.deserialize("sale.ser");
+            sale = salaDataSerializer.caricaSala();
 
         } catch (Exception e) {
             System.out.println("Impossibile caricare le sale esistenti. " + e.getMessage());
@@ -100,14 +110,15 @@ public class PagamentoController {
         }
 
         try {
-            spettacoli = (List<ISpettacolo>) spettacoloSerializer.deserialize("spettacoli.ser");
+            //spettacoli = (List<ISpettacolo>) spettacoloSerializer.deserialize("spettacoli.ser");
+            spettacoli = spettacoloDataSerializer.caricaSpettacoli();
             //saleObservableList.addAll(sale);
         } catch (Exception e) {
             System.out.println("Impossibile caricare gli spettacoli esistenti. " + e.getMessage());
             spettacoli = new ArrayList<>();
         }
 
-        pagamentoService = new PagamentoService(registroBiglietti, salaSerializer, spettacoloSerializer, spettacoli, sale);
+        pagamentoService = new PagamentoService(registroBiglietti, spettacoli, sale);
     }
 
     public void aggiungiBigliettiAlTilePane(List<IBiglietto> biglietti) {

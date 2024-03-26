@@ -1,12 +1,20 @@
 package org.example.interfaccia_grafica.pagamento.service;
 
 import Serializzazione.adapter.adaptee.RegistroBigliettiSerializer;
+import Serializzazione.adapter.adaptee.SalaSerializer;
+import Serializzazione.adapter.adaptee.SpettacoloSerializer;
 import Serializzazione.adapter.adapter.RegistroBigliettiSerializerAdapter;
+import Serializzazione.adapter.adapter.SalaSerializerAdapter;
+import Serializzazione.adapter.adapter.SpettacoloSerializerAdapter;
 import Serializzazione.adapter.target.IDataSerializer;
 import cinema_Infrastructure.sala.ISala;
 import cinema_Infrastructure.spettacolo.ISpettacolo;
 import domain.Utente;
 import org.example.interfaccia_grafica.general_utility_classes.AlertUtil;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.ISalaDataSerializer;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.ISpettacoloDataSerializer;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.SalaDataSerializer;
+import org.example.interfaccia_grafica.general_utility_classes.serializzazione.SpettacoloDataSerializer;
 import payment_strategy.IMetodoPagamentoStrategy;
 import payment_strategy.PayContext;
 import revenues_observer.concrete_observable.RegistroBiglietti;
@@ -24,18 +32,20 @@ import java.util.List;
 public class PagamentoService implements IPagamentoService {
     // Inietta le dipendenze necessarie, come il registro dei biglietti e i serializzatori
     private AbstractRegistroBiglietti registroBiglietti;
-    private IDataSerializer salaSerializer;
-    private IDataSerializer spettacoloSerializer;
+//    private IDataSerializer salaSerializer;
+   // private IDataSerializer spettacoloSerializer;
     private List<ISpettacolo> spettacoli;
     private List<ISala> sale;
     private Utente utente;
+    private ISalaDataSerializer salaSerializer;
+    private ISpettacoloDataSerializer spettacoloSerializer;
 
     // Costruttore per iniettare le dipendenze
-    public PagamentoService(AbstractRegistroBiglietti registroBiglietti, IDataSerializer salaSerializer, IDataSerializer spettacoloSerializer, List<ISpettacolo> spettacoli, List<ISala> sale) {
+    public PagamentoService(AbstractRegistroBiglietti registroBiglietti, List<ISpettacolo> spettacoli, List<ISala> sale) {
 
         this.registroBiglietti = registroBiglietti;
-        this.salaSerializer = salaSerializer;
-        this.spettacoloSerializer = spettacoloSerializer;
+        this.salaSerializer = new SalaDataSerializer (new SalaSerializerAdapter(new SalaSerializer()));
+        this.spettacoloSerializer = new SpettacoloDataSerializer(new SpettacoloSerializerAdapter(new SpettacoloSerializer()));
         this.spettacoli = spettacoli;
         this.sale = sale;
     }
@@ -55,8 +65,9 @@ public class PagamentoService implements IPagamentoService {
                 utente.setCommand(acquistoCommand);
                 utente.eseguiComando(); // Esegui il comando senza controllare il risultato
 
-                salaSerializer.serialize(sale,"sale.ser");
-                spettacoloSerializer.serialize(spettacoli, "spettacoli.ser");
+                //salaSerializer.serialize(sale,"sale.ser");
+                salaSerializer.salvaSala(sale);
+                spettacoloSerializer.salvaSpettacolo(spettacoli);
 
                 aggiornaRicaviConNuovoBiglietto(biglietto);
             } else {
@@ -95,8 +106,8 @@ public class PagamentoService implements IPagamentoService {
 
         if (spettacoloTrovato != null && spettacoloTrovato.getSala().occupaPosto()) {
             // Se il posto è stato occupato con successo, serializza lo stato aggiornato
-            salaSerializer.serialize(sale,"sale.ser");
-            spettacoloSerializer.serialize(spettacoli, "spettacoli.ser");
+            salaSerializer.salvaSala(sale);
+            spettacoloSerializer.salvaSpettacolo(spettacoli);
             return true; // Posto occupato e stato serializzato con successo
         } else {
             AlertUtil.showErrorAlert("La sala è piena o lo spettacolo non è stato trovato.");
@@ -162,8 +173,8 @@ public class PagamentoService implements IPagamentoService {
             // Libera il posto nello spettacolo trovato
             spettacoloTrovato.getSala().liberaPosto();
             // Serializza lo stato aggiornato della sala e degli spettacoli
-            salaSerializer.serialize(sale, "sale.ser");
-            spettacoloSerializer.serialize(spettacoli, "spettacoli.ser");
+            salaSerializer.salvaSala(sale);
+            spettacoloSerializer.salvaSpettacolo(spettacoli);
             return true; // Posto liberato e stato serializzato con successo
         } else {
             AlertUtil.showAlert("Spettacolo non trovato.", "Lo spettacolo non è stato trovato");
