@@ -1,6 +1,5 @@
 package org.example.interfaccia_grafica.spettacoli.service;
 
-import Serializzazione.adapter.target.IDataSerializer;
 import admin_commands.spettacolo.aggiungi_spettacolo.AggiungiSpettacoloCommand;
 import admin_commands.spettacolo.modifica_spettacolo.modifica_film.ModificaFilmPerIdSpettacoloCommand;
 import admin_commands.spettacolo.modifica_spettacolo.modifica_orario.ModificaOrarioPerIdSpettacoloCommand;
@@ -13,9 +12,8 @@ import cinema_Infrastructure.spettacolo.ISpettacolo;
 import cinema_Infrastructure.spettacolo.Spettacolo;
 import cinema_Infrastructure.spettacolo.gestione_spettacolo.*;
 import domain.Amministratore;
-import exception.spettacolo.SpettacoloNonTrovatoException;
 import org.example.interfaccia_grafica.general_utility_classes.serializzazione.ISpettacoloDataSerializer;
-import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
+import ID_persistente.IGeneratoreIDPersistente;
 
 import java.time.LocalDateTime;
 import java.util.List;

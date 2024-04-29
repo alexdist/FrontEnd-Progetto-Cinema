@@ -27,9 +27,8 @@ import org.example.interfaccia_grafica.general_utility_classes.serializzazione.*
 import org.example.interfaccia_grafica.spettacoli.service.GestioneSpettacoliService;
 import org.example.interfaccia_grafica.spettacoli.service.IGestioneSpettacoliService;
 import org.example.interfaccia_grafica.spettacoli.utility_classes.*;
-import prova_id_PERSISTENTE.GeneratoreIDPersistenteSpettacolo;
+import ID_persistente.GeneratoreIDPersistenteSpettacolo;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

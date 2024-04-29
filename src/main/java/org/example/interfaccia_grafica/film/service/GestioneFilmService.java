@@ -1,6 +1,5 @@
 package org.example.interfaccia_grafica.film.service;
 
-import Serializzazione.adapter.target.IDataSerializer;
 import admin_commands.film.aggiungi_film.AggiungiFilmCommand;
 import admin_commands.film.elimina_film.RimuoviFilmCommand;
 import admin_interfaces.ICommand;
@@ -16,7 +15,7 @@ import exception.film.FilmGiaPresenteException;
 import exception.film.FilmNonTrovatoException;
 import exception.film.TitoloVuotoException;
 import org.example.interfaccia_grafica.general_utility_classes.serializzazione.IFilmDataSerializer;
-import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
+import ID_persistente.IGeneratoreIDPersistente;
 
 import java.util.List;
 import java.util.function.Consumer;

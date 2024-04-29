@@ -30,8 +30,8 @@ import org.example.interfaccia_grafica.service_userdashcontroller.GestoreAcquist
 import org.example.interfaccia_grafica.service_userdashcontroller.IGestoreAcquisti;
 import org.example.interfaccia_grafica.service_userdashcontroller.IServizioPrezziBiglietto;
 import org.example.interfaccia_grafica.service_userdashcontroller.ServizioPrezziBiglietto;
-import prova_id_PERSISTENTE.GeneratoreIDPersistenteBiglietti;
-import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
+import ID_persistente.GeneratoreIDPersistenteBiglietti;
+import ID_persistente.IGeneratoreIDPersistente;
 import ticket.factory.product.IBiglietto;
 import ticket_pricing.IPrezziBiglietto;
 

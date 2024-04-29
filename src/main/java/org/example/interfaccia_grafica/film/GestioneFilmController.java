@@ -2,7 +2,6 @@ package org.example.interfaccia_grafica.film;
 
 import Serializzazione.adapter.adaptee.FilmSerializer;
 import Serializzazione.adapter.adapter.FilmSerializerAdapter;
-import Serializzazione.adapter.target.IDataSerializer;
 import cinema_Infrastructure.film.IFilm;
 import domain.Amministratore;
 import domain.Ruolo;
@@ -23,10 +22,9 @@ import org.example.interfaccia_grafica.film.service.IGestioneFilmService;
 import org.example.interfaccia_grafica.general_utility_classes.AlertUtil;
 import org.example.interfaccia_grafica.general_utility_classes.serializzazione.FilmDataSerializer;
 import org.example.interfaccia_grafica.general_utility_classes.serializzazione.IFilmDataSerializer;
-import prova_id_PERSISTENTE.GeneratoreIDPersistenteFilm;
-import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
+import ID_persistente.GeneratoreIDPersistenteFilm;
+import ID_persistente.IGeneratoreIDPersistente;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;

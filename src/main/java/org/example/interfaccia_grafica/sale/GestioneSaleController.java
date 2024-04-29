@@ -2,7 +2,6 @@ package org.example.interfaccia_grafica.sale;
 
 import Serializzazione.adapter.adaptee.SalaSerializer;
 import Serializzazione.adapter.adapter.SalaSerializerAdapter;
-import Serializzazione.adapter.target.IDataSerializer;
 import cinema_Infrastructure.sala.ISala;
 import cinema_Infrastructure.sala.Sala;
 import domain.Amministratore;
@@ -19,8 +18,8 @@ import org.example.interfaccia_grafica.general_utility_classes.serializzazione.I
 import org.example.interfaccia_grafica.general_utility_classes.serializzazione.SalaDataSerializer;
 import org.example.interfaccia_grafica.sale.service.GestioneSaleService;
 import org.example.interfaccia_grafica.sale.service.IGestioneSaleService;
-import prova_id_PERSISTENTE.GeneratoreIDPersistenteSala;
-import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
+import ID_persistente.GeneratoreIDPersistenteSala;
+import ID_persistente.IGeneratoreIDPersistente;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,22 +1,16 @@
 package org.example.interfaccia_grafica.service_userdashcontroller;
 
-import Serializzazione.adapter.adaptee.PrezziBigliettoSerializer;
-import Serializzazione.adapter.adapter.PrezziBigliettoSerializerAdapter;
 import Serializzazione.adapter.target.IDataSerializer;
 import cinema_Infrastructure.spettacolo.ISpettacolo;
-import cinema_Infrastructure.spettacolo.Spettacolo;
 import domain.Utente;
-import id_generator_factory.product.IGeneratoreID;
-import org.example.interfaccia_grafica.general_utility_classes.AlertUtil;
-import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
+//import id_generator_factory.product.IGeneratoreID;
+import ID_persistente.IGeneratoreIDPersistente;
 import ticket.factory.abstract_factory.BigliettoFactory;
 import ticket.factory.concrete_factory.BigliettoInteroFactory;
 import ticket.factory.concrete_factory.BigliettoRidottoFactory;
 import ticket.factory.product.IBiglietto;
 import ticket_pricing.IPrezziBiglietto;
-import ticket_pricing.PrezziBiglietto;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 

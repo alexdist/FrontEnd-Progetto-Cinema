@@ -1,6 +1,5 @@
 package org.example.interfaccia_grafica.sale.service;
 
-import Serializzazione.adapter.target.IDataSerializer;
 import admin_commands.sala.aggiungi_sala.AggiungiSalaCommand;
 import admin_commands.sala.rimuovi_sala.RimuoviSalaCommand;
 import admin_interfaces.ICommand;
@@ -17,7 +16,7 @@ import exception.sala.*;
 import exception.spettacolo.SovrapposizioneSpettacoloException;
 import exception.spettacolo.SpettacoloNonTrovatoException;
 import org.example.interfaccia_grafica.general_utility_classes.serializzazione.ISalaDataSerializer;
-import prova_id_PERSISTENTE.IGeneratoreIDPersistente;
+import ID_persistente.IGeneratoreIDPersistente;
 
 import java.io.IOException;
 import java.util.List;
