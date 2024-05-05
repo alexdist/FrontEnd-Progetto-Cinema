@@ -152,15 +152,15 @@ public class GestioneSpettacoliController implements Initializable { //
     @FXML
     private ObservableList<ISala> salaObservableList = FXCollections.observableArrayList();
 
-    SpettacoloSerializer spettacoloSerializer = new SpettacoloSerializer();
-    IDataSerializer spettacoloSerializerAdapter = new SpettacoloSerializerAdapter(spettacoloSerializer);
+   // SpettacoloSerializer spettacoloSerializer = new SpettacoloSerializer();
+   // IDataSerializer spettacoloSerializerAdapter = new SpettacoloSerializerAdapter(spettacoloSerializer);
 
-    FilmSerializer filmSerializer = new FilmSerializer();
-    IDataSerializer filmSerializerAdapter = new FilmSerializerAdapter(filmSerializer);
+   // FilmSerializer filmSerializer = new FilmSerializer();
+   // IDataSerializer filmSerializerAdapter = new FilmSerializerAdapter(filmSerializer);
 
     // Adapter instances
-    SalaSerializer salaSerializer = new SalaSerializer();
-    IDataSerializer salaSerializerAdapter = new SalaSerializerAdapter(salaSerializer);
+   // SalaSerializer salaSerializer = new SalaSerializer();
+   // IDataSerializer salaSerializerAdapter = new SalaSerializerAdapter(salaSerializer);
 
     Amministratore amministratore = new Amministratore("Nome", "Cognome", Ruolo.AMMINISTRATORE);
 
@@ -177,7 +177,6 @@ public class GestioneSpettacoliController implements Initializable { //
         salaDataSerializer = new SalaDataSerializer(new SalaSerializerAdapter(new SalaSerializer()));
 
         try {
-            //spettacoli = (List<ISpettacolo>) spettacoloSerializerAdapter.deserialize("spettacoli.ser");
             spettacoli = spettacoloDataSerializer.caricaSpettacoli();
             spettacoliObservableList.addAll(spettacoli);
         } catch (Exception e) {
@@ -207,23 +206,22 @@ public class GestioneSpettacoliController implements Initializable { //
                         .collect(Collectors.toList())
         ));
 
-//        // Imposta un valore predefinito se necessario
+
         hoursComboBox.getSelectionModel().select(LocalTime.now().getHour());
         minutesComboBox.getSelectionModel().select(LocalTime.now().getMinute());
 
         // Popola le ObservableList con i dati di film e sale.
-        // Assumi che i metodi getFilms() e getSale() restituiscano le liste necessarie.
         filmObservableList.addAll(getFilms());
         salaObservableList.addAll(getSale());
 
-        // Configura ComboBox e TableView con le utilità
+        // Configura ComboBox e TableView con le classi di utilità
         ComboBoxUtil.setupFilmComboBox(combobox_film, filmObservableList);
         ComboBoxUtil.setupSalaComboBox(combobox_sala, salaObservableList);
 
         ComboBoxUtil.setupFilmComboBox(combobox_film_modifica,filmObservableList);
         ComboBoxUtil.setupSalaComboBox(combobox_sala_modifica,salaObservableList);
 
-        // Aggiungi listener ai ComboBox utilizzando la classe di utilità
+        // Aggiunge listener ai ComboBox utilizzando la classe di utilità
         ComboBoxListenerUtil.addFilmSelectionListener(combobox_film);
         ComboBoxListenerUtil.addSalaSelectionListener(combobox_sala);
 
@@ -265,7 +263,7 @@ public class GestioneSpettacoliController implements Initializable { //
         IDSpettacoloCol_tableview.setCellValueFactory(cellData ->
                 new SimpleObjectProperty<>(cellData.getValue().getId()));
 
-        // Assicurati di impostare la `TableView` con la tua `ObservableList`
+        // imposta la `TableView` con la `ObservableList`
         spettacolo_tableview.setItems(spettacoliObservableList);
     }
     @FXML
@@ -387,23 +385,23 @@ public class GestioneSpettacoliController implements Initializable { //
     }
     @FXML
     private List<IFilm> getFilms() {
-        // Questo metodo deve recuperare l'elenco dei film, ad esempio:
+
         try {
-            //return (List<IFilm>) filmSerializerAdapter.deserialize("film.ser");
+
             return filmDataSerializer.caricaFilm();
         } catch (Exception e) {
-            // gestire l'eccezione e ritornare una lista vuota o gestire di conseguenza
+
             return new ArrayList<>();
         }
     }
     @FXML
     private List<ISala> getSale() {
-        // Questo metodo deve recuperare l'elenco delle sale, simile a come viene fatto per i film
+
         try {
-            //return (List<ISala>) salaSerializerAdapter.deserialize("sale.ser");
+
             return salaDataSerializer.caricaSala();
         } catch (Exception e) {
-            // gestire l'eccezione e ritornare una lista vuota o gestire di conseguenza
+
             return new ArrayList<>();
         }
     }

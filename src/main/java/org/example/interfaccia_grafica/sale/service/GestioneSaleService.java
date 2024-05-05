@@ -25,7 +25,6 @@ import java.util.function.Consumer;
 public class GestioneSaleService implements IGestioneSaleService {
     private List<ISala> sale;
     private IGeneratoreIDPersistente generatoreID;
-    //private IDataSerializer salaSerializer;
     private ISalaDataSerializer salaSerializer;
     private Amministratore amministratore;
 
@@ -49,7 +48,6 @@ public class GestioneSaleService implements IGestioneSaleService {
             throw new SalaGiaEsistenteException("Una sala con questo numero esiste già.");
         }
 
-        //    ISala nuovaSala = new Sala(numeroSala, capacita);
         IAggiungiSala servizioAggiungiSala = new AggiungiSala(sale, generatoreID);
 
         ISala nuovaSala = new Sala(numeroSala, capacita);
@@ -60,7 +58,7 @@ public class GestioneSaleService implements IGestioneSaleService {
         amministratore.eseguiComando();
 
         onSuccess.accept(nuovaSala);
-        //salaSerializer.serialize(sale, "sale.ser");
+
         salaSerializer.salvaSala(sale);
     }
 
@@ -75,12 +73,11 @@ public class GestioneSaleService implements IGestioneSaleService {
             amministratore.setCommand(rimuoviSalaCommand);
             amministratore.eseguiComando();
 
-            //salaSerializer.serialize(sale, "sale.ser"); // Salva le sale dopo la rimozione
             salaSerializer.salvaSala(sale);
 
             onSuccess.accept(idSala); // Esegue l'operazione di successo
         } catch (SalaNonTrovataException e) {
-            throw e; // Rilancia l'eccezione specifica per gestirla al livello superiore
+            throw e;
         } catch (Exception e) {
             throw new Exception("Errore imprevisto durante la rimozione della sala.", e);
         }

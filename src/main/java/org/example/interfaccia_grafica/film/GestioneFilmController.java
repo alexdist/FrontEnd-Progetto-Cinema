@@ -24,7 +24,6 @@ import org.example.interfaccia_grafica.general_utility_classes.serializzazione.F
 import org.example.interfaccia_grafica.general_utility_classes.serializzazione.IFilmDataSerializer;
 import ID_persistente.GeneratoreIDPersistenteFilm;
 import ID_persistente.IGeneratoreIDPersistente;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,10 +92,9 @@ public class GestioneFilmController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        //IDataSerializer filmSerializerAdapter = new FilmSerializerAdapter(new FilmSerializer());
+
         filmDataSerializer = new FilmDataSerializer(new FilmSerializerAdapter(new FilmSerializer()));
         try {
-            //films = (List<IFilm>) filmSerializerAdapter.deserialize("film.ser");
             films = filmDataSerializer.caricaFilm();
             filmObservableList.addAll(films);
         } catch (Exception e) {

@@ -110,9 +110,8 @@ public class UserDashboardController {
     @FXML
     private double y = 0;
 
-    // Nella classe UserDashboardController
     @FXML
-    private Utente utente;
+    private Utente utente; // passato dalla classe UserDashboardController
 
     @FXML
     IGeneratoreIDPersistente generatoreID;
@@ -145,7 +144,7 @@ public class UserDashboardController {
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 30, 0);
         numeroBiglietti_spinner.setValueFactory(valueFactory);
 
-        // Aggiungi un ChangeListener allo spinner dei numeri di biglietti
+        // Aggiunge un ChangeListener allo spinner dei numeri di biglietti
         numeroBiglietti_spinner.valueProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue != null) {
                 aggiornaPrezzoParziale();
@@ -194,7 +193,7 @@ public class UserDashboardController {
                     setText(null);
                     setStyle("");
                 } else {
-                    // Estrai il numero di posti disponibili dal testo
+                    // Estrae il numero di posti disponibili dal testo
                     String[] parts = item.split(" ");
                     int postiDisponibili = Integer.parseInt(parts[0]);
 
@@ -205,7 +204,7 @@ public class UserDashboardController {
                     if (postiDisponibili < 5) {
                         setStyle("-fx-text-fill: red;");
                     } else {
-                        setStyle("-fx-text-fill: black;"); // Oppure un altro colore per valori superiori
+                        setStyle("-fx-text-fill: black;"); // usa il nero per valori superiori a 5
                     }
                 }
             }
@@ -218,7 +217,7 @@ public class UserDashboardController {
         List<ISpettacolo> spettacoli = spettacoloDataSerializer.caricaSpettacoli();
         spettacoli_user_tableview.setItems(FXCollections.observableList(spettacoli));
 
-        // Aggiungi un listener alla selezione degli elementi nella TableView
+        // Aggiunge un listener alla selezione degli elementi nella TableView
         spettacoli_user_tableview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 ISpettacolo spettacoloSelezionato = spettacoli_user_tableview.getSelectionModel().getSelectedItem();
@@ -234,7 +233,7 @@ public class UserDashboardController {
         if (numeroBiglietti_spinner.getValue() != null) {
 
             int numeroBiglietti = numeroBiglietti_spinner.getValue();
-            // Ottieni i prezzi aggiornati dal servizio
+            // Ottiene i prezzi aggiornati dal servizio
             IPrezziBiglietto prezziAttuali = prezziBigliettoDaFile.getPrezziBiglietto();
 
             double prezzoApplicato = utente.getEta() < 14 ? prezziAttuali.getPrezzoRidotto() : prezziAttuali.getPrezzoIntero();
@@ -252,7 +251,7 @@ public class UserDashboardController {
         if (spettacoloSelezionatoTemp != null) {
             // Imposta lo spettacolo selezionato
             spettacoloSelezionato = spettacoloSelezionatoTemp;
-            // Supponiamo che spettacoloSelezionato.getOrarioProiezione() ritorni un oggetto LocalDateTime
+
             LocalDateTime dataOrarioProiezione = spettacoloSelezionato.getOrarioProiezione();
 
             // Crea un oggetto DateTimeFormatter e specifica il formato desiderato
@@ -297,7 +296,7 @@ public class UserDashboardController {
             System.out.println("Nome: " + acquirente.getNome());
             System.out.println("Cognome: " + acquirente.getCognome());
             System.out.println("Prezzo: " + biglietto.getCosto() + "€");
-            // Aggiungi eventuali altre informazioni che desideri visualizzare
+
             System.out.println("-------------------------------------");
         }
     }
@@ -305,25 +304,24 @@ public class UserDashboardController {
     public void caricaSchermataPagamento(List<IBiglietto> bigliettiCreati) {
         try {
             // Carica il nuovo contenuto FXML per il centro
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("pagamento.fxml")); // Assicurati di usare il percorso corretto
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("pagamento.fxml"));
             AnchorPane pagamentoPane = loader.load();
 
-            // Ottieni l'accesso al controller associato alla vista caricata
+            // Ottiene l'accesso al controller associato alla vista caricata
             PagamentoController pagamentoController = loader.getController();
 
             // Passa l'oggetto Utente e la lista dei biglietti al controller della schermata di pagamento
             pagamentoController.setUtente(this.utente);
             pagamentoController.setBigliettiDaAcquistare(bigliettiCreati); // Usa la lista dei biglietti passata come parametro
 
-            // Sostituisci il contenuto del centro nel BorderPane
+            // Sostituisce il contenuto del centro nel BorderPane
             mainBorderPane.setCenter(pagamentoPane);
         } catch (IOException e) {
-            e.printStackTrace(); // Gestisci l'eccezione come preferisci
+            e.printStackTrace();
         }
     }
 
     private void aggiornaLabelConSpettacoloSelezionato(ISpettacolo spettacolo) {
-        // Assumi che la classe ISpettacolo e le sue relative classi abbiano i metodi getter corretti
         selectTitoloFilm_label.setText(spettacolo.getFilm().getTitolo());
         selectGenereFilm_label.setText(spettacolo.getFilm().getGenere());
         selectDataFilm_label.setText(spettacolo.getOrarioProiezione().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
@@ -332,7 +330,7 @@ public class UserDashboardController {
     public void setUtente(Utente utente) {
         this.utente = utente;
         updateLabelUtente();
-        // Aggiornare la vista della dashboard, se necessario
+        // Aggiorna la vista della dashboard
     }
 
     public void logout() throws IOException {
@@ -364,12 +362,12 @@ public class UserDashboardController {
         }
     }
 
-    // Metodo helper per aggiornare la label con il nome e cognome dell'utente
+    // Metodo per aggiornare la label con il nome e cognome dell'utente
     private void updateLabelUtente() {
 
         if (utente != null && label_utente != null) {
-            String nome = utente.getNome(); // Assumi che la classe Utente abbia il metodo getNome()
-            String cognome = utente.getCognome(); // Assumi che la classe Utente abbia il metodo getCognome()
+            String nome = utente.getNome(); // la classe Utente ha il metodo getNome()
+            String cognome = utente.getCognome(); // la classe Utente ha il metodo getCognome()
             label_utente.setText(nome + " " + cognome);
         }
     }

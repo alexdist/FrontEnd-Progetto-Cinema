@@ -66,12 +66,6 @@ public class PagamentoController {
     @FXML
     private AbstractRegistroBiglietti registroBiglietti;
 
-//    @FXML
-//    private IDataSerializer salaSerializer;
-//
-//    @FXML
-//    private IDataSerializer spettacoloSerializer;
-
     @FXML
     private IMetodoPagamentoStrategy metodoPagamentoContanti;
 
@@ -90,34 +84,26 @@ public class PagamentoController {
         spettacoloDataSerializer = new SpettacoloDataSerializer(new SpettacoloSerializerAdapter(new SpettacoloSerializer()));
         salaDataSerializer = new SalaDataSerializer(new SalaSerializerAdapter(new SalaSerializer()));
 
-
-        // Inizializza qui le dipendenze
         bigliettiDaAcquistare = new ArrayList<>();
         registroBiglietti = new RegistroBiglietti();
-//        salaSerializer = new SalaSerializerAdapter(new SalaSerializer());
-//        spettacoloSerializer = new SpettacoloSerializerAdapter(new SpettacoloSerializer());
+
         metodoPagamentoContanti = new PagamentoContantiStrategy();
         metodoPagamentoCartaDiCredito = new PagamentoCartaDiCreditoStrategy();
         metodoPagamentoBancomat = new PagamentoBancomatStrategy();
 
         try {
-            //sale = (List<ISala>) salaSerializer.deserialize("sale.ser");
             sale = salaDataSerializer.caricaSala();
-
         } catch (Exception e) {
             System.out.println("Impossibile caricare le sale esistenti. " + e.getMessage());
             sale = new ArrayList<>();
         }
 
         try {
-            //spettacoli = (List<ISpettacolo>) spettacoloSerializer.deserialize("spettacoli.ser");
             spettacoli = spettacoloDataSerializer.caricaSpettacoli();
-            //saleObservableList.addAll(sale);
         } catch (Exception e) {
             System.out.println("Impossibile caricare gli spettacoli esistenti. " + e.getMessage());
             spettacoli = new ArrayList<>();
         }
-
         pagamentoService = new PagamentoService(registroBiglietti, spettacoli, sale);
     }
 
@@ -152,7 +138,7 @@ public class PagamentoController {
 
     public void setUtente(Utente utente) {
         this.utente = utente;
-        // Ora imposti l'utente anche nel PagamentoService
+        // imposta l'utente anche nel PagamentoService
         this.pagamentoService.setUtente(utente);
     }
 
@@ -163,7 +149,7 @@ public class PagamentoController {
 
     @FXML
     private void pagaInContanti() throws IOException, ClassNotFoundException {
-        //IMetodoPagamentoStrategy metodoPagamento = new PagamentoContantiStrategy();
+
         if (pagamentoService.eseguiPagamento(bigliettiDaAcquistare, metodoPagamentoContanti)) {
             aggiungiBigliettiAlTilePane(bigliettiDaAcquistare);
         }
@@ -171,7 +157,7 @@ public class PagamentoController {
 
     @FXML
     private void pagaConCarta() throws IOException, ClassNotFoundException {
-        //IMetodoPagamentoStrategy metodoPagamento = new PagamentoCartaDiCreditoStrategy();
+
         if (pagamentoService.eseguiPagamento(bigliettiDaAcquistare, metodoPagamentoCartaDiCredito)) {
             aggiungiBigliettiAlTilePane(bigliettiDaAcquistare);
         }
@@ -179,7 +165,7 @@ public class PagamentoController {
 
     @FXML
     private void pagaConBancomat() throws IOException, ClassNotFoundException {
-       // IMetodoPagamentoStrategy metodoPagamento = new PagamentoBancomatStrategy();
+
         if (pagamentoService.eseguiPagamento(bigliettiDaAcquistare, metodoPagamentoBancomat)) {
             aggiungiBigliettiAlTilePane(bigliettiDaAcquistare);
         }

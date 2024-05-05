@@ -23,14 +23,12 @@ public class GestioneSpettacoliService implements IGestioneSpettacoliService{//
 
     private List<ISpettacolo> spettacoli;
     private IGeneratoreIDPersistente generatoreID;
-    //private IDataSerializer spettacoloSerializerAdapter;
     private ISpettacoloDataSerializer spettacoloDataSerializer;
     private Amministratore amministratore;
 
     public GestioneSpettacoliService(List<ISpettacolo> spettacoli, IGeneratoreIDPersistente generatoreID, ISpettacoloDataSerializer spettacoloDataSerializer, Amministratore amministratore) {
         this.spettacoli = spettacoli;
         this.generatoreID = generatoreID;
-        //this.spettacoloSerializerAdapter = spettacoloSerializerAdapter;
         this.spettacoloDataSerializer = spettacoloDataSerializer;
         this.amministratore = amministratore;
     }
@@ -45,11 +43,8 @@ public class GestioneSpettacoliService implements IGestioneSpettacoliService{//
         ICommand aggiungiSpettacoloCommand = new AggiungiSpettacoloCommand(servizioAggiungiSpettacolo, nuovoSpettacolo);
         amministratore.setCommand(aggiungiSpettacoloCommand);
         amministratore.eseguiComando();
-        //aggiungiSpettacoloTable(nuovoSpettacolo);
         onSuccess.accept(nuovoSpettacolo);
 
-        // Eventuale logica di post-esecuzione, come la serializzazione
-        //spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser");
         spettacoloDataSerializer.salvaSpettacolo(spettacoli);
     }
 
@@ -63,24 +58,21 @@ public class GestioneSpettacoliService implements IGestioneSpettacoliService{//
 
         onSuccess.accept(idSpettacolo); // Notifica il successo dell'operazione
 
-        //spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser"); // Salva la lista aggiornata di spettacoli
         spettacoloDataSerializer.salvaSpettacolo(spettacoli);
     }
 
     public void modificaOrarioSpettacolo(long idSpettacolo, LocalDateTime nuovoOrario, Runnable onSuccess) throws Exception {
 
-        // Assumi che ModificaSpettacolo implementi IModificaSpettacolo e richieda una lista di spettacoli come dipendenza
         IModificaSpettacolo servizioModificaOrarioSpettacolo = new ModificaSpettacolo(spettacoli);
 
-        // Crea il comando con tutti i parametri richiesti
+        // Crea il comando di modifica spettacolo
         ICommand modificaOrarioSpettacoloCommand = new ModificaOrarioPerIdSpettacoloCommand(servizioModificaOrarioSpettacolo, idSpettacolo, nuovoOrario);
 
         amministratore.setCommand(modificaOrarioSpettacoloCommand);
         amministratore.eseguiComando();
 
-        onSuccess.run(); // Esegui l'azione di successo, per esempio l'aggiornamento dell'UI
+        onSuccess.run(); // Esegue l'azione di successo, e l'aggiornamento dell'UI
 
-       // spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser"); // Salva le modifiche
         spettacoloDataSerializer.salvaSpettacolo(spettacoli);
     }
 
@@ -92,9 +84,8 @@ public class GestioneSpettacoliService implements IGestioneSpettacoliService{//
         amministratore.setCommand(modificaSalaSpettacoloCommand);
         amministratore.eseguiComando();
 
-        onSuccess.run(); // Esegui l'azione di successo
+        onSuccess.run();
 
-        //spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser"); // Salva le modifiche
         spettacoloDataSerializer.salvaSpettacolo(spettacoli);
     }
 
@@ -107,9 +98,8 @@ public class GestioneSpettacoliService implements IGestioneSpettacoliService{//
         amministratore.setCommand(modificaFilmSpettacoloCommand);
         amministratore.eseguiComando();
 
-        onSuccess.run(); // Esegui l'azione di successo
+        onSuccess.run();
 
-        //spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser"); // Salva le modifiche
         spettacoloDataSerializer.salvaSpettacolo(spettacoli);
     }
 }

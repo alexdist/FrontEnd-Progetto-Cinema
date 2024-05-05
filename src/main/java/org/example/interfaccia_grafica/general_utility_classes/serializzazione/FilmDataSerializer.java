@@ -21,13 +21,13 @@ public class FilmDataSerializer implements IFilmDataSerializer{
         if (result instanceof List<?>) {
             return (List<IFilm>) result;
         } else {
-            // Gestisci l'errore o ritorna una lista vuota
+
             return new ArrayList<>();
         }
     }
 
     public void salvaSala(List<IFilm> filmList) {
-        // Presumendo che IDataSerializer includa un metodo per serializzare oggetti
-        filmSerializerAdapter.serialize(filmList, "film.ser"); // Utilizza il file "sale.ser" per la serializzazione
+
+        filmSerializerAdapter.serialize(filmList, "film.ser");
     }
 }

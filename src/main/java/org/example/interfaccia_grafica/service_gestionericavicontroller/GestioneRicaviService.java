@@ -23,7 +23,6 @@ public class GestioneRicaviService implements IGestioneRicaviService{
             caricaRegistroBiglietti();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-            // Gestione dell'errore, ad esempio inizializzazione a valori di default o logging
         }
     }
 
@@ -35,8 +34,6 @@ public class GestioneRicaviService implements IGestioneRicaviService{
 
         if (registroBiglietti == null) {
             System.out.println("Errore nel caricamento del registro dei biglietti.");
-            // Qui potresti decidere di inizializzare registroBiglietti con un nuovo oggetto
-            // registroBiglietti = new RegistroBiglietti();
         }
     }
 

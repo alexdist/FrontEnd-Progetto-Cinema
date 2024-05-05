@@ -17,7 +17,7 @@ public class SpettacoloDataSerializer implements ISpettacoloDataSerializer{
         if (result instanceof List<?>) {
             return (List<ISpettacolo>) result;
         } else {
-            // Gestisci l'errore o ritorna una lista vuota
+
             return new ArrayList<>();
         }
     }
@@ -25,13 +25,9 @@ public class SpettacoloDataSerializer implements ISpettacoloDataSerializer{
     // Metodo per salvare la lista degli spettacoli
     public void salvaSpettacolo(List<ISpettacolo> spettacoli) {
         try {
-            // Presumendo che spettacoloSerializerAdapter abbia un metodo per serializzare oggetti
             spettacoloSerializerAdapter.serialize(spettacoli, "spettacoli.ser");
         } catch (Exception e) {
             e.printStackTrace();
-            // Qui potresti voler gestire l'errore in modo più specifico, ad esempio mostrando un messaggio all'utente
         }
     }
-
-    // Se necessario, puoi aggiungere qui anche metodi per salvare (serializzare) gli spettacoli
 }

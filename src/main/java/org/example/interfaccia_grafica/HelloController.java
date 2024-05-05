@@ -100,7 +100,6 @@ public class HelloController {
     }
 
     // Metodo per mostrare il pannello dell'utente
-
     @FXML
     private void handleLoginUtente() {
         utente_form.setVisible(true);
@@ -132,7 +131,7 @@ public class HelloController {
 
     @FXML
     private void handleAdminLogin() throws IOException {
-        // Aggiungi qui il codice per verificare le credenziali dell'admin
+        // codice per verificare le credenziali dell'admin
         String username = admin_username.getText();
         String password = admin_password.getText();
 
@@ -221,10 +220,10 @@ public class HelloController {
         // Raccoglie i dati dell'utente dai campi di testo
         String nome = utente_nome.getText();
         String cognome = utente_cognome.getText();
-        int eta = Integer.parseInt(utente_eta.getText()); // Assicurati che utente_eta contenga un numero valido
+        int eta = Integer.parseInt(utente_eta.getText()); // devo creare un controllo che verifichi che il numero inserito dell'età sia valido.
 
         // Crea l'oggetto Utente
-        Utente utente = new Utente(nome, cognome, eta, Ruolo.UTENTE); // Sostituisci Ruolo.UTENTE con il valore appropriato
+        Utente utente = new Utente(nome, cognome, eta, Ruolo.UTENTE);
 
         // Nasconde la finestra corrente
         utente_accedi.getScene().getWindow().hide();
@@ -233,7 +232,7 @@ public class HelloController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("user_dashboard.fxml"));
         Parent root = loader.load();
 
-        // Ottenere il controller della dashboard dell'utente e impostare l'utente
+        // Ottiene il controller della dashboard dell'utente e imposta l'utente
         UserDashboardController dashboardController = loader.getController();
         dashboardController.setUtente(utente);
 

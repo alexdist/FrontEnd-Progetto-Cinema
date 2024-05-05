@@ -77,9 +77,9 @@ public class AdminDashboardHelloController implements Initializable {
                 // Il numero di sale attive corrisponde alla dimensione della lista
                 return sale.size();
             } catch (Exception e) {
-                // Gestisci eventuali eccezioni, come un file non trovato o un errore di deserializzazione
+
                 e.printStackTrace();
-                return 0; // In caso di errore, ritorna 0 o gestisci come preferisci
+                return 0;
             }
         }
 }

@@ -76,14 +76,14 @@ public class GestionePrezziController {
 
         prezziDataSerializer = new PrezziDataSerializer(new PrezziBigliettoSerializerAdapter(new PrezziBigliettoSerializer()));
 
-        // Tentativo di caricamento dei prezzi salvati
+        // caricamento dei prezzi salvati
         Optional<IPrezziBiglietto> prezziCaricati = prezziDataSerializer.caricaPrezzi();
         if (prezziCaricati.isPresent()) {
             prezziBiglietto = prezziCaricati.get();
             // Inizializza prezziService con i prezzi caricati
             prezziService = new PrezziService(prezziBiglietto, amministratore);
         } else {
-            // Se non ci sono prezzi salvati, inizializza con valori di default o gestisci come preferisci
+            // Se non ci sono prezzi salvati, inizializza con valori di default
             prezziBiglietto = new PrezziBiglietto(0, 0);
             prezziService = new PrezziService(prezziBiglietto, amministratore);
         }
@@ -98,18 +98,16 @@ public class GestionePrezziController {
         impostaSovraPrz_btn1.setOnAction(event -> impostaSovrapprezzo());
 
 
-        // Assumi che prezziBiglietto sia un campo della classe controller che è stato caricato o inizializzato nel metodo caricaPrezziDaFile()
         if (prezziBiglietto != null) {
             // Crea una ObservableList con un solo elemento: l'oggetto prezziBiglietto
             ObservableList<IPrezziBiglietto> data = FXCollections.observableArrayList(prezziBiglietto);
 
-            // Imposta questa ObservableList come l'elemento della TableView
+            // Imposta ObservableList come l'elemento della TableView
             prezzi_tableview.setItems(data);
 
             // Configura le TableColumn per mostrare i dati
             prezzoInteroCol_tableview.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrezzoIntero()));
             prezzoRidottoCol_tableview.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrezzoRidotto()));
-            //sovrapprezzoCol_tableview1.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getSovrapprezzo()*100));
             sovrapprezzoCol_tableview1.setCellValueFactory(cellData ->
                     new SimpleObjectProperty<>((int) (cellData.getValue().getSovrapprezzo() * 100)));
 
@@ -119,7 +117,7 @@ public class GestionePrezziController {
     private void aggiornaPrezziTableView() {
         if (prezziBiglietto != null) {
             // Semplicemente aggiorna la ObservableList con il nuovo oggetto prezziBiglietto
-            // In questo caso specifico, dato che c'è un solo elemento, puoi rimuoverlo e aggiungerlo di nuovo per forzare l'aggiornamento
+            // In questo caso specifico, dato che c'è un solo elemento, è possibile rimuoverlo e aggiungerlo di nuovo per forzare l'aggiornamento
             prezzi_tableview.getItems().clear();
             prezzi_tableview.getItems().add(prezziBiglietto);
         }
@@ -131,17 +129,13 @@ private void impostaPrezzoIntero() {
         double nuovoPrezzoIntero = Double.parseDouble(impostaPrzIntero_textflied.getText());
         prezziService.impostaPrezzoIntero(nuovoPrezzoIntero);
         aggiornaPrezziTableView();
-        // Mostra un alert di successo
+
         showAlert("Prezzo Aggiornato", "Il prezzo intero è stato aggiornato con successo.");
 
-       // prezziDataSerializer.salvaPrezzi(prezziBiglietto);
-       // salvaPrezziSuFile();
-        // Aggiorna la UI se necessario, ad esempio ricaricando i dati nella TableView
     } catch (NumberFormatException | FilmGiaPresenteException | DurataFilmNonValidaException |
              TitoloVuotoException | FilmNonTrovatoException | SalaGiaEsistenteException | SalaNonTrovataException |
              SovrapposizioneSpettacoloException | FilmNonValidoException | SalaNonValidaException |
              SpettacoloNonTrovatoException e) {
-        // Gestire l'eccezione se il valore inserito non è un numero
     } catch (Exception e) {
         throw new RuntimeException(e);
     }
@@ -152,15 +146,14 @@ private void impostaPrezzoIntero() {
             double nuovoPrezzoRidotto = Double.parseDouble(impostaPrzRidotto_textflied.getText());
             prezziService.impostaPrezzoRidotto(nuovoPrezzoRidotto);
             aggiornaPrezziTableView();
-            // Mostra un alert di successo
+
             showAlert("Prezzo Aggiornato", "Il prezzo ridotto è stato aggiornato con successo.");
-            //prezziDataSerializer.salvaPrezzi(prezziBiglietto);
-            // Aggiorna la UI se necessario, ad esempio ricaricando i dati nella TableView
+
         } catch (NumberFormatException | FilmGiaPresenteException | DurataFilmNonValidaException |
                  TitoloVuotoException | FilmNonTrovatoException | SalaGiaEsistenteException | SalaNonTrovataException |
                  SovrapposizioneSpettacoloException | FilmNonValidoException | SalaNonValidaException |
                  SpettacoloNonTrovatoException | IOException e) {
-            // Gestire l'eccezione se il valore inserito non è un numero
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -168,19 +161,16 @@ private void impostaPrezzoIntero() {
 
     private void impostaSovrapprezzo() {
         try {
-            //double sovrapprezzo = Double.parseDouble(impostaSovraPrz_textflied1.getText());
             double sovrapprezzo = sovrapprezzo_spinner.getValue();
             prezziService.impostaSovrapprezzo(sovrapprezzo);
             aggiornaPrezziTableView();
-            // Mostra un alert di successo
+
             showAlert("Prezzo Aggiornato", "Il sovrapprezzo è stato aggiornato con successo.");
-           // prezziDataSerializer.salvaPrezzi(prezziBiglietto);
-            // Aggiorna la UI se necessario, ad esempio ricaricando i dati nella TableView
+
         } catch (NumberFormatException | FilmGiaPresenteException | DurataFilmNonValidaException |
                  TitoloVuotoException | FilmNonTrovatoException | SalaGiaEsistenteException | SalaNonTrovataException |
                  SovrapposizioneSpettacoloException | FilmNonValidoException | SalaNonValidaException |
                  SpettacoloNonTrovatoException | IOException e) {
-            // Gestire l'eccezione se il valore inserito non è un numero
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

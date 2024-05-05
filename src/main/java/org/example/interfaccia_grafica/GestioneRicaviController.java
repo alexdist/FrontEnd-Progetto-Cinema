@@ -17,14 +17,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.interfaccia_grafica.ricavi.DatiSala;
-import org.example.interfaccia_grafica.service_gestionericavicontroller.GestioneRicaviService;
-import org.example.interfaccia_grafica.service_gestionericavicontroller.IGestioneRicaviService;
 import revenues_observer.concrete_observable.RegistroBiglietti;
 import revenues_observer.concrete_observableA.AffluenzaPerSalaReport;
 import revenues_observer.concrete_observableB.RicaviPerSalaReport;
 import revenues_observer.observable.AbstractRegistroBiglietti;
-import revenues_observer.observer.IReport;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -33,44 +29,6 @@ import java.util.List;
 import java.util.Map;
 
 
-//public class GestioneRicaviController {
-//    @FXML
-//    private TableColumn<DatiSala, Number> affluenzaSalaCol_tableview;
-//
-//    @FXML
-//    private Button generaRepRicavi_btn;
-//
-//    @FXML
-//    private TableColumn<DatiSala, Number> ricaviRicavoCol_tableview;
-//
-//    @FXML
-//    private TableColumn<DatiSala, String> ricaviSalaCol_tableview;
-//
-//    @FXML
-//    private TableView<DatiSala> ricavi_tableview;
-//
-//    @FXML
-//    private IGestioneRicaviService gestioneRicaviService;
-//
-//
-//    @FXML
-//    private void initialize() throws IOException, ClassNotFoundException {
-//
-//        gestioneRicaviService = new GestioneRicaviService();
-//
-//        ricaviSalaCol_tableview.setCellValueFactory(new PropertyValueFactory<>("nomeSala"));
-//        affluenzaSalaCol_tableview.setCellValueFactory(new PropertyValueFactory<>("affluenza"));
-//        ricaviRicavoCol_tableview.setCellValueFactory(new PropertyValueFactory<>("ricavi"));
-//    }
-//
-//
-//
-//    @FXML
-//    private void generaReportRicavi() {
-//        List<DatiSala> dati = gestioneRicaviService.calcolaDatiPerSala();
-//        ricavi_tableview.setItems(FXCollections.observableArrayList(dati));
-//    }
-//}
 
 public class GestioneRicaviController {
 
@@ -101,8 +59,6 @@ public class GestioneRicaviController {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             System.out.println("Errore nel caricamento del registro dei biglietti.");
-            // Qui potresti decidere di inizializzare registroBiglietti con un nuovo oggetto
-            // se non riesci a caricarlo dal file
             registroBiglietti = new RegistroBiglietti(); // Fallback se il file non esiste o c'è un errore
         }
 
@@ -142,11 +98,9 @@ public class GestioneRicaviController {
     }
 
     private void aggiornaUIDatiReport() {
-        // Questo metodo dovrebbe aggregare i dati da entrambi i report e aggiornare l'UI
-        // Assumendo che i report espongano metodi per ottenere i loro dati
-        // La seguente implementazione è un esempio di come potrebbe essere realizzata
-        Map<Integer, Double> ricaviPerSala = ricaviReport.getRicaviPerSala(); // Metodo ipotetico
-        Map<Integer, Integer> affluenzaPerSala = affluenzaReport.getAffluenzaPerSala(); // Metodo ipotetico
+        // Questo metodo aggrega i dati da entrambi i report e aggiorna l'UI
+        Map<Integer, Double> ricaviPerSala = ricaviReport.getRicaviPerSala();
+        Map<Integer, Integer> affluenzaPerSala = affluenzaReport.getAffluenzaPerSala();
 
         List<DatiSala> dati = new ArrayList<>();
         ricaviPerSala.forEach((numeroSala, ricavi) -> {

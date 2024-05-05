@@ -16,7 +16,6 @@ public class DateTimeUtil {
         if (date != null && hour != null && minute != null) {
             return LocalDateTime.of(date, LocalTime.of(hour, minute));
         } else {
-            // Gestisci il caso in cui una selezione è nulla
             return null;
         }
     }

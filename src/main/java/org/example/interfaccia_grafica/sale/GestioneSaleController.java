@@ -68,18 +68,13 @@ public class GestioneSaleController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         salaDataSerializer = new SalaDataSerializer(new SalaSerializerAdapter(new SalaSerializer()));
 
-        //IDataSerializer salaSerializerAdapter = new SalaSerializerAdapter(new SalaSerializer());
-        // Tentativo di caricare le sale esistenti
         try {
-            //sale = (List<ISala>) salaSerializerAdapter.deserialize("sale.ser");
             sale =  salaDataSerializer.caricaSala();
             saleObservableList.addAll(sale);
         } catch (Exception e) {
             System.out.println("Impossibile caricare le sale esistenti. " + e.getMessage());
             sale = new ArrayList<>();
         }
-
-        // Qui assumiamo che 'sale' sia la lista delle sale disponibili e sia già stata inizializzata
 
         IGeneratoreIDPersistente generatoreIDSala = new GeneratoreIDPersistenteSala();
         Amministratore amministratore = new Amministratore("Mario","Rossi",Ruolo.AMMINISTRATORE);

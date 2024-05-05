@@ -8,7 +8,6 @@ public class ComboBoxListenerUtil {
     public static void addFilmSelectionListener(ComboBox<IFilm> comboBox) {
         comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                // Logica da eseguire quando un film è selezionato
                 System.out.println("Film selezionato: " + newValue.getTitolo());
             }
         });
@@ -17,7 +16,6 @@ public class ComboBoxListenerUtil {
     public static void addSalaSelectionListener(ComboBox<ISala> comboBox) {
         comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                // Logica da eseguire quando una sala è selezionata
                 System.out.println("Sala selezionata: " + newValue.getNumeroSala());
             }
         });

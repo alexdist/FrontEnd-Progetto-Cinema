@@ -66,23 +66,12 @@ public class ServizioPrezziBiglietto implements IServizioPrezziBiglietto{
 
 
     private void inizializzaPrezziDefault() {
-        // Qui puoi inizializzare prezziBiglietto con alcuni valori di default
+        // valori di default
         prezziBiglietto = new PrezziBiglietto(0, 0, 0); // Assumiamo questi come valori di default
     }
 
     public void resetPrezziBigliettoAiValoriDefault() {
         caricaPrezziBiglietti();
-//        File file = new File("prezziBiglietto.ser");
-//        if (file.exists()) {
-//            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-//                prezziBiglietto = (IPrezziBiglietto) ois.readObject();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                inizializzaPrezziDefault();
-//            }
-//        } else {
-//            inizializzaPrezziDefault();
-//        }
     }
 
 

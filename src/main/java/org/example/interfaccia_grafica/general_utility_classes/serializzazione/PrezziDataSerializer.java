@@ -15,8 +15,8 @@ public class PrezziDataSerializer implements IPrezziDataSerializer{
         try {
             prezziSerializerAdapter.serialize(prezziBiglietto, "prezziBiglietto.ser");
         } catch (Exception e) {
-            // Gestire l'eccezione, ad esempio mostrando un messaggio di errore all'utente
-            e.printStackTrace(); // Per semplicità, qui stampiamo lo stack trace dell'eccezione
+
+            e.printStackTrace();
         }
     }
 
@@ -30,8 +30,8 @@ public class PrezziDataSerializer implements IPrezziDataSerializer{
                 return Optional.empty();
             }
         } catch (Exception e) {
-            // Gestire le eccezioni, come file non trovato o errori di deserializzazione
-            e.printStackTrace(); // Per semplicità, qui stampiamo lo stack trace dell'eccezione
+
+            e.printStackTrace();
             return Optional.empty();
         }
     }

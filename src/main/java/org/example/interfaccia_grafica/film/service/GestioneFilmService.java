@@ -23,7 +23,6 @@ import java.util.function.Consumer;
 public class GestioneFilmService implements IGestioneFilmService {
     private List<IFilm> films;
     private IGeneratoreIDPersistente generatoreID;
-    //private IDataSerializer filmSerializer;
     private IFilmDataSerializer filmSerializer;
     private Amministratore amministratore;
 
@@ -38,8 +37,6 @@ public class GestioneFilmService implements IGestioneFilmService {
     public void aggiungiFilm(String titolo, int durata, String genere, Consumer<IFilm> onSuccess) throws FilmGiaPresenteException, DurataFilmNonValidaException, TitoloVuotoException, Exception {
         // Implementazione del metodo per aggiungere un film, incluso il controllo di validità e unicità
         IFilm nuovoFilm = new Film(titolo, durata, genere);
-        // Assumi che Film sia una classe che implementa IFilm
-        // Eseguire qui la logica per verificare l'unicità, la validità dei dati e aggiungere il film alla lista
 
         IAggiungiFilm servizioAggiungiFilm = new AggiungiFilm(films, generatoreID);
         ICommand aggiungiFilmCommand = new AggiungiFilmCommand(servizioAggiungiFilm, nuovoFilm);
@@ -48,7 +45,7 @@ public class GestioneFilmService implements IGestioneFilmService {
         amministratore.eseguiComando();
 
         onSuccess.accept(nuovoFilm);
-        //filmSerializer.serialize(films, "film.ser");
+
         filmSerializer.salvaSala(films);
     }
 
@@ -57,11 +54,11 @@ public class GestioneFilmService implements IGestioneFilmService {
 
         IRimuoviFilm servizioRimuoviFilm = new RimuoviFilm(films);
         ICommand rimuoviFilmCommand = new RimuoviFilmCommand(servizioRimuoviFilm, idFilm);
-        // Implementazione del metodo per rimuovere un film
+
         amministratore.setCommand(rimuoviFilmCommand);
         amministratore.eseguiComando();
 
-        //filmSerializer.serialize(films, "film.ser");
+
         filmSerializer.salvaSala(films);
 
         onSuccess.accept(idFilm);

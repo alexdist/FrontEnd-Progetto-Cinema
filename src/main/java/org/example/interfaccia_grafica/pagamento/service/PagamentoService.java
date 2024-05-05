@@ -30,17 +30,15 @@ import java.io.IOException;
 import java.util.List;
 
 public class PagamentoService implements IPagamentoService {
-    // Inietta le dipendenze necessarie, come il registro dei biglietti e i serializzatori
+
     private AbstractRegistroBiglietti registroBiglietti;
-//    private IDataSerializer salaSerializer;
-   // private IDataSerializer spettacoloSerializer;
     private List<ISpettacolo> spettacoli;
     private List<ISala> sale;
     private Utente utente;
     private ISalaDataSerializer salaSerializer;
     private ISpettacoloDataSerializer spettacoloSerializer;
 
-    // Costruttore per iniettare le dipendenze
+
     public PagamentoService(AbstractRegistroBiglietti registroBiglietti, List<ISpettacolo> spettacoli, List<ISala> sale) {
 
         this.registroBiglietti = registroBiglietti;
@@ -63,9 +61,8 @@ public class PagamentoService implements IPagamentoService {
             if (aggiornaStatoPostoAcquistato(biglietto.getSpettacolo().getId())) {
                 IUserCommand acquistoCommand = new AcquistoBigliettoCommand(servizioAcquisto, biglietto);
                 utente.setCommand(acquistoCommand);
-                utente.eseguiComando(); // Esegui il comando senza controllare il risultato
+                utente.eseguiComando();
 
-                //salaSerializer.serialize(sale,"sale.ser");
                 salaSerializer.salvaSala(sale);
                 spettacoloSerializer.salvaSpettacolo(spettacoli);
 
@@ -75,7 +72,6 @@ public class PagamentoService implements IPagamentoService {
                 return false; // Termina la funzione e indica che l'acquisto non è riuscito
             }
         }
-
         // Se il ciclo termina senza entrare nell'else, significa che tutti gli acquisti sono andati a buon fine
         return true;
     }

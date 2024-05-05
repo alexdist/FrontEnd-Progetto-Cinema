@@ -57,13 +57,13 @@ public class DashboardController implements Initializable {
 
     private void loadInitialDashboardView() {
         try {
-            // Assicurati che il percorso del file FXML sia corretto e relativo alla tua struttura del progetto
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-dashboard-hello.fxml"));
             Node initialView = loader.load();
             mainBorderPane.setCenter(initialView);
         } catch (IOException e) {
             e.printStackTrace();
-            // Gestisci l'errore, ad esempio mostrando un messaggio di errore all'utente
+
         }
     }
 
@@ -166,8 +166,7 @@ public class DashboardController implements Initializable {
             loader.setLocation(getClass().getResource(fxmlFile));
             Node node = loader.load();
 
-            // Se necessario, qui puoi interagire con il controller del file FXML appena caricato
-            // Object controller = loader.getController();
+
 
             mainBorderPane.setCenter(node);
 
