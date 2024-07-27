@@ -37,14 +37,14 @@
                                     </ImageView>
                                 </graphic>
                             </Button>
-                            <Label layoutX="38.0" layoutY="11.0" text="Gestione Cinema">
+                            <Label layoutX="43.0" layoutY="11.0" text="Biglietteria Automatica">
                                 <font>
                                     <Font name="Microsoft Sans Serif" size="13.0" />
                                 </font>
                             </Label>
                             <ImageView fitHeight="60.0" fitWidth="30.0" layoutX="7.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
-                                    <Image url="@../../../Icone/icons8-gear-100.png" />
+                                    <Image url="@../../../Icone/icons8-biglietto-100.png" />
                                 </image>
                             </ImageView>
                         </children>
@@ -158,7 +158,7 @@
                                        <Font name="System Bold" size="17.0" />
                                     </font>
                                  </Label>
-                                 <Label layoutX="120.0" layoutY="225.0" text="Title">
+                                 <Label layoutX="103.0" layoutY="225.0" text="Titolo film">
                                     <font>
                                        <Font size="14.0" />
                                     </font>
@@ -169,7 +169,7 @@
                                  <Font name="Microsoft Sans Serif" size="18.0" />
                               </font>
                            </Label>
-                           <Label layoutX="590.0" layoutY="59.0" text="Price">
+                           <Label layoutX="590.0" layoutY="59.0" text="Prezzo">
                               <font>
                                  <Font name="Microsoft Sans Serif" size="18.0" />
                               </font>
@@ -190,7 +190,7 @@
                                  <Font size="18.0" />
                               </font>
                            </Label>
-                           <Label layoutX="662.0" layoutY="180.0" text="Total:">
+                           <Label layoutX="662.0" layoutY="180.0" text="Totale:">
                               <font>
                                  <Font name="System Bold" size="20.0" />
                               </font>

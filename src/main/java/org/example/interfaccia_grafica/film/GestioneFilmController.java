@@ -126,7 +126,7 @@ public class GestioneFilmController implements Initializable {
             int durataFilm = Integer.parseInt(durataFilm_textfield.getText());
 
             gestioneFilmService.aggiungiFilm(titoloFilm, durataFilm, genereFilm, nuovoFilm -> {
-                AlertUtil.showInformationAlert("Film aggiunto con successo!");
+                AlertUtil.showAlert("Operazione Completata","Film aggiunto con successo!");
                 aggiungiFilmTable(nuovoFilm);
             });
         } catch (FilmGiaPresenteException e) {
@@ -150,7 +150,7 @@ public class GestioneFilmController implements Initializable {
             long idFilm = Long.parseLong(IDRimuoviFIlm_textfield.getText());
 
             gestioneFilmService.rimuoviFilm(idFilm, idFilmRimosso -> {
-                AlertUtil.showInformationAlert("Film rimosso con successo!");
+                AlertUtil.showAlert("Operazione Completata","Film rimosso con successo!");
                 rimuoviFilmTable(idFilmRimosso);
             });
         } catch (NumberFormatException e) {

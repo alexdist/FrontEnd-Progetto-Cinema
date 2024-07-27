@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Font?>
@@ -17,15 +19,51 @@
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Label>
-                  <Button fx:id="pagaInContanti_button" layoutX="115.0" layoutY="68.0" mnemonicParsing="false" onAction="#pagaInContanti" prefHeight="99.0" prefWidth="135.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga in Contanti" />
-                  <Button fx:id="pagaConCarta_button" layoutX="378.0" layoutY="68.0" mnemonicParsing="false" onAction="#pagaConCarta" prefHeight="99.0" prefWidth="135.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga con Carta" />
-                  <Button fx:id="pagaConBancomat_button" layoutX="633.0" layoutY="68.0" mnemonicParsing="false" onAction="#pagaConBancomat" prefHeight="99.0" prefWidth="141.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga con Bancomat" />
-                  <Button fx:id="annulla_button" layoutX="725.0" layoutY="305.0" mnemonicParsing="false" onAction="#annullaUltimoAcquisto" prefHeight="55.0" prefWidth="147.0" text="AnnullaUltimoAcquisto" />
+                  <Button fx:id="pagaInContanti_button" layoutX="76.0" layoutY="68.0" mnemonicParsing="false" onAction="#pagaInContanti" prefHeight="99.0" prefWidth="198.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga in Contanti">
+                     <graphic>
+                        <ImageView fitHeight="44.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../Icone/icons8-banconote-100.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <Button fx:id="pagaConCarta_button" layoutX="348.0" layoutY="68.0" mnemonicParsing="false" onAction="#pagaConCarta" prefHeight="99.0" prefWidth="198.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga con Carta">
+                     <graphic>
+                        <ImageView fitHeight="96.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../Icone/icons8-carta-di-debito-100.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <Button fx:id="pagaConBancomat_button" layoutX="632.0" layoutY="68.0" mnemonicParsing="false" onAction="#pagaConBancomat" prefHeight="99.0" prefWidth="198.0" styleClass="buy-btn" stylesheets="@user.css" text="Paga con Bancomat">
+                     <graphic>
+                        <ImageView fitHeight="52.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../Icone/icons8-carta-di-credito-80.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <Button fx:id="annulla_button" layoutX="671.0" layoutY="354.0" mnemonicParsing="false" onAction="#annullaUltimoAcquisto" prefHeight="55.0" prefWidth="198.0" styleClass="annulla-btn" stylesheets="@user.css" text="Annulla Ultimo Acquisto">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../Icone/icons8-torna-indietro-100.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
                   <AnchorPane layoutX="23.0" layoutY="245.0" prefHeight="211.0" prefWidth="642.0">
                      <children>
                               <TilePane fx:id="tilePaneBiglietti" hgap="10" layoutX="-3.0" prefHeight="272.0" prefWidth="651.0" vgap="10" />
                      </children>
                   </AnchorPane>
+                  <Button fx:id="back_btn" layoutX="23.0" layoutY="505.0" mnemonicParsing="false" onAction="#handleBackButton" styleClass="comeback-btn" stylesheets="@admin-dashboardstyle.css" text="Torna Indietro">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../Icone/icons8-indietro-100.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
                     </children>
                 </AnchorPane>
             </children>

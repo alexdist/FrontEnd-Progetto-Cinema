@@ -86,3 +86,15 @@
 .receipt-btn:hover{
     -fx-background-color: #d39948;
 }
+
+.annulla-btn {
+    -fx-background-color: #FFFF00; /* Giallo */
+    -fx-text-fill: #000; /* Testo nero per contrastare il giallo */
+    -fx-font-size: 14px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+
+.annulla-btn:hover {
+    -fx-background-color: #FFD700; /* Un giallo dorato per il hover */
+}

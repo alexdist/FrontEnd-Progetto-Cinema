@@ -93,7 +93,8 @@ public class GestioneSaleController implements Initializable {
             int capacita = Integer.parseInt(capacitaSala_textflied.getText());
 
             gestioneSaleService.aggiungiSala(numeroSala, capacita, nuovaSala -> {
-                AlertUtil.showInformationAlert("Sala aggiunta con successo!");
+                //AlertUtil.showInformationAlert("Sala aggiunta con successo!");
+                AlertUtil.showAlert("Operazione Completata","Sala aggiunta con successo!");
                 aggiungiSalaTable(nuovaSala);
             });
         } catch (NumeroSalaNegativoException | NumeroPostiNegativoException e) {
@@ -114,7 +115,7 @@ public class GestioneSaleController implements Initializable {
             long idSala = Long.parseLong(IDRimuoviSala_textfiel.getText());
 
             Consumer<Long> onSuccess = idSalaRimosso -> {
-                AlertUtil.showInformationAlert("Sala rimossa con successo!");
+                AlertUtil.showAlert("Operazione Completata","Sala rimossa con successo!");
                 rimuoviSalaTable(idSalaRimosso);
             };
             gestioneSaleService.rimuoviSala(idSala, onSuccess);

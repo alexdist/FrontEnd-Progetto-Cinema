@@ -276,7 +276,7 @@ public class GestioneSpettacoliController implements Initializable { //
             gestioneSpettacoliService.aggiungiSpettacolo(filmSelezionato, salaSelezionata, orarioSelezionato, this::aggiungiSpettacoloTable);
 
             // Aggiornamento dell'UI post-aggiunta spettacolo
-            AlertUtil.showInformationAlert("Spettacolo aggiunto con successo!");
+            AlertUtil.showAlert("Operazione Completata","Spettacolo aggiunto con successo!");
         } catch (Exception e) {
             AlertUtil.showErrorAlert("Errore nell'aggiunta dello spettacolo: " + e.getMessage());
         }
@@ -298,7 +298,7 @@ public class GestioneSpettacoliController implements Initializable { //
 
             gestioneSpettacoliService.modificaOrarioSpettacolo(idSpettacolo, orarioModificato, () -> {
                 spettacolo_tableview.refresh(); // Aggiorna l'UI
-                AlertUtil.showAlert("Successo", "Orario dello spettacolo modificato con successo.");
+                AlertUtil.showAlert("Operazione Completata", "Orario dello spettacolo modificato con successo.");
             });
         } catch (NumberFormatException e) {
             AlertUtil.showAlert("Errore di formato", "L'ID inserito non è valido.");
@@ -315,13 +315,13 @@ public class GestioneSpettacoliController implements Initializable { //
             ISala salaSelezionata = combobox_sala_modifica.getSelectionModel().getSelectedItem();
 
             if (salaSelezionata == null) {
-                AlertUtil.showAlert("Errore", "Seleziona una sala da assegnare allo spettacolo.");
+                AlertUtil.showAlert("Operazione Completata", "Seleziona una sala da assegnare allo spettacolo.");
                 return;
             }
 
             gestioneSpettacoliService.modificaSalaSpettacolo(idSpettacolo, salaSelezionata, () -> {
                 spettacolo_tableview.refresh(); // Aggiorna l'UI
-                AlertUtil.showAlert("Successo", "Sala dello spettacolo modificato con successo.");
+                AlertUtil.showAlert("Operazione Completata", "Sala dello spettacolo modificato con successo.");
             });
         } catch (NumberFormatException e) {
             AlertUtil.showAlert("Errore di formato", "L'ID inserito non è valido.");
@@ -342,7 +342,7 @@ public class GestioneSpettacoliController implements Initializable { //
 
             gestioneSpettacoliService.modificaFilmSpettacolo(idSpettacolo, filmSelezionato, () -> {
                 spettacolo_tableview.refresh(); // Aggiorna l'UI
-                AlertUtil.showAlert("Successo", "Film dello spettacolo modificato con successo.");
+                AlertUtil.showAlert("Operazione Completata", "Film dello spettacolo modificato con successo.");
             });
         } catch (NumberFormatException e) {
             AlertUtil.showAlert("Errore di formato", "L'ID inserito non è valido.");
@@ -363,7 +363,7 @@ public class GestioneSpettacoliController implements Initializable { //
 
             gestioneSpettacoliService.rimuoviSpettacolo(idSpettacolo, this::rimuoviSpettacoloTable);
 
-            AlertUtil.showInformationAlert("Spettacolo rimosso con successo!");
+            AlertUtil.showAlert("Operazione Completata","Spettacolo rimosso con successo!");
         } catch (NumberFormatException e) {
             AlertUtil.showErrorAlert("L'ID inserito non è valido.");
         } catch (SpettacoloNonTrovatoException e) {

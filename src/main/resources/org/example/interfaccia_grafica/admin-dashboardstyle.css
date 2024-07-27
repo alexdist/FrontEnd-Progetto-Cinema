@@ -131,7 +131,8 @@
 .modify-btn{
     -fx-background-color: #FFA500; /* Arancione */
     -fx-background-radius: 8px;
-    -fx-text-fill: #fff;
+    -fx-text-fill: #000;
+
     -fx-font-size: 14px;
     -fx-cursor: hand;
 }
@@ -141,9 +142,9 @@
 }
 
 .comeback-btn{
-    -fx-background-color: #B0B0B0; /* Grigio medio */
+    -fx-background-color: #E0E0E0;
     -fx-background-radius: 8px;
-    -fx-text-fill: #fff;
+    -fx-text-fill: #000;
     -fx-font-size: 14px;
     -fx-cursor: hand;
 }

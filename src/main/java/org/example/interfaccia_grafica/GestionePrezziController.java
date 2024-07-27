@@ -89,7 +89,8 @@ public class GestionePrezziController {
         }
 
         // Configura lo Spinner per valori da 0.0 a 1.0, con incremento di 0.1
-        SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 1.0, 0.0, 0.1);
+        //SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 1.0, 0.0, 0.1);
+        SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 100.0, 0.0, 10.0);
         sovrapprezzo_spinner.setValueFactory(valueFactory);
         sovrapprezzo_spinner.setEditable(true); // Opzionale: rende lo Spinner editabile per l'input manuale
 
@@ -109,7 +110,8 @@ public class GestionePrezziController {
             prezzoInteroCol_tableview.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrezzoIntero()));
             prezzoRidottoCol_tableview.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrezzoRidotto()));
             sovrapprezzoCol_tableview1.setCellValueFactory(cellData ->
-                    new SimpleObjectProperty<>((int) (cellData.getValue().getSovrapprezzo() * 100)));
+                    //new SimpleObjectProperty<>((int) (cellData.getValue().getSovrapprezzo() * 100)));
+                    new SimpleObjectProperty<>((int) (cellData.getValue().getSovrapprezzo())));
 
         }
     }
